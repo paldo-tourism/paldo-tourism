@@ -1,7 +1,10 @@
 package com.estsoft.paldotourism.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@EntityListeners(AuditingEntityListener.class)
+@Entity
 public class Likes {
 
     @Id

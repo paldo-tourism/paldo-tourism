@@ -1,7 +1,10 @@
 package com.estsoft.paldotourism.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@EntityListeners(AuditingEntityListener.class)
+@Entity
 public class ReservedSeat {
 
     @Id
@@ -10,12 +13,12 @@ public class ReservedSeat {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
-    private Bus bus;
+    private Bus bus; // 버스 정보(FK)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
-    private Reservation reservation;
+    private Reservation reservation; // 예약 정보(FK)
 
     @Column
-    private Integer seatNumber;
+    private Integer seatNumber; // 좌석 번호
 }

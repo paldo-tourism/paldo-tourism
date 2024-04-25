@@ -1,17 +1,20 @@
 package com.estsoft.paldotourism.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@EntityListeners(AuditingEntityListener.class)
+@Entity
 public class PaymentHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 게시글 아이디(PK)
+    private Integer id; // 결제 아이디(PK)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
-    private Reservation reservation; // 작성자 정보(FK)
+    private Reservation reservation; // 예약 정보(FK)
 
     @Column
-    private Integer totalCharge; // 카테고리
+    private Integer totalCharge; // 총 결제 금액
 }

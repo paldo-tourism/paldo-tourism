@@ -24,4 +24,7 @@ public class User {
     @Column
     private String phoneNumber; // 전화번호
 
+    @Enumerated(EnumType.STRING)
+    private Role role; // 유저 역할
+
 }
