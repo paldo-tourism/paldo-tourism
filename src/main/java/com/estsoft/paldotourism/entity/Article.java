@@ -15,8 +15,8 @@ public class Article {
     @JoinColumn
     private User user; // 작성자 정보(FK)
 
-    @Column
-    private String category; // 카테고리
+    @Enumerated(EnumType.STRING)
+    private Category category; // 카테고리
 
     @Column
     private String title; // 제목
