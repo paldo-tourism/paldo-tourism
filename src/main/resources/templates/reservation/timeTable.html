@@ -1,10 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>배차 조회</title>
 </head>
+
 <body>
 
+<div>
+    <div>
+        <img th:src="@{/}" alt="로고">
+        <h2>배차 조회</h2>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>출발지</th>
+            <th>도착지</th>
+            <th>출발 시간</th>
+            <th>등급</th>
+        </tr>
+        </thead>
+
+      <tbody>
+      <tr>
+        <td th:text="${select.depTerminal}">출발지</td>
+        <td th:text="${select.arrTerminal}">도착지</td>
+        <td th:text="${select.depTime}">출발 시간</td>
+        <td th:text="${select.busGrade}">등급</td>
+      </tr>
+
+      </tbody>
+    </table>
+
+  <table>
+    <thead>
+    <tr>
+      <th>출발</th>
+      <th>도착</th>
+      <th>등급</th>
+      <th>요금</th>
+      <th>잔여 좌석</th>
+      <th>선택</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="bus : ${buses}">
+      <td th:text="${bus.depTerminal}">출발</td>
+      <td th:text="${bus.arrTerminal}">도착</td>
+      <td th:text="${bus.busGrade}">등급</td>
+      <td th:text="${bus.charge}">요금</td>
+      <td th:text="${bus.seat}">잔여 좌석</td>
+      <td><button><a th:href="${'/'}">선택</a></button></td>
+    </tr>
+
+    </tbody>
+  </table>
+
+</div>
 </body>
 </html>
