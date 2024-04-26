@@ -5,7 +5,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class ReservedSeat {
+public class Seat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +21,8 @@ public class ReservedSeat {
 
     @Column
     private Integer seatNumber; // 좌석 번호
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Status status; // 예약 상태
 }

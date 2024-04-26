@@ -2,5 +2,5 @@ package com.estsoft.paldotourism.entity;
 
 public enum Category {
 
-    ANNOUNCEMENT, QA
+    CATEGORY_ANNOUNCEMENT, CATEGORY_QA
 }
