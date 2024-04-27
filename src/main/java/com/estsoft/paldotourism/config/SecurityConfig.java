@@ -27,6 +27,10 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(auth ->              // 인증, 인가 설정
                         auth.requestMatchers("/**").permitAll()
                                 .anyRequest().authenticated())
+                .formLogin(auth -> auth.loginPage("/login")
+                        .defaultSuccessUrl("/login-result-test"))
+                .logout(auth -> auth.logoutSuccessUrl("/")
+                        .invalidateHttpSession(true))
                 .csrf(auth -> auth.disable());                  // csrf 비활성화
         return httpSecurity.build();
     }
