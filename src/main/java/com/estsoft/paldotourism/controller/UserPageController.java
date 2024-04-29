@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserPageController {
@@ -25,8 +26,8 @@ public class UserPageController {
 
     // 로그인 결과 확인 테스트 페이지
     @GetMapping("/login-result-test")
-    public String loginResultTest(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        model.addAttribute("user", userDetails);
+    public String loginResultTest(@AuthenticationPrincipal UserDetails currentUser, Model model) {
+        model.addAttribute("currentUser", currentUser);
         return "user/login-result-test";
     }
 

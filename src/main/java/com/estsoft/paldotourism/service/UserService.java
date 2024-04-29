@@ -27,8 +27,12 @@ public class UserService {
         return responseDto;
     }
 
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("해당 이메일이 존재하지 않습니다. email=" + email));
+    public boolean isEmailAvailable(String email) {
+        return !userRepository.existsByEmail(email);
     }
+
+    public boolean isNicknameAvailable(String nickname) {
+        return !userRepository.existsByNickName(nickname);
+    }
+
 }
