@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<form th:method="put" th:action="@{/article/update/{articleId}(articleId=${articleId})}">
+  <input type="hidden" name="_method" value="PUT">
+  <input type="hidden" name="articleId" th:value="${articleId}">
+  <select name="category" required>
+    <option value="" selected>카테고리</option>
+    <option value="CATEGORY_ANNOUNCEMENT">공지</option>
+    <option value="CATEGORY_QA">문의</option>
+  </select>
+  <p>제목</p><input type="text" name="title" th:value="${article.title}" required>
+  <p>내용</p><input type="text" name="content" th:value="${article.content}" required>
+  <button type="submit">수정</button>
+</form>
+</body>
+</html>

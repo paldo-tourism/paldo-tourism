@@ -1,15 +1,21 @@
 package com.estsoft.paldotourism.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Article {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Article extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 게시글 아이디(PK)
+    private Long id; // 게시글 아이디(PK)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
@@ -24,4 +30,23 @@ public class Article {
     @Column(length = 10000)
     private String content; // 내용
 
+    @Builder
+    public Article(User user, Category category, String title, String content) {
+        this.user = user;
+        this.category = category;
+        this.title = title;
+        this.content = content;
+    }
+
+    public void updateTitle(String title){
+        this.title = title;
+    }
+
+    public void updateContent(String content){
+        this.content = content;
+    }
+
+    public void updateCategory(Category category) {
+        this.category = category;
+    }
 }
