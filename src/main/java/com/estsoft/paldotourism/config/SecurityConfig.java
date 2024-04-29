@@ -1,6 +1,5 @@
 package com.estsoft.paldotourism.config;
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,7 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @EnableWebSecurity
 @Configuration
@@ -29,7 +27,7 @@ public class SecurityConfig {
                                 .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
                         .defaultSuccessUrl("/login-result-test"))
-                .logout(auth -> auth.logoutSuccessUrl("/")
+                .logout(auth -> auth.logoutSuccessUrl("/login")
                         .invalidateHttpSession(true))
                 .csrf(auth -> auth.disable());                  // csrf 비활성화
         return httpSecurity.build();
