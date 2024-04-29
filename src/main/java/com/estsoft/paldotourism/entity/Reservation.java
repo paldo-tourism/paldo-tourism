@@ -1,5 +1,6 @@
 package com.estsoft.paldotourism.entity;
 
+import com.estsoft.paldotourism.controller.MailController;
 import jakarta.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -21,5 +22,18 @@ public class Reservation {
 
     @Column
     private String reservationNumber; // 예약 번호
+
+
+    @Column
+    private String reservationStatus;
+
+    @PostUpdate()
+    public void afterReservationStatusUpdate()
+    {
+        if("결제완료".equals(this.reservationStatus))
+        {
+            MailController.sendEmail();
+        }
+    }
 
 }
