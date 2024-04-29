@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+로그인 결과 테스트 HTML 입니다.
+현재 로그인한 유저의 정보
+<div>
+    <p>user-email: <span th:text="${user.email}">email</span></p>
+</div>
+<div>
+    <p>user-nickname: <span th:text="${user.nickName}">nickname</span></p>
+</div>
+<div>
+    <p>user-phone number: <span th:text="${user.phoneNumber}">phone number</span></p>
+</div>
+
+
+</body>
+</html>

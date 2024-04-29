@@ -2,13 +2,12 @@ package com.estsoft.paldotourism.controller;
 
 import com.estsoft.paldotourism.dto.user.AddUserRequestDto;
 import com.estsoft.paldotourism.dto.user.AddUserResponseDto;
+import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
