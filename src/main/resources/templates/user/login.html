@@ -1,0 +1,26 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>로그인</title>
+</head>
+<body>
+<main class="form-login">
+    <form action="/login" method="POST">
+
+        <div class="form-floating">
+            <label><strong>Email</strong></label>
+            <input type="email" class="form-control"  name="username" placeholder="Enter Your email">
+
+        </div>
+        <div class="form-floating">
+            <label><strong>Password</strong></label>
+            <input type="password" class="form-control" id="password" name="password"  placeholder="Enter Your Password">
+
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" id="login-btn" type="submit">Login</button><br>
+    </form>
+</main>
+</body>
+</html>
