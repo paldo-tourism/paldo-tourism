@@ -7,30 +7,42 @@
   <title>회원가입</title>
 </head>
 
-<body>
-<form action="/api/signup" method="post">
-  <div class = "mb-2">
-      <div class="mb-3 text-left">
-        <label class="form-label text-black"><strong>email</strong></label>
-        <input type="email" class="form-control" name="email" id="email" th:value="${user.email}" placeholder="Enter your email" required>
-      </div>
-      <div class="mb-3 text-left">
-        <label class="form-label text-black"><strong>nickname</strong></label>
-        <input type="text" class="form-control" id="nickName" name="nickName" th:value="${user.nickName}" placeholder="Enter your nickname" required>
-      </div>
-      <div class="mb-3 text-left">
-        <label class="form-label text-black"><strong>Password</strong></label>
-        <input type="password" class="form-control" id="password" name="password" th:value="${user.password}" placeholder="Enter your password" required>
-      </div>
-      <div class="mb-3 text-left">
-        <label class="form-label text-black"><strong>phone number</strong></label>
-        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${user.phoneNumber}" placeholder="Enter your phone number" required>
-      </div>
-
-      <button type="submit" id="signup-btn" class="btn btn-primary ui-state-focus">Sign up</button><br><br>
-  </div>
-</form>
-
+<body class="gradient-custom">
+<section class="d-flex vh-100">
+    <div class="container-fluid row justify-content-center align-content-center">
+        <div class="card" th:style="'border-radius: 1rem;'">
+            <div class="card-body p-5 text-center">
+                <h2 class="text-black">8도 관광</h2>
+                <div class = "mb-2">
+                    <form action="/api/signup" method="post">
+                        <div class="mb-3 text-left">
+                            <label class="form-label text-black"><strong>email</strong></label>
+                            <input type="email" class="form-control" name="email" id="email" th:value="${user.email}" placeholder="Enter your email" required>
+                            <button type="button" id="checkEmailBtn" class="btn btn-info">중복 확인</button>
+                            <div id="emailStatus"></div>
+                            <div id="emailFeedback" style="color: red;"></div>
+                        </div>
+                        <div class="mb-3 text-left">
+                            <label class="form-label text-black"><strong>nickname</strong></label>
+                            <input type="text" class="form-control" id="nickName" name="nickName" th:value="${user.nickName}" placeholder="Enter your nickname" required>
+                            <button type="button" id="checkNicknameBtn" class="btn btn-info">중복 확인</button>
+                            <div id="nicknameStatus"></div>
+                        </div>
+                        <div class="mb-3 text-left">
+                            <label class="form-label text-black"><strong>Password</strong></label>
+                            <input type="password" class="form-control" id="password" name="password" th:value="${user.password}" placeholder="Enter your password" required>
+                        </div>
+                        <div class="mb-3 text-left">
+                            <label class="form-label text-black"><strong>phone number</strong></label>
+                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${user.phoneNumber}" placeholder="Enter your phone number" required>
+                        </div>
+                    </form>
+                        <button type="submit" id="signup-btn" class="btn btn-primary ui-state-focus">Sign up</button><br><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <script src="js/user/signup.js"></script>
 </body>
 </html>
