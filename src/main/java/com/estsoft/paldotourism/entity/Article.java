@@ -5,8 +5,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
@@ -29,6 +32,10 @@ public class Article extends BaseTime {
 
     @Column(length = 10000)
     private String content; // 내용
+
+    @Column
+    @ColumnDefault("false")
+    private Boolean isSecret;
 
     @Builder
     public Article(User user, Category category, String title, String content) {
