@@ -1,15 +1,21 @@
 package com.estsoft.paldotourism.entity;
 
+import com.fasterxml.jackson.databind.ser.Serializers.Base;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Seat {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Seat extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 좌석 아이디(PK)
+    private Long id; // 좌석 아이디(PK)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
@@ -24,5 +30,13 @@ public class Seat {
 
     @Enumerated(EnumType.STRING)
     @Column
-    private Status status; // 예약 상태
+    private SeatStatus status; // 예약 상태
+
+    @Builder
+    private Seat(Bus bus, int seatNumber, SeatStatus status) {
+        this.bus = bus;
+        this.seatNumber = seatNumber;
+        this.status = status;
+        //TODO reservation은 일단 null로 둘 것인지?...
+    }
 }
