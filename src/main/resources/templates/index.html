@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>8도관광</title>
+  <link rel="stylesheet" href="/static/css/layout/header.css" th:href="@{/css/layout/header.css}"/>
+  <link rel="stylesheet" href="/static/css/index.css" th:href="@{/css/index.css}"/>
+</head>
+<body>
+<div th:replace="~{layout/header.html::main-header}"></div>
+
+<!--사용자에게 여행지 입력을 받는 container-->
+<section class="main-cont">
+  <div class="info-input-box">
+    <div class="dep-place-selected-box">
+      <span>출발지</span>
+      <a href="#" onclick="clickToGoDepInfoList()">
+        <p>출발지를 선택해주세요.</p>
+      </a>
+    </div>
+    <div class="arr-place-selected-box">
+      <span>도착지</span>
+      <a href="#" onclick="clickToGoArrInfoList()">
+        <p>도착지를 선택해주세요.</p>
+      </a>
+    </div>
+    <div class="date-selected-box">
+      <span>날짜</span>
+      <a href="#" onclick="clickToGoDatePick()">
+        <p>출발날짜를 선택해주세요.</p>
+      </a>
+    </div>
+    <div class="bus-grade-selected-box">
+      <span>등급</span>
+      <label for="bus-grade-select"></label>
+      <select id="bus-grade-select">
+        <option value="">버스 등급을 선택해주세요</option>
+        <option value="1">우등</option>
+        <option value="2">일반</option>
+      </select>
+    </div>
+    <button class="check-button" onclick="clickToGoTimeTableButton()">조회하기</button>
+  </div>
+
+  <aside class="sub-cont">
+    <p>여행지를 정하지 못했다면<br>
+      AI에게 마음에 드는 여행지를 추천 받아보세요!</p>
+    <a href="#" th:href="@{}" class="recommend-button">AI 여행지 추천받기</a>
+  </aside>
+</section>
+
+<!--출발지를 선택했을때 나오는 모달-->
+
+
+</body>
+<script src="/static/js/header.js" th:src="@{/js/header.js}"></script>
+<script src="/static/js/index.js" th:src="@{/js/index.js}"></script>
+</html>
