@@ -17,8 +17,9 @@ public class ReservationService {
         this.busRepository = busRepository;
     }
 
-    public List<Bus> getAllBus(String depTerminal, String arrTerminal, String depTime, String busGrade) {
-
-        return busRepository.findAllByDepTerminalAndArrTerminalAndDepTimeAndBusGrade(depTerminal,arrTerminal,depTime,busGrade);
-    }
+    //출발시간 대신 출발날짜로 조회해야해서 DepTime -> DepDate로 변경했습니다
+//    public List<Bus> getAllBus(String depTerminal, String arrTerminal, String depTime, String busGrade) {
+//
+//        return busRepository.findAllByDepTerminalAndArrTerminalAndDepTimeAndBusGrade(depTerminal,arrTerminal,depTime,busGrade);
+//    }
 }
