@@ -25,16 +25,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 회원 아이디(PK)
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email; // 이메일(사실상의 아이디)
 
-    @Column(name = "nickname", nullable = false)
+    @Column(name = "nickname", nullable = false, unique = true)
     private String nickName; // 닉네임
 
     @Column(name = "password", nullable = false)
     private String password; // 비밀번호
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number", nullable = false, unique = true)
     private String phoneNumber; // 전화번호
 
     @Enumerated(EnumType.STRING)
