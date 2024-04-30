@@ -6,7 +6,6 @@
 </head>
 <body>
   <form method="post" action="/article/write">
-    <input type="hidden" name="writerEmail" th:value="${email}">
     <select name="category">
       <option value="" selected>카테고리</option>
       <option value="CATEGORY_ANNOUNCEMENT">공지</option>
@@ -14,6 +13,7 @@
     </select>
     <p>제목</p><input type="text" name="title">
     <p>내용</p><input type="text" name="content">
+    <label><input name="secret" type="checkbox">비밀글</label>
     <button type="submit">작성</button>
   </form>
 </body>

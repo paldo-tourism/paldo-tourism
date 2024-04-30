@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
@@ -17,6 +18,7 @@ public class ArticleRequestDTO {
 
   private String content;
 
+  @Setter
   private String writerEmail;
 
   private Category category;

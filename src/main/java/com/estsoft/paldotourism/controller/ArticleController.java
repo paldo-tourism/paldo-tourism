@@ -5,10 +5,16 @@ import com.estsoft.paldotourism.dto.qna.article.ArticleResponseDTO;
 import com.estsoft.paldotourism.dto.qna.article.PageResponseDTO;
 import com.estsoft.paldotourism.entity.Category;
 import com.estsoft.paldotourism.service.ArticleService;
+import com.estsoft.paldotourism.service.UserDetailService;
+import jakarta.annotation.Nullable;
+import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,13 +28,17 @@ public class ArticleController {
 
   @Autowired
   private ArticleService articleService;
+  @Autowired
+  private UserDetailService userDetailService;
 
   @GetMapping("/article")
   public String articleList(Model model, @PageableDefault(page = 0, size = 15, sort ="createdDateTime",
-   direction = Direction.DESC) Pageable pageable){
-    PageResponseDTO pageResponseDTO = articleService.articleList(pageable);
+   direction = Direction.DESC) Pageable pageable, @Nullable String searchType, @Nullable String keyword){
+    PageResponseDTO pageResponseDTO = articleService.articleList(searchType, keyword, pageable);
 
     model.addAttribute("list", pageResponseDTO);
+    model.addAttribute("searchType", searchType);
+    model.addAttribute("keyword", keyword);
 
     return "/article/list";
   }
@@ -36,6 +46,7 @@ public class ArticleController {
   @GetMapping("/article/{articleId}")
   public String articleRead(@PathVariable Long articleId, Model model){
     ArticleResponseDTO articleResponseDTO = articleService.articleRead(articleId);
+
     model.addAttribute("article", articleResponseDTO);
 
     return "/article/read";
@@ -43,13 +54,20 @@ public class ArticleController {
 
   @GetMapping("/article/write")
   public String articleWritePage(Model model){
-    model.addAttribute("email", "test@naver.com");
-
     return "/article/write";
   }
 
   @PostMapping("/article/write")
-  public String articleWrite(ArticleRequestDTO articleRequestDTO){
+  public String articleWrite(ArticleRequestDTO articleRequestDTO, Principal principal){
+
+//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    String currentUsername = authentication.getName();
+//    UserDetails currentUser = userDetailService.loadUserByUsername(currentUsername);
+
+    UserDetails currentUser = userDetailService.loadUserByUsername(principal.getName());
+
+    articleRequestDTO.setWriterEmail(currentUser.getUsername());
+
     Long articleId = articleService.articleWrite(articleRequestDTO);
 
     return "redirect:/article/"+articleId;

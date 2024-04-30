@@ -5,15 +5,12 @@ import com.estsoft.paldotourism.dto.qna.article.ArticleResponseDTO;
 import com.estsoft.paldotourism.dto.qna.article.PageResponseDTO;
 import com.estsoft.paldotourism.entity.Article;
 import com.estsoft.paldotourism.entity.Category;
-import com.estsoft.paldotourism.entity.Role;
 import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.repository.ArticleRepository;
 import com.estsoft.paldotourism.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +23,22 @@ public class ArticleService {
   @Autowired
   private UserRepository userRepository;
 
-  public PageResponseDTO articleList(Pageable pageable){
-    return new PageResponseDTO(articleRepository.findAll(pageable).map(this::toDTO));
+  public PageResponseDTO articleList(String searchType, String keyword, Pageable pageable){
+    if(searchType == null || searchType.isEmpty()){
+      return new PageResponseDTO(articleRepository.findAll(pageable).map(this::toDTO));
+    }
+
+    PageResponseDTO responseDTO;
+
+    if(searchType.equals("t")){
+      responseDTO = new PageResponseDTO(articleRepository.findAllByTitleContains(keyword, pageable).map(this::toDTO));
+    }else if(searchType.equals("c")){
+      responseDTO = new PageResponseDTO(articleRepository.findAllByContentContains(keyword, pageable).map(this::toDTO));
+    }else {
+      responseDTO = new PageResponseDTO(articleRepository.findAllByTitleOrContentContains(keyword, pageable).map(this::toDTO));
+    }
+
+    return responseDTO;
   }
 
   public ArticleResponseDTO articleRead(Long articleId){

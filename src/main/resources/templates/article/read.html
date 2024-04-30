@@ -16,8 +16,8 @@
   <textarea th:text="${article.writer}" readonly></textarea>
   <textarea th:text="${article.title}" readonly></textarea>
   <textarea th:text="${article.content}" readonly></textarea>
-  <textarea th:text="${article.createdAt}" readonly></textarea>
-  <textarea th:text="${article.updatedAt}" readonly></textarea>
+  <textarea th:text="${#temporals.format(article.createdAt, 'yyyy/MM/dd HH:mm:ss')}" readonly></textarea>
+  <textarea th:text="${#temporals.format(article.updatedAt, 'yyyy/MM/dd HH:mm:ss')}" readonly></textarea>
 
   <a th:href="@{/article}">글목록</a>
 
