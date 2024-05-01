@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+</head>
+<body>
+
+<div>
+    <h1>내 정보</h1>
+    <ul>
+        <li><a th:href="@{/my-reservations}">내 예약 정보</a></li>
+        <li><a th:href="@{/my-favorites}">내 찜</a></li>
+        <li><a th:href="@{/myPage/edit}">비밀번호 변경 / 회원탈퇴</a></li>
+    </ul>
+</div>
+
+</body>
+</html>

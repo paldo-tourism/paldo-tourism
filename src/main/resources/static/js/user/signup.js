@@ -50,6 +50,24 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function (){
+    document.getElementById('passwordConfirm').addEventListener('keyup', function (event){
+        var password = document.getElementById('password').value;
+        var passwordConfirm = document.getElementById('passwordConfirm').value;
+        var pw_check_msg = document.getElementById('pw_check_msg');
+
+        if (password === passwordConfirm){
+            pw_check_msg.textContent = '비밀번호가 일치합니다';
+            pw_check_msg.style.color = 'green';
+        }
+        else{
+            pw_check_msg.textContent = '비밀번호 일치하지 않습니다.';
+            pw_check_msg.style.color = 'red';
+        }
+    });
+});
+
+
 let isNickNameValid = false;
 document.getElementById('checkNicknameBtn').addEventListener('click', function() {
     const nickname = document.getElementById('nickName').value;
@@ -85,6 +103,7 @@ signupBtn.addEventListener('click', function(event) {
     const email = document.getElementById('email').value;
     const nickName = document.getElementById('nickName').value;
     const password = document.getElementById('password').value;
+    const passwordConfrim = document.getElementById('passwordConfirm').value;
     const phoneNumber = document.getElementById('phoneNumber').value;
 
     if(!email) {
@@ -99,7 +118,11 @@ signupBtn.addEventListener('click', function(event) {
     } else if(!phoneNumber) {
         alert('전화번호를 입력하세요.');
         return;
+    } else if(passwordConfrim !== password) {
+        alert('비밀번호가 일치하지 않습니다.');
+        return;
     }
+
     if (!isEmailValid) {
         alert('이메일 중복 확인이 필요합니다.');
     } else if (!isNickNameValid) {
