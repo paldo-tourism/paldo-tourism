@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원 가입</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+</head>
+<body class="gradient-custom">
+<section class="d-flex vh-100">
+  <div class="container-fluid row justify-content-center align-content-center">
+    <div class="card" th:style="'border-radius: 1rem;'">
+      <div class="card-body p-5 text-center">
+        <h2 class="text-black">8도 관광 - 회원가입</h2>
+        <p class="text-bg-dark-50 mt-2">고속버스 예약과 AI 앨런을 활용해 목적지를 추천받습니다.</p>
+
+        <div class = "mb-2">
+          <form action="/api/signup" method="post">
+
+            <div class="mb-3 text-left">
+              <label class="form-label text-black"><strong>Email</strong></label>
+              <input type="email" class="form-control" id="email" name="email" th:value="${user.email}" placeholder="Enter your email" required>
+              <div id="emailStatus"></div>
+              <div id="emailFeedback" style="color: red;"></div>
+              <button type="button" id="checkEmailBtn" class="btn btn-info" style="margin-top: 5px">중복 확인</button>
+            </div>
+
+            <div class="mb-3 text-left">
+              <label class="form-label text-black"><strong>Nickname</strong></label>
+              <input type="text" class="form-control" id="nickName" name="nickName" th:value="${user.nickName}"placeholder="Enter your nickanme" required>
+              <div id="nicknameStatus"></div>
+              <button type="button" id="checkNicknameBtn" class="btn btn-info" style="margin-top: 5px" >중복 확인</button>
+            </div>
+
+            <div class="mb-3 text-left">
+              <label class="form-label text-black"><strong>Password</strong></label>
+              <input type="password" class="form-control" id="password" name="password" th:value="${user.password}"placeholder="Enter your password" required>
+            </div>
+
+            <div class="mb-3 text-left">
+              <label class="form-label text-black"><strong>Password Confirm</strong></label>
+              <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Enter your password again" required>
+              <div id="pw_check_msg"></div>
+            </div>
+
+            <div class="mb-3 text-left">
+              <label class="form-label text-black"><strong>Phone number</strong></label>
+              <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${user.phoneNumber}"placeholder="Enter your phone number" required>
+            </div>
+
+            <button type="submit" id="signup-btn" class="btn btn-primary ui-state-focus">Sign up</button><br><br>
+            <p>-------------------- 또는 --------------------</p>
+            <a th:href="@{/forgot-pw}">PW 찾기</a><br>
+          </form>
+        </div>
+        <form>
+          <p><strong> 이미 계정이 있으신가요?</strong></p>
+          <button class="btn btn-secondary"><a th:href="@{/login}" style="color: white">Login</a></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="js/user/signup.js"></script>
+</body>
+</html>

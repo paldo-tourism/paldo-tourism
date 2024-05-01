@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Payment</title>
+
+    <!-- jQuery -->
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+    <link rel="stylesheet" href="/static/css/payment/payment.css" th:href="@{/css/payment/payment.css}">
+    <link rel="stylesheet" href="/static/css/layout/header.css" th:href="@{/css/layout/header.css}"/>
+
+
+    <script>
+        var IMP = window.IMP;
+        IMP.init("imp26578218");
+
+        function requestPay() {
+            IMP.request_pay({
+                    pg: "kakaopay",
+                    pay_method: "EASY_PAY",
+                    merchant_uid: `payment-${crypto.randomUUID()}`,   // 주문번호
+                    name: "서울 - 경기 버스 노선",
+                    amount: 10,                         // 숫자 타입
+                    buyer_email: "test@gmail.com",
+                    buyer_name: "김테스트",
+                    buyer_tel: "010-2623-7952"
+                },
+                function (rsp) {
+                    //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+                    if (rsp.success) {
+                        $.ajax({
+                            url: '/verify/' + rsp.imp_uid,
+                            method: "POST",
+                            // contentType: "application/json",
+                            // data: JSON.stringify({
+                            //     imp_uid: rsp.imp_uid,            // 결제 고유번호
+                            //     merchant_uid: rsp.merchant_uid,   // 주문번호
+                            //     amount: rsp.paid_amount
+                            // }),
+                        }).done(function (data) {
+                            // 가맹점 서버 결제 API 성공시 로직
+                            if (rsp.paid_amount === data.response.amount) {
+                                alert("결제 성공");
+                                // console.log(rsp);
+                                // console.log(data.response);
+
+                                $.ajax(
+                                    {
+                                        url: '/mail',
+                                        method: "POST",
+                                        success: function (response) {
+                                            // /mail 엔드포인트로의 POST 요청이 성공한 경우 처리
+                                            console.log("메일 전송 성공:", response);
+                                        },
+                                        error: function (xhr, status, error) {
+                                            // /mail 엔드포인트로의 POST 요청이 실패한 경우 처리
+                                            console.log("메일 전송 실패:", xhr.responseText);
+                                        }
+                                    }
+                                )
+                            }
+                        })
+                    } else {
+                        alert(rsp.error_msg);
+                    }
+                }
+            );
+        }
+    </script>
+
+</head>
+<body>
+<div th:replace="~{layout/header.html::main-header}"></div>
+
+<div class="flex-main">
+    <main>
+        <h2>결제</h2>
+        <div class="flex-container">
+            <div class="container">
+                <div class="payment-container">
+                    <form>
+                        <div class="payment-box">
+                            <div class="title">결제 방법</div>
+                            <div class="options">
+                                <label><input type="radio" name="payment" value="credit"> 신용 카드</label>
+                                <label><input type="radio" name="payment" value="kakao"> 카카오페이</label>
+                                <label><input type="radio" name="payment" value="naver"> 네이버 페이</label>
+                            </div>
+                        </div>
+                        <div class="payment-box">
+                            <div class="title">발급 방법</div>
+                            <div class="options">
+                                <label><input type="radio" name="issue" value="email"> 이메일</label>
+                                <label><input type="radio" name="issue" value="text"> 문자</label>
+                            </div>
+                        </div>
+                        <div class="payment-box">
+                            <div class="title">결제 금액</div>
+                            <input type="text" name="amount" value="58000 원" readonly>
+                        </div>
+                        <!--            <button type="submit" >결제</button>-->
+
+                    </form>
+                </div>
+
+<!--                타임리프 추후에 적용할 필요 있음-->
+                <div class="item-container">
+                    <div class="item-details">
+                        <div class="reservation-info">
+                        <table>
+                            <tr>
+                                <th>출발</th>
+                                <td>서울</td>
+                                <th>도착</th>
+                                <td>경주</td>
+                            </tr>
+                            <tr>
+                                <th>날짜</th>
+                                <td>2024-04-24</td>
+                                <th>시간</th>
+                                <td>15:10</td>
+                            </tr>
+                            <tr>
+                                <th>성인</th>
+                                <td>1명</td>
+                                <th>아동</th>
+                                <td>0명</td>
+                            </tr>
+                            <tr>
+                                <th>등급</th>
+                                <td>일반</td>
+                                <th>좌석</th>
+                                <td>33번</td>
+                            </tr>
+                        </table>
+                        </div>
+
+                    </div>
+                    <!-- 결제하기 버튼 생성 -->
+                    <button type="button" class="submit-button" onclick="requestPay()">결제</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+</body>
+</html>

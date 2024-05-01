@@ -25,11 +25,11 @@ public class ReservationController {
 //        return ResponseEntity.ok().body(reservationService.getAllBus(depTerminal,arrTerminal,depTime,busGrade));
 //    }
 
-    @PostMapping("/api/main/")
-    public ResponseEntity<List<Bus>> postAllBus(@RequestParam("depTerminal") String depTerminal, @RequestParam("arrTerminal") String arrTerminal, @RequestParam("depTime") String depTime, @RequestParam("busGrade") String busGrade)
-    {
-        return ResponseEntity.ok().body(reservationService.getAllBus(depTerminal,arrTerminal,depTime,busGrade));
-    }
+//    @PostMapping("/api/main/")
+//    public ResponseEntity<List<Bus>> postAllBus(@RequestParam("depTerminal") String depTerminal, @RequestParam("arrTerminal") String arrTerminal, @RequestParam("depTime") String depTime, @RequestParam("busGrade") String busGrade)
+//    {
+//        return ResponseEntity.ok().body(reservationService.getAllBus(depTerminal,arrTerminal,depTime,busGrade));
+//    }
 
 //    @GetMapping("/api/reservation")
 //    public ResponseEntity<List<Bus>> getAllBus()

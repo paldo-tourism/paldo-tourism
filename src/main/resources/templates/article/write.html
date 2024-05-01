@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <form method="post" action="/article/write">
+    <select name="category">
+      <option value="" selected>카테고리</option>
+      <option value="CATEGORY_ANNOUNCEMENT">공지</option>
+      <option value="CATEGORY_QA">문의</option>
+    </select>
+    <p>제목</p><input type="text" name="title">
+    <p>내용</p><input type="text" name="content">
+    <label><input name="secret" type="checkbox">비밀글</label>
+    <button type="submit">작성</button>
+  </form>
+</body>
+</html>
