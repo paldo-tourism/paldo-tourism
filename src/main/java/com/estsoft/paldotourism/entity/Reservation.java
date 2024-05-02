@@ -2,15 +2,18 @@ package com.estsoft.paldotourism.entity;
 
 import com.estsoft.paldotourism.controller.MailController;
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
+@NoArgsConstructor
 public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 예약 아이디(PK)
+    private Long id; // 예약 아이디(PK)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
@@ -20,7 +23,27 @@ public class Reservation {
     @JoinColumn
     private Bus bus; // 버스 정보(FK)
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private PaymentHistory paymentHistory; // 결제 정보(FK)
+
     @Column
     private String reservationNumber; // 예약 번호
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Status reservationStatus;
+
+
+    @Builder
+    public Reservation(User user, Bus bus, PaymentHistory paymentHistory, String reservationNumber, Status reservationStatus)
+    {
+        this.user =user;
+        this.bus = bus;
+        this.paymentHistory = paymentHistory;
+        this.reservationNumber = reservationNumber;
+        this.reservationStatus = reservationStatus;
+    }
+
 
 }
