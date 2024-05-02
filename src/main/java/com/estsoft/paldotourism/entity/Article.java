@@ -38,11 +38,12 @@ public class Article extends BaseTime {
     private Boolean isSecret;
 
     @Builder
-    public Article(User user, Category category, String title, String content) {
+    public Article(User user, Category category, String title, String content, Boolean isSecret) {
         this.user = user;
         this.category = category;
         this.title = title;
         this.content = content;
+        this.isSecret = isSecret;
     }
 
     public void updateTitle(String title){
@@ -55,5 +56,9 @@ public class Article extends BaseTime {
 
     public void updateCategory(Category category) {
         this.category = category;
+    }
+
+    public void updateIsSecret(Boolean isSecret){
+        this.isSecret = isSecret;
     }
 }

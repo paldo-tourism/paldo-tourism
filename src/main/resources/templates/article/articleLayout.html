@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="setContent(content)">
+  <head>
+    <meta charset="UTF-8">
+    <title>문의 게시판</title>
+    <link th:href="@{/css/layout/header.css}" rel="stylesheet">
+    <style>
+      *{
+        box-sizing: border-box;
+      }
+
+      .content {
+        width:100%;
+      }
+      /*.footer { width:100vw; height: 10vh; background: brown;}*/
+    </style>
+  </head>
+  <body>
+  <div class="header"><th:block th:replace="~{/layout/header::main-header}" /></div>
+  <div class="content flex"><th:block th:replace="${content}"></th:block></div>
+<!--  <div class="footer"><th:block th:replace="~{/layout/footer::footer}" /></div>-->
+  </body>
+</th:block>
+</html>

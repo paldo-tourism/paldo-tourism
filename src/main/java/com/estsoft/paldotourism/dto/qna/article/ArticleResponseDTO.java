@@ -26,9 +26,11 @@ public class ArticleResponseDTO {
 
   private LocalDateTime updatedAt;
 
+  private boolean isSecret;
+
   @Builder
   public ArticleResponseDTO(Long id, String writer, String title, String content, Category category, LocalDateTime createdAt,
-      LocalDateTime updatedAt) {
+      LocalDateTime updatedAt, boolean isSecret) {
     this.id = id;
     this.writer = writer;
     this.title = title;
@@ -36,5 +38,14 @@ public class ArticleResponseDTO {
     this.category = category;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+    this.isSecret = isSecret;
+  }
+
+  public void updateIsSecret(String loginUserNickName){
+    if(this.isSecret){
+      if(loginUserNickName.equals(this.writer)){
+        this.isSecret = false;
+      }
+    }
   }
 }
