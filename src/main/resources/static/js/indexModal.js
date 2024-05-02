@@ -45,12 +45,12 @@ function selectTerminal(terminalName, type) {
 function confirmDeparture() {
   const selectedDeparture = document.getElementById('selectedDeparture').textContent;
 
-  if(selectedDeparture === '출발지를 선택해주세요.') {
+  if(selectedDeparture === '') {
     alert("출발지를 선택해주세요.");
     return false; //모달창이 안닫히게 설정
   }
 
-  document.querySelector('.dep-place-selected-box p').textContent = selectedDeparture;
+  document.getElementById('depTerminalName').value = selectedDeparture;
   closeModal('departureModal');
 }
 
@@ -58,12 +58,12 @@ function confirmDeparture() {
 function confirmArrival() {
   const selectedArrival = document.getElementById('selectedArrival').textContent;
 
-  if(selectedArrival === '도착지를 선택해주세요.') {
+  if(selectedArrival === '') {
     alert("도착지를 선택해주세요.");
     return false; //모달창이 안닫히게 설정
   }
 
-  document.querySelector('.arr-place-selected-box p').textContent = selectedArrival;
+  document.getElementById('arrTerminalName').value = selectedArrival;
   closeModal('arrivalModal');
 }
 

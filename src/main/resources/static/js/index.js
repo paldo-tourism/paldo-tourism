@@ -37,15 +37,19 @@ function formatDate(date) {
 //메인화면에서 '조회하기'버튼을 눌렀을때 함수
 function clickToGoTimeTableButton() {
   //사용자가 입력한 출발지,도착지,출발날짜,버스등급 값을 가져온다
-  let depTerminalName = document.querySelector('.dep-place-selected-box p').textContent;
-  let arrTerminalName = document.querySelector('.arr-place-selected-box p').textContent;
+  let depTerminalName = document.getElementById('depTerminalName').value
+  let arrTerminalName = document.getElementById('arrTerminalName').value
   let depDate = document.getElementById('date-select').value;
   let busGrade = document.getElementById('bus-grade-select').value;
 
-  //TODO depTerminalName , arrTerminalName 기본이 빈칸이 되게 수정
   if(!depTerminalName || !arrTerminalName || !depDate || !busGrade) {
     alert("모든 필드를 올바르게 입력해주세요.");
     return false;
+  }
+
+  if(depTerminalName === arrTerminalName) {
+    alert("출발지와 도착지를 다르게 입력해주세요.")
+    return false
   }
 
   fetch('/api/bus', {
@@ -61,9 +65,7 @@ function clickToGoTimeTableButton() {
     })
   })
   .then(response => {
-    if(!response.ok) throw new Error("네트워크 오류");
-    console.log("success"); //로깅
-    // response.json();
+    if(!response.ok) throw new Error("네트워크 오류가 발생했습니다");
   })
   .then(data => {
     window.location.href = "/timeTable";
