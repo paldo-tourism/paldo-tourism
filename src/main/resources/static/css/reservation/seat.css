@@ -1,75 +1,36 @@
-
-h3 {
+.title {
     margin-left: 20%;
 }
 
-/*사용자가 선택한 출발지,도착지,날짜,등급 정보를 간단히 보여주는 div*/
-.user-selected-place-info-detail {
-    margin-left:20%;
+#main-area{
+    display: flex;
+    flex-direction: row;
+    margin-left: 20%;
     margin-right: 20%;
-    background-color: #f4f4f4;
-    border-radius: 8px;
+    gap: 200px;
+}
+#bus-area{
+    width: 300px;
+    height: 100%;
 }
 
-.user-selected-place-info-detail {
-    display: flex;
-    justify-content: space-around;
+.seat-area{
+    background-color: #f4f4f4;
+}
+
+.bus-info .schedule-container,.select-info{
     align-items: center;
     padding: 20px;
-}
-
-/*TODO 글자수에 따라서 출발지,도착지,날짜,등급 위치가 바뀌는데 나중에 바꾸기로*/
-.info-item h4, .info-item h3 {
-    margin: 0;
-    white-space: nowrap; /* 글자가 세로로 늘어나지 않도록 */
-    overflow: hidden; /* 오버플로우된 텍스트 숨기기 */
-    text-overflow: ellipsis; /* 텍스트 오버플로우 시 말줄임표 사용 */
-}
-
-.info-item h4 {
-    font-weight: lighter;
-    color: #818181;
-    margin-bottom: 10px;
-}
-
-.info-item h3 {
-    font-size: 1.1em;
-    color: #333;
-}
-
-/*사용자가 선택한 정보에 따라 버스 스케줄 표를 보여주는 div*/
-.schedule-container {
-    margin-top:20px;
-    margin-left: 20%;
-    margin-right: 20%;
-    display: block;
-    font-family: Arial, sans-serif;
-}
-
-.schedule-header, .schedule-item {
-    display: flex;
-    align-items: center;
-    padding: 10px;
     background-color: #f4f4f4;
+    border-radius: 8px;
+    margin-bottom: 50px;
+    width: 200px;
 }
 
-.schedule-header {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-}
 
-.schedule-item {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
 
-.header-item, .item-detail {
-    flex: 1;
-    text-align: center;
-    padding: 5px;
-}
 
-.seat-select-button {
+#payment-btn {
     background-color: #007BFF;
     color: white;
     border: none;
@@ -77,21 +38,45 @@ h3 {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 100%;
 }
 
-.seatBox {
-    display: inline-block;
-    margin-right: 10px; /* 각 체크박스 사이의 간격 조절 */
+input{
+    display: none;
 }
 
-.seat-select-button:hover {
-    background-color: #0056b3;
+label{
+    display: block;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 }
 
-.user-select-seat span:nth-child(4n+3){
-    margin-left: 59px;
+.seat {
+    width: 50px; /* 좌석 너비 */
+    height: 50px; /* 좌석 높이 */
+    background-color: #ccc; /* 좌석 색상 */
+    margin: 5px; /* 좌석 간격 */
 }
 
+.seat-select {
+    display: none; /* 체크박스를 숨깁니다. */
+}
+
+.seat-select:checked + .seat {
+    background-color: #a2ff88; /* 선택된 좌석의 색상 */
+}
+
+#bus-area{
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    height: 100%;
+}
+
+#bus-area .seatBox:nth-child(4n+3) {
+    margin-left: 60px;
+}
 
 
 
