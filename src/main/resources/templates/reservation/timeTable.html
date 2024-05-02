@@ -18,19 +18,19 @@
   <div class="user-selected-place-info-detail">
     <div class="info-item">
       <h4>출발지</h4>
-      <h3 th:text="${depTerminal}">여주프리미엄아울렛</h3>
+      <h3 th:text="${schedules.get(0).depTerminal}">여주프리미엄아울렛</h3>
     </div>
     <div class="info-item">
       <h4>도착지</h4>
-      <h3 th:text="${arrTerminal}">여주부산대구터미널</h3>
+      <h3 th:text="${schedules.get(0).arrTerminal}">여주부산대구터미널</h3>
     </div>
     <div class="info-item">
       <h4>날짜</h4>
-      <h3 th:text="${depDateTime}">2024-04-24</h3>
+      <h3 th:text="${schedules.get(0).depDate}">2024-04-24</h3>
     </div>
     <div class="info-item">
       <h4>등급</h4>
-      <h3 th:text="${busGrade}">일반</h3>
+      <h3 th:text="${schedules.get(0).busGrade}">일반</h3>
     </div>
   </div>
   <!--  사용자가 선택한 정보에 따라 버스 스케줄 표를 보여주는 div-->
@@ -49,7 +49,7 @@
         <div class="item-detail" th:text="${item.arrTime}">17:10</div>
         <div class="item-detail" th:text="${item.busGrade}">일반</div>
         <div class="item-detail" th:text="${item.charge}">54000 원</div>
-        <div class="item-detail" th:text="${'${item.remainingSeats} / ${item.totalSeatNumber}'}">15
+        <div class="item-detail" th:text="${item.remainingSeats} + ' / ' + ${item.totalSeatNumber}">15
           / 28
         </div>
         <div class="item-detail">
