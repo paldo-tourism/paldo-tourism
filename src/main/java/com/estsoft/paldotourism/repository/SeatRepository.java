@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface SeatRepository extends JpaRepository<Seat,Long> {
 
     Integer countByBusAndStatus(Bus bus, SeatStatus status);
+
+    Seat findByBusAndSeatNumber(Bus bus, Integer seatNumber);
 }
