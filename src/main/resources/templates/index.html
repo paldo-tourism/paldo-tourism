@@ -8,30 +8,30 @@
   <title>8도관광</title>
   <link rel="stylesheet" href="/static/css/layout/header.css" th:href="@{/css/layout/header.css}"/>
   <link rel="stylesheet" href="/static/css/index.css" th:href="@{/css/index.css}"/>
+  <link rel="stylesheet" href="/static/css/indexModal.css" th:href="@{/css/indexModal.css}"/>
 </head>
 <body>
 <div th:replace="~{layout/header.html::main-header}"></div>
 
 <!--사용자에게 여행지 입력을 받는 container-->
 <section class="main-cont">
-  <div class="info-input-box">
+  <form class="info-input-box" onsubmit="return clickToGoTimeTableButton()">
     <div class="dep-place-selected-box">
       <span>출발지</span>
-      <a href="#" onclick="clickToGoDepInfoList()">
+      <a onclick="openModal('departureModal')">
+<!--        TODO @NotBlank가 소용이 없다...-->
         <p>출발지를 선택해주세요.</p>
       </a>
     </div>
     <div class="arr-place-selected-box">
       <span>도착지</span>
-      <a href="#" onclick="clickToGoArrInfoList()">
+      <a onclick="openModal('arrivalModal')">
         <p>도착지를 선택해주세요.</p>
       </a>
     </div>
     <div class="date-selected-box">
       <span>날짜</span>
-      <a href="#" onclick="clickToGoDatePick()">
-        <p>출발날짜를 선택해주세요.</p>
-      </a>
+      <select id="date-select"></select>
     </div>
     <div class="bus-grade-selected-box">
       <span>등급</span>
@@ -42,20 +42,160 @@
         <option value="2">일반</option>
       </select>
     </div>
-    <button class="check-button" onclick="clickToGoTimeTableButton()">조회하기</button>
-  </div>
+    <button class="check-button" >조회하기</button>
+  </form>
 
   <aside class="sub-cont">
     <p>여행지를 정하지 못했다면<br>
       AI에게 마음에 드는 여행지를 추천 받아보세요!</p>
-    <a href="#" th:href="@{}" class="recommend-button">AI 여행지 추천받기</a>
+<!--    <a href="#" th:href="@{}" class="recommend-button">AI 여행지 추천받기</a>-->
+    <a href="#"  class="recommend-button">AI 여행지 추천받기</a>
   </aside>
 </section>
 
 <!--출발지를 선택했을때 나오는 모달-->
+<div class="modal" id="departureModal"  role="dialog">
+  <section class="title">
+    출발지 선택
+    <button onclick = "closeModal('departureModal')" class="modal-close-button">
+      <img th:src="@{/img/modal-close-button.png}" src="/static/img/modal-close-button.png" alt="모달창 닫기 버튼">
+    </button>
+  </section>
+  <section class="cont">
+    <section class="place">
+      <div class="place-name-box">
+        <p>출발지</p>
+        <span class="place-name" id="selectedDeparture">출발지를 선택해주세요.</span>
+      </div>
+      <button onclick="confirmDeparture()" class="confirm-button">선택 완료</button>
+    </section>
+    <section class="search">
+      <form class="search-form" onsubmit="return submitForm('departure')">
+        <input type="text" class="search-input" placeholder="터미널 이름을 검색하세요." id="inputDepartureTerminalName">
+        <button type="submit" class="search-button">
+          <img th:src="@{/img/search-icon.png}" src="/static/img/search-icon.png" alt="검색">
+        </button>
+      </form>
+    </section>
+    <section class="terminal-wrap">
+      <p>지역별 터미널</p>
+      <div class="terminal-box">
+        <div class="terminal-sort-by-local">
+          <ul class="area-list">
+            <li onclick="viewTerminalList('전체','departure')">
+              <span>전체</span>
+            </li>
+            <li onclick="viewTerminalList('서울','departure')">
+              <span>서울</span>
+            </li>
+            <li onclick="viewTerminalList('인천/경기','departure')">
+              <span>인천/경기</span>
+            </li>
+            <li onclick="viewTerminalList('강원','departure')">
+              <span>강원</span>
+            </li>
+            <li onclick="viewTerminalList('대전/충남','departure')">
+              <span>대전/충남</span>
+            </li>
+            <li onclick="viewTerminalList('충북','departure')">
+              <span>충북</span>
+            </li>
+            <li onclick="viewTerminalList('광주/전남','departure')">
+              <span>광주/전남</span>
+            </li>
+            <li onclick="viewTerminalList('전북','departure')">
+              <span>전북</span>
+            </li>
+            <li onclick="viewTerminalList('부산/경남','departure')">
+              <span>부산/경남</span>
+            </li>
+            <li onclick="viewTerminalList('대구/경북','departure')">
+              <span>대구/경북</span>
+            </li>
+          </ul>
+        </div>
+        <div class="terminal-list" >
+          <ul class="terminal-list-display" id="departure-terminal-list">
 
+          </ul>
+        </div>
+      </div>
+    </section>
+  </section>
+</div>
+
+<!--도착지를 선택했을때 나오는 모달-->
+<div class="modal" id="arrivalModal"  role="dialog">
+  <section class="title">
+    도착지 선택
+    <button onclick = "closeModal('arrivalModal')" class="modal-close-button">
+      <img th:src="@{/img/modal-close-button.png}" src="/static/img/modal-close-button.png" alt="모달창 닫기 버튼">
+    </button>
+  </section>
+  <section class="cont">
+    <section class="place">
+      <div class="place-name-box departure">
+        <p>출발지</p>
+        <span class="place-name" id="selectedArrival">도착지를 선택해주세요.</span>
+      </div>
+      <button onclick="confirmArrival()" class="confirm-button">선택 완료</button>
+    </section>
+    <section class="search">
+      <form class="search-form" onsubmit="return submitForm('arrival')">
+        <input type="text" class="search-input" placeholder="터미널 이름을 검색하세요." id="inputArrivalTerminalName">
+        <button type="submit" class="search-button">
+          <img th:src="@{/img/search-icon.png}" src="/static/img/search-icon.png" alt="검색">
+        </button>
+      </form>
+    </section>
+    <section class="terminal-wrap">
+      <p>지역별 터미널</p>
+      <div class="terminal-box">
+        <div class="terminal-sort-by-local">
+          <ul class="area-list">
+            <li onclick="viewTerminalList('전체','arrival')">
+              <span>전체</span>
+            </li>
+            <li onclick="viewTerminalList('서울','arrival')">
+              <span>서울</span>
+            </li>
+            <li onclick="viewTerminalList('인천/경기','arrival')">
+              <span>인천/경기</span>
+            </li>
+            <li onclick="viewTerminalList('강원','arrival')">
+              <span>강원</span>
+            </li>
+            <li onclick="viewTerminalList('대전/충남','arrival')">
+              <span>대전/충남</span>
+            </li>
+            <li onclick="viewTerminalList('충북','arrival')">
+              <span>충북</span>
+            </li>
+            <li onclick="viewTerminalList('광주/전남','arrival')">
+              <span >광주/전남</span>
+            </li>
+            <li  onclick="viewTerminalList('전북','arrival')">
+              <span>전북</span>
+            </li>
+            <li  onclick="viewTerminalList('부산/경남','arrival')">
+              <span>부산/경남</span>
+            </li>
+            <li onclick="viewTerminalList('대구/경북','arrival')">
+              <span>대구/경북</span>
+            </li>
+          </ul>
+        </div>
+        <div class="terminal-list" >
+          <ul class="terminal-list-display" id="arrival-terminal-list">
+          </ul>
+        </div>
+      </div>
+    </section>
+  </section>
+</div>
 
 </body>
 <script src="/static/js/header.js" th:src="@{/js/header.js}"></script>
 <script src="/static/js/index.js" th:src="@{/js/index.js}"></script>
+<script src="/static/js/indexModal.js" th:src="@{/js/indexModal.js}"></script>
 </html>
