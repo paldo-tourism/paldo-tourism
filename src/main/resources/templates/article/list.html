@@ -1,75 +1,95 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-  <h1>문의 게시판</h1>
-  <h5 th:text="${#authentication.name}"></h5>
-  <h5 th:text="${#authentication.authorities}"></h5>
-  <h5 th:text="${#authentication.authenticated}"></h5>
-  <h5 th:text="${#authentication.principal}"></h5>
-  <h5 th:text="${#authentication.credentials}"></h5>
-  <h5 th:text="${#authentication.details}"></h5>
-  <table>
-    <thead>
-    <tr>
-      <th>글번호</th>
-      <th>제목</th>
-      <th>작성자</th>
-      <th>작성일</th>
-    </tr>
-    </thead>
+<th:block th:replace = "~{/article/articleLayout :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css"/>
+    <link th:href="@{/css/article/articleList.css}" rel="stylesheet">
 
-    <tbody>
-    <tr th:each="dto : ${list.getDtoList()}">
-      <th scope="row">
-          [[${dto.id}]]
-      </th>
-      <td>
-        <a th:href="@{/article/{articleId}(articleId = ${dto.id})}">
-        [[${dto.title}]]
+    <div id="content-wrap" class="flex">
+      <h2>문의 게시판</h2>
+
+      <div id="article-table">
+        <div class="row head flex">
+          <div class="row-wrap flex">
+            <span class="col col-id text-center">번호</span>
+            <span class="col col-title text-left">제목</span>
+            <span class="col col-writer text-left">작성자</span>
+            <span class="col col-time text-center">작성일</span>
+          </div>
+        </div>
+
+        <a class="row flex article" th:each="dto : ${list.getDtoList()}" th:href="${dto.isSecret ? '#' : '/article/{articleId}(articleId = ${dto.id}'}">
+          <div class="row-wrap flex">
+            <span class="col col-id text-center">
+              [[${dto.id}]]
+            </span>
+            <span class="col col-title" th:if="${!dto.isSecret()}">
+              [[${dto.title}]]
+            </span>
+            <span class="col col-title isSecret" th:if="${dto.isSecret()}">
+              <i class="fad fa-lock" style="--fa-primary-color: #939393; --fa-secondary-color: #939393;"></i>
+              비밀글입니다.
+            </span>
+            <span class="col col-writer text-left">[[${dto.writer}]]</span>
+            <span class="col col-time text-center">[[${#temporals.format(dto.createdAt, 'yyyy/MM/dd')}]]</span>
+          </div>
         </a>
-      </td>
-      <td>[[${dto.writer}]]</td>
-      <td>[[${#temporals.format(dto.createdAt, 'yyyy/MM/dd')}]]</td>
-    </tr>
-    </tbody>
-  </table>
+      </div>
 
-  <form method="get" action="article">
-    <select name="searchType">
-      <option value="t" selected>제목</option>
-      <option value="c">내용</option>
-      <option value="w">작성자</option>
-      <option value="tc">제목+내용</option>
-    </select>
-    <input name="keyword" type="text">
-    <button type="submit">검색</button>
-  </form>
+      <div id="article-search-write" class="flex">
+        <form method="get" action="article">
+          <select name="searchType">
+            <option value="t" selected>제목</option>
+            <option value="c">내용</option>
+            <option value="w">작성자</option>
+            <option value="tc">제목+내용</option>
+          </select>
+          <input name="keyword" type="text">
+          <button class="btn-search" type="submit">검색</button>
+        </form>
 
-  <ul>
-    <li th:if="${list.prev}">
-      <a th:if="${searchType != null}" th:href="@{/article(page=${list.start - 2}, searchType=${searchType}, keyword=${keyword})}"><</a>
-      <a th:if="${searchType == null}" th:href="@{/article(page=${list.start - 2})}"><</a>
-    </li>
+        <a id="btn-write" th:href="@{/article/write}">글쓰기</a>
+      </div>
 
-    <li th:each="page:${list.pageList}">
-      <a th:if="${searchType != null}" th:href="@{/article(page=${page} - 1, searchType=${searchType}, keyword=${keyword})}">
-        [[${page}]]
-      </a>
-      <a th:if="${searchType == null}" th:href="@{/article(page=${page} - 1)}">
-        [[${page}]]
-      </a>
-    </li>
+      <ul id="page">
+        <li class="page-item" th:if="${list.prev}">
+          <a th:if="${searchType != null}" th:href="@{/article(page=${list.start - 2}, searchType=${searchType}, keyword=${keyword})}"><</a>
+          <a th:if="${searchType == null}" th:href="@{/article(page=${list.start - 2})}"><</a>
+        </li>
 
-    <li class="page-item" th:if="${list.next}">
-      <a th:if="${searchType != null}" th:href="@{/article(page=${list.end}, searchType=${searchType}, keyword=${keyword})}">></a>
-      <a th:if="${searchType == null}" th:href="@{/article(page=${list.end})}">></a>
-    </li>
-  </ul>
+        <li class="page-item" th:each="page:${list.pageList}">
+          <a th:if="${searchType != null}" th:href="@{/article(page=${page} - 1, searchType=${searchType}, keyword=${keyword})}">
+            [[${page}]]
+          </a>
+          <a th:if="${searchType == null}" th:href="@{/article(page=${page} - 1)}">
+            [[${page}]]
+          </a>
+        </li>
 
-  <a th:href="@{/article/write}">글쓰기</a>
-</body>
-</html>
+        <li class="page-item" th:if="${list.next}">
+          <a th:if="${searchType != null}" th:href="@{/article(page=${list.end}, searchType=${searchType}, keyword=${keyword})}">></a>
+          <a th:if="${searchType == null}" th:href="@{/article(page=${list.end})}">></a>
+        </li>
+      </ul>
+
+<!--      <div class="pagination">-->
+<!--        <span class="pagination__number-indicator"></span>-->
+<!--        <button class="pagination__arrow">-->
+<!--          <span class="pagination__arrow-half"></span>-->
+<!--          <span class="pagination__arrow-half"></span>-->
+<!--        </button>-->
+<!--        <button class="pagination__number">1</button>-->
+<!--        <button class="pagination__number">2</button>-->
+<!--        <button class="pagination__number">3</button>-->
+<!--        <button class="pagination__number pagination__number&#45;&#45;active">4</button>-->
+<!--        <button class="pagination__number">5</button>-->
+<!--        <button class="pagination__number">6</button>-->
+<!--        <button class="pagination__number">7</button>-->
+<!--        <button class="pagination__arrow pagination__arrow&#45;&#45;right">-->
+<!--          <span class="pagination__arrow-half"></span>-->
+<!--          <span class="pagination__arrow-half"></span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <script src="/js/article/pagination.js" ></script>-->
+  </th:block>
+</th:block>

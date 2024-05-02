@@ -19,19 +19,23 @@ public class ArticleRequestDTO {
   private String content;
 
   @Setter
-  private String writerEmail;
+  private String writer;
 
   private Category category;
 
+  private Boolean isSecret;
+
   @Builder
-  public ArticleRequestDTO(String title, String content, String writerEmail, Category category){
+  public ArticleRequestDTO(String title, String content, String writer, Category category, Boolean isSecret){
     this.title = title;
 
     this.content = content;
 
-    this.writerEmail = writerEmail;
+    this.writer = writer;
 
     this.category = category;
+
+    this.isSecret = isSecret;
   }
 
 }
