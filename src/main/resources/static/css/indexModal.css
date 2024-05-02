@@ -1,0 +1,185 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 740px;
+  background-color: white;
+  border:1px solid gainsboro;
+  z-index: 1000;
+}
+
+.title {
+  position: relative;
+  padding: 10px 0;
+  text-align: center;
+  font-weight: 500;
+  font-size: 25px;
+  background-color: darkseagreen;
+  color: white;
+}
+
+.modal-close-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  background-color: inherit;
+  border: none;
+}
+
+/* 출발지와 도착지를 표시 */
+.place {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.place-name-box {
+  background-color: white;
+  border: 1px solid gainsboro;
+  border-radius: 4px;
+  width: 308px;
+  height: 86px;
+  padding: 10px;
+}
+
+.place-name-box p {
+  color: darkseagreen;
+}
+
+.place-name {
+  font-size: 25px;
+}
+
+.confirm-button {
+  padding: 5px;
+  margin-left: 20px;
+  color: white;
+  background-color: darkseagreen;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.confirm-button:hover {
+  filter:brightness(90%);
+}
+
+/* 검색창 스타일 */
+.search-input {
+  border-radius: 40px;
+  font-size: 14px;
+  padding: 15px 36px;
+  width: 90%;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.search-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: -50px;
+}
+
+.search-button img {
+  width: 24px;
+}
+
+/*터미널 정보*/
+.cont {
+  padding-bottom: 10px;
+}
+
+.terminal-wrap {
+  padding: 5px 20px 5px 20px;
+}
+
+.terminal-wrap p {
+  color: darkseagreen;
+  margin: 10px 0;
+}
+
+
+.terminal-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+/*지역별 터미널*/
+.area-list li {
+  list-style: none;
+  min-height: 33px;
+  background-color: #f3f4f6;
+  margin: 5px 0;
+  padding:6px 10px;
+  font-size: 16px;
+  line-height: 1.3;
+  box-sizing: border-box;
+  border: 1px solid gainsboro;
+  color:grey;
+  cursor: pointer;
+}
+
+.area-list li:hover {
+  color: white;
+  background-color: darkseagreen;
+}
+
+.area-list li.active {
+  border: 2px solid darkseagreen;
+}
+
+.area-list li span {
+  width: 100%;
+}
+
+/*터미널 리스트*/
+.terminal-list-display {
+  display: flex;
+  width: 600px;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* 항목들을 왼쪽에서 오른쪽으로 정렬 */
+  overflow-y: auto; /* 세로 스크롤바 활성화 */
+  max-height: 390px;
+}
+
+.terminal-list-display li {
+  flex: 0 0 30%; /* 실제 사용 가능한 너비를 고려하여 30%로 조정 */
+  color:grey;
+  margin: 5px 9px 15px 10px;
+  box-sizing: border-box;
+  list-style: none;
+  text-align: right;
+}
+
+.terminal-list-display li:hover {
+  color:darkseagreen;
+  cursor: pointer;
+}
+
+/*스크롤바 css*/
+.terminal-list-display::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-list-display::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 10px;
+}
+
+.terminal-list-display::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}

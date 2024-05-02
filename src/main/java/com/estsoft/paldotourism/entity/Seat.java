@@ -2,14 +2,12 @@ package com.estsoft.paldotourism.entity;
 
 import com.fasterxml.jackson.databind.ser.Serializers.Base;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Seat extends BaseTime {
 

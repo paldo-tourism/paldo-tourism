@@ -4,7 +4,7 @@ import com.estsoft.paldotourism.entity.Bus;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BusRepository extends JpaRepository<Bus,Integer> {
+public interface BusRepository extends JpaRepository<Bus,Long> {
 
     List<Bus> findAllByDepTerminalAndArrTerminalAndDepDateAndBusGrade(String depTerminal, String arrTerminal, String depDate, String busGrade);
 }

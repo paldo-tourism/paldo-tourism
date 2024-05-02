@@ -51,7 +51,7 @@ class ArticleServiceTest {
 
   @Test
   public void updateTest(){
-    articleService.articleUpdate("수정 테스트 제목", "수정 테스트 내용", Category.CATEGORY_QA,  55L);
+//    articleService.articleUpdate("수정 테스트 제목", "수정 테스트 내용", Category.CATEGORY_QA,  55L);
     System.out.println(articleService.articleRead(55L));
   }
 

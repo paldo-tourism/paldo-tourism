@@ -1,0 +1,89 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.main-cont {
+  margin-top:10%;
+  margin-left:20%;
+  margin-right: 20%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-input-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%; /*main-cont의 50%차지*/
+}
+
+.info-input-box span {
+  min-width: 80px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.info-input-box a {
+  background-color: white;
+}
+
+.info-input-box a:hover {
+  background-color: #f0f0f0;
+}
+
+.info-input-box a p {
+  margin: 0;
+}
+
+.info-input-box > div{
+  width: 100%;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.info-input-box input,.info-input-box select {
+  display: inline-block;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 90%;
+  text-align: center;
+}
+
+.info-input-box input:focus, .info-input-box select:focus {
+  border-color: #4A90E2;
+}
+
+/*aside 관련 css*/
+.sub-cont {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.recommend-button {
+  width: 80%;
+  margin: 50px auto;
+  padding: 10px;
+  background-color: #46B78E;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+.recommend-button:hover , .check-button:hover {
+  filter:brightness(90%);
+}
+
+.check-button {
+  margin-left: 70%;
+  width: 30%;
+  border: none;
+  padding: 10px;
+  background-color: #46B78E;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+}

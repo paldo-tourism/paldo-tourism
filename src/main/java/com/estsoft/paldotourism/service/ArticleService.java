@@ -4,7 +4,6 @@ import com.estsoft.paldotourism.dto.qna.article.ArticleRequestDTO;
 import com.estsoft.paldotourism.dto.qna.article.ArticleResponseDTO;
 import com.estsoft.paldotourism.dto.qna.article.PageResponseDTO;
 import com.estsoft.paldotourism.entity.Article;
-import com.estsoft.paldotourism.entity.Category;
 import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.repository.ArticleRepository;
 import com.estsoft.paldotourism.repository.UserRepository;
@@ -12,6 +11,8 @@ import jakarta.transaction.Transactional;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,12 +24,15 @@ public class ArticleService {
   @Autowired
   private UserRepository userRepository;
 
-  public PageResponseDTO articleList(String searchType, String keyword, Pageable pageable){
-    if(searchType == null || searchType.isEmpty()){
-      return new PageResponseDTO(articleRepository.findAll(pageable).map(this::toDTO));
-    }
+  public PageResponseDTO articleList(String searchType, String keyword, String loginUserNickname, Pageable pageable){
 
     PageResponseDTO responseDTO;
+
+    if(searchType == null || searchType.isEmpty()){
+      responseDTO = new PageResponseDTO(articleRepository.findAll(pageable).map(this::toDTO));
+      responseDTO.getDtoList().forEach(x->x.updateIsSecret(loginUserNickname));
+      return responseDTO;
+    }
 
     if(searchType.equals("t")){
       responseDTO = new PageResponseDTO(articleRepository.findAllByTitleContains(keyword, pageable).map(this::toDTO));
@@ -38,11 +42,15 @@ public class ArticleService {
       responseDTO = new PageResponseDTO(articleRepository.findAllByTitleOrContentContains(keyword, pageable).map(this::toDTO));
     }
 
+    responseDTO.getDtoList().forEach(x->x.updateIsSecret(loginUserNickname));
+
     return responseDTO;
   }
 
   public ArticleResponseDTO articleRead(Long articleId){
-    return toDTO(articleRepository.findById(articleId).orElseThrow(()-> new NoSuchElementException("없는 글입니다.")));
+    Article article = articleRepository.findById(articleId).orElseThrow(()-> new NoSuchElementException("없는 글입니다."));
+
+    return toDTO(article);
   }
 
   public Long articleWrite(ArticleRequestDTO articleRequestDTO){
@@ -50,11 +58,12 @@ public class ArticleService {
   }
 
   @Transactional
-  public void articleUpdate(String title, String content, Category category, Long articleId){
+  public void articleUpdate(ArticleRequestDTO articleRequestDTO, Long articleId){
     Article article = articleRepository.findById(articleId).orElseThrow(()-> new NoSuchElementException("없는 글입니다."));
-    article.updateCategory(category);
-    article.updateTitle(title);
-    article.updateContent(content);
+    article.updateCategory(articleRequestDTO.getCategory());
+    article.updateTitle(articleRequestDTO.getTitle());
+    article.updateContent(articleRequestDTO.getContent());
+    article.updateIsSecret(articleRequestDTO.getIsSecret());
   }
 
   public void articleDelete(Long articleId){
@@ -62,13 +71,14 @@ public class ArticleService {
   }
 
   private Article toEntity(ArticleRequestDTO dto){
-    User user = userRepository.findByEmail(dto.getWriterEmail()).orElseThrow();
+    User user = userRepository.findByEmail(dto.getWriter()).orElseThrow();
 
     return Article.builder()
         .user(user)
         .title(dto.getTitle())
         .content(dto.getContent())
         .category(dto.getCategory())
+        .isSecret(dto.getIsSecret())
         .build();
   }
 
@@ -81,6 +91,14 @@ public class ArticleService {
         .writer(article.getUser().getNickName())
         .createdAt(article.getCreatedDateTime())
         .updatedAt(article.getModifiedDateTime())
+        .isSecret(article.getIsSecret())
         .build();
+  }
+
+  //유저 정보 가져오기
+  private User getAuthenticatedUser() {
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    return userRepository.findByEmail(username)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
   }
 }

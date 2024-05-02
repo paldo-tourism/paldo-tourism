@@ -16,7 +16,10 @@ public class MailController {
 //    public String dispMail(){
 //        return "mail";
 //    }
-
+@GetMapping("/test")
+public String test() {
+    return "/reservation/seatSelect";
+}
     @PostMapping("/mail")
     public void execMail(){
         MailDto mailDto = mailService.setMailDto();

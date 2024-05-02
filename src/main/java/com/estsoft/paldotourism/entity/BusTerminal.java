@@ -15,4 +15,6 @@ public class BusTerminal extends BaseTime{
     private String id;
 
     private String name;
+
+    private String region;
 }

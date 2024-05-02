@@ -70,8 +70,7 @@ public class BusApiService {
             Collectors.toList());
     }
 
-    @Transactional
-    public BusInfoFindResponseDto createBusWithSeats(OpenApiResponseBusItem item, String busGrade, String depDate) {
+    private BusInfoFindResponseDto createBusWithSeats(OpenApiResponseBusItem item, String busGrade, String depDate) {
         int totalSeats = busGrade.equals("우등") ? PREMIUM_BUS_TOTAL_SEATS : REGULAR_BUS_TOTAL_SEATS;
 
         Bus bus = item.toEntity(depDate,busGrade,totalSeats);
@@ -81,8 +80,7 @@ public class BusApiService {
         return BusInfoFindResponseDto.of(bus,seatRepository.countByBusAndStatus(bus,SeatStatus.EMPTY));
     }
 
-    @Transactional
-    public void createSeatsForBus(Bus bus, int totalSeats) {
+    private void createSeatsForBus(Bus bus, int totalSeats) {
         for(int i = 1; i <= totalSeats; i++) {
             Seat seat = Seat.builder()
                 .seatNumber(i)
