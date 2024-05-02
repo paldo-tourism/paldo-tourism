@@ -1,0 +1,35 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>로그인</title>
+</head>
+<body>
+
+    <form action="/login" method="post" id="login-form">
+
+        <div class="form-floating">
+            <label><strong>Email</strong></label>
+            <input type="email" class="form-control"  name="username"  placeholder="Enter Your email">
+
+        </div>
+        <div class="form-floating">
+            <label><strong>Password</strong></label>
+            <input type="password" class="form-control" name="password"  placeholder="Enter Your Password">
+        </div>
+
+        <div th:if="${param.error}" class="alert alert-danger" role="alert" id="login-error">
+            <p id="login-error-msg"> 이메일 또는 비밀번호를 잘못 입력했습니다.
+                입력하신 내용을 다시 확인해주세요.</p> <span th:text="${param.exception}">오류 메시지</span>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" id="login-btn" type="submit">Login</button><br>
+        <a th:href="@{/signup}">회원가입</a> /
+        <a th:href="@{/forgot-pw}">PW 찾기</a>
+    </form>
+
+
+
+</body>
+</html>

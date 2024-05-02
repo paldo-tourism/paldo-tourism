@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <h1>문의 게시판</h1>
+  <h5 th:text="${#authentication.name}"></h5>
+  <h5 th:text="${#authentication.authorities}"></h5>
+  <h5 th:text="${#authentication.authenticated}"></h5>
+  <h5 th:text="${#authentication.principal}"></h5>
+  <h5 th:text="${#authentication.credentials}"></h5>
+  <h5 th:text="${#authentication.details}"></h5>
+  <table>
+    <thead>
+    <tr>
+      <th>글번호</th>
+      <th>제목</th>
+      <th>작성자</th>
+      <th>작성일</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="dto : ${list.getDtoList()}">
+      <th scope="row">
+          [[${dto.id}]]
+      </th>
+      <td>
+        <a th:href="@{/article/{articleId}(articleId = ${dto.id})}">
+        [[${dto.title}]]
+        </a>
+      </td>
+      <td>[[${dto.writer}]]</td>
+      <td>[[${#temporals.format(dto.createdAt, 'yyyy/MM/dd')}]]</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <form method="get" action="article">
+    <select name="searchType">
+      <option value="t" selected>제목</option>
+      <option value="c">내용</option>
+      <option value="w">작성자</option>
+      <option value="tc">제목+내용</option>
+    </select>
+    <input name="keyword" type="text">
+    <button type="submit">검색</button>
+  </form>
+
+  <ul>
+    <li th:if="${list.prev}">
+      <a th:if="${searchType != null}" th:href="@{/article(page=${list.start - 2}, searchType=${searchType}, keyword=${keyword})}"><</a>
+      <a th:if="${searchType == null}" th:href="@{/article(page=${list.start - 2})}"><</a>
+    </li>
+
+    <li th:each="page:${list.pageList}">
+      <a th:if="${searchType != null}" th:href="@{/article(page=${page} - 1, searchType=${searchType}, keyword=${keyword})}">
+        [[${page}]]
+      </a>
+      <a th:if="${searchType == null}" th:href="@{/article(page=${page} - 1)}">
+        [[${page}]]
+      </a>
+    </li>
+
+    <li class="page-item" th:if="${list.next}">
+      <a th:if="${searchType != null}" th:href="@{/article(page=${list.end}, searchType=${searchType}, keyword=${keyword})}">></a>
+      <a th:if="${searchType == null}" th:href="@{/article(page=${list.end})}">></a>
+    </li>
+  </ul>
+
+  <a th:href="@{/article/write}">글쓰기</a>
+</body>
+</html>

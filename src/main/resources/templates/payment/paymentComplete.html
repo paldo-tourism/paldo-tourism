@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Payment Complete</title>
+
+    <link rel="stylesheet" href="/static/css/payment/paymentComplete.css" th:href="@{/css/payment/paymentComplete.css}">
+    <link rel="stylesheet" href="/static/css/layout/header.css" th:href="@{/css/layout/header.css}"/>
+</head>
+<body>
+<div th:replace="~{layout/header.html::main-header}"></div>
+
+<div class="flex-main">
+    <main>
+        <h2>결제 완료</h2>
+                <!-- 타임리프 추후에 적용할 필요 있음-->
+        <div class="item-container">
+            <div class="item-details">
+                <div class="reservation-info">
+                    <table>
+                        <tr>
+                            <th>출발</th>
+                            <td>서울</td>
+                            <th>도착</th>
+                            <td>경주</td>
+                        </tr>
+                        <tr>
+                            <th>날짜</th>
+                            <td>2024-04-24</td>
+                            <th>시간</th>
+                            <td>15:10</td>
+                        </tr>
+                        <tr>
+                            <th>좌석</th>
+                            <td>33</td>
+                            <th>인원</th>
+                            <td>1명</td>
+                        </tr>
+                        <tr>
+                            <th>결제 방법</th>
+                            <td>카카오페이</td>
+                            <th>결제 금액</th>
+                            <td>58000원</td>
+                        </tr>
+                        <tr>
+                            <th>결제 시간</th>
+                            <td>2024-04-24 09:52:21</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="button-flex">
+                <button type="button" class="link-button">메인</button>
+                <button type="button" class="link-button">예매 내역 확인</button>
+            </div>
+        </div>
+
+
+    </main>
+</div>
+</body>
+</html>

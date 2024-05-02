@@ -1,0 +1,135 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.flex-main
+{
+    display: flex;
+    justify-content: center;
+
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+
+}
+
+
+.container {
+    /*width: 100%;*/
+
+    /*margin: 0 auto;*/
+    /*padding: 20px;*/
+    /*box-shadow: 0 2px 8px rgba(0,0,0,0.1);*/
+    /*background-color: #fff;*/
+
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.payment-container, .item-container {
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin: 10px;
+    width: 500px;
+    flex: 1;
+}
+
+.item-details {
+    margin-left: 20px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.item {
+    margin-top: 20px;
+}
+
+.logo, .navigation button {
+    font-size: 1.2rem;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 24px;
+}
+
+.navigation button {
+    margin-left: 10px;
+}
+
+.payment-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-box {
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.options label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.amount-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input[type="text"] {
+    width: 80%;
+}
+
+.submit-button {
+    width: 70%;
+    padding: 5px;
+    margin-top: 15px;
+    margin-left: 16%;
+    background-color: #46B78E;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+}
+
+table {
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    font-size: 16px;
+}
+
+th {
+    color: #818181;
+}
+
+td {
+    font-weight: bold;
+}
+

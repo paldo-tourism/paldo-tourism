@@ -1,14 +1,10 @@
 package com.estsoft.paldotourism.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
-
+@Builder
 public class MailDto {
     private String dep_terminal;
     private String arr_terminal;
@@ -17,8 +13,24 @@ public class MailDto {
     private int charge;
     private String bus_grade;
     private String message;
+    private String email;
+    private String nickname;
+    private String reservationNumber;
+    private String seatNumber;
 
-    //아래 항목 테스트 변수로 삭제 예정입니다:)
-    private String address;
-    private String title;
+
+    public String makeMessageDump(){
+        StringBuilder messageBuilder = new StringBuilder();
+        messageBuilder.append(this.nickname)
+                .append("님의 예약 내역입니다.")
+                .append(dep_terminal).append("터미널에서 ")
+                .append(dep_time).append("에 출발하여 ")
+                .append(arr_terminal).append("터미널에 ")
+                .append(arr_time).append("에 도착하는 ")
+                .append(bus_grade).append("등급 버스를 예매 하셨습니다. ")
+                .append(charge).append("원 결제 하셨으며, ")
+                .append("예약번호는 ").append(reservationNumber).append("입니다.");
+
+        return this.message = messageBuilder.toString();
+    }
 }

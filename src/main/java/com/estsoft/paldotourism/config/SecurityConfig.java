@@ -1,6 +1,5 @@
 package com.estsoft.paldotourism.config;
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,7 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @EnableWebSecurity
 @Configuration
@@ -24,9 +22,13 @@ public class SecurityConfig {
     // 특정 HTTP 요청에 대한 웹 기반 보안 구성
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(auth ->              // 인증, 인가 설정
-                        auth.requestMatchers("/**").permitAll()
-                                .anyRequest().authenticated())
+        httpSecurity.authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/**").permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(auth -> auth.loginPage("/login")
+                        .defaultSuccessUrl("/login-result-test"))
+                .logout(auth -> auth.logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true))
                 .csrf(auth -> auth.disable());                  // csrf 비활성화
         return httpSecurity.build();
     }
