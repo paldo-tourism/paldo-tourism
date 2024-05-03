@@ -1,13 +1,14 @@
 package com.estsoft.paldotourism.entity;
 
-import com.estsoft.paldotourism.controller.MailController;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
+@Getter
 @NoArgsConstructor
 public class Reservation {
 
@@ -36,14 +37,21 @@ public class Reservation {
 
 
     @Builder
-    public Reservation(User user, Bus bus, PaymentHistory paymentHistory, String reservationNumber, Status reservationStatus)
-    {
-        this.user =user;
+    public Reservation(User user, Bus bus, PaymentHistory paymentHistory, String reservationNumber, Status reservationStatus) {
+        this.user = user;
         this.bus = bus;
         this.paymentHistory = paymentHistory;
         this.reservationNumber = reservationNumber;
         this.reservationStatus = reservationStatus;
     }
 
+    public void updateReservationStatus(Status reservationStatus) {
+        this.reservationStatus = reservationStatus;
+    }
+
+    public void updatePaymentHistory(PaymentHistory paymentHistory)
+    {
+        this.paymentHistory = paymentHistory;
+    }
 
 }

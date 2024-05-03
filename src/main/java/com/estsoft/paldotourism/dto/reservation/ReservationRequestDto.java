@@ -17,25 +17,25 @@ import static com.estsoft.paldotourism.entity.Status.*;
 @NoArgsConstructor
 public class ReservationRequestDto {
 
-    private String depTerminalName;
-    private String arrTerminalName;
-
-    private String depDate;
-
-    private String depTime;
-
-    private String busGrade;
+//    private String depTerminalName;
+//    private String arrTerminalName;
+//
+//    private String depDate;
+//
+//    private String depTime;
+//
+//    private String busGrade;
 
     private List<Integer> seatNumbers;
 
     @Builder
-    public ReservationRequestDto(String depTerminalName, String arrTerminalName, String depDate, String depTime, String busGrade, List<Integer> seatNumbers)
+    public ReservationRequestDto(List<Integer> seatNumbers)
     {
-        this.depTerminalName = depTerminalName;
-        this.arrTerminalName = arrTerminalName;
-        this.depDate = depDate;
-        this.depTime = depTime;
-        this.busGrade = busGrade;
+//        this.depTerminalName = depTerminalName;
+//        this.arrTerminalName = arrTerminalName;
+//        this.depDate = depDate;
+//        this.depTime = depTime;
+//        this.busGrade = busGrade;
         this.seatNumbers = seatNumbers;
     }
 

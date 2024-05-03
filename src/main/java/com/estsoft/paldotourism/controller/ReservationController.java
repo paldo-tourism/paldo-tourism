@@ -23,35 +23,33 @@ public class ReservationController {
         this.userDetailService = userDetailService;
     }
 
-    @PostMapping("/api/reservation/{busid}")
+    // 예약 추가(예약 데이터를 테이블에 추가함)
+    @PostMapping("/api/reservation/{busId}")
     public void addReservation(@RequestBody ReservationRequestDto requestDto, @PathVariable Long busId, Principal principal)
     {
         UserDetails currentUser = userDetailService.loadUserByUsername(principal.getName());
-
         String userName = currentUser.getUsername();
 
         reservationService.addReservation(busId, requestDto,userName);
     }
 
+    // 예약 변경(기존 예약 데이터의 예약 상태를 취소로 바꾸고 새로운 예약 데이터를 테이블에 추가함)
+    @PutMapping("/api/reservation/change/{reservationId}/{busId}")
+    public void changeReservation(@RequestBody ReservationRequestDto requestDto, @PathVariable Long reservationId, @PathVariable Long busId, Principal principal)
+    {
+        UserDetails currentUser = userDetailService.loadUserByUsername(principal.getName());
+        String userName = currentUser.getUsername();
 
+        reservationService.changeReservation(reservationId,busId, requestDto,userName);
+    }
 
+    // 예약 취소(기존 예약 데이터의 예약 상태를 취소로 변경)
+    @PutMapping("/api/reservation/cancel/{reservationId}")
+    public void cancelReservation(@PathVariable Long reservationId)
+    {
 
-//    @GetMapping("/api/reservation/")
-//    public ResponseEntity<List<Bus>> getAllBus(@RequestParam("depTerminal") String depTerminal, @RequestParam("arrTerminal") String arrTerminal, @RequestParam("depTime") String depTime, @RequestParam("busGrade") String busGrade)
-//    {
-//        return ResponseEntity.ok().body(reservationService.getAllBus(depTerminal,arrTerminal,depTime,busGrade));
-//    }
+        reservationService.cancelReservation(reservationId);
+    }
 
-//    @PostMapping("/api/main/")
-//    public ResponseEntity<List<Bus>> postAllBus(@RequestParam("depTerminal") String depTerminal, @RequestParam("arrTerminal") String arrTerminal, @RequestParam("depTime") String depTime, @RequestParam("busGrade") String busGrade)
-//    {
-//        return ResponseEntity.ok().body(reservationService.getAllBus(depTerminal,arrTerminal,depTime,busGrade));
-//    }
-
-//    @GetMapping("/api/reservation")
-//    public ResponseEntity<List<Bus>> getAllBus()
-//    {
-//
-//    }
 
 }
