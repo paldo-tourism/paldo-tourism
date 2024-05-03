@@ -8,6 +8,8 @@ import com.estsoft.paldotourism.entity.Bus;
 import com.estsoft.paldotourism.entity.BusTerminal;
 import com.estsoft.paldotourism.entity.Seat;
 import com.estsoft.paldotourism.entity.SeatStatus;
+import com.estsoft.paldotourism.exception.openapi.BusRouteNotFoundException;
+import com.estsoft.paldotourism.exception.openapi.UrlNotValidException;
 import com.estsoft.paldotourism.repository.BusRepository;
 import com.estsoft.paldotourism.repository.BusTerminalRepository;
 import com.estsoft.paldotourism.repository.SeatRepository;
@@ -15,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -58,7 +61,8 @@ public class BusApiService {
 
         if(busInfoList.size() > 0) {//이미 테이블에 관련 데이터가 있다면 DB에 있던 버스데이터를 반환
             log.info("이미 존재하는 버스 데이터 입니다.");
-            return busInfoList.stream().map(bus -> BusInfoFindResponseDto.of(bus,seatRepository.countByBusAndStatus(bus,SeatStatus.EMPTY))).collect(
+            return busInfoList.stream().map(bus -> BusInfoFindResponseDto.of(bus,seatRepository.countByBusAndStatus(bus,SeatStatus.EMPTY),
+                LocalDateTime.now())).collect(
                 Collectors.toList());
         }
 
@@ -71,13 +75,14 @@ public class BusApiService {
     }
 
     private BusInfoFindResponseDto createBusWithSeats(OpenApiResponseBusItem item, String busGrade, String depDate) {
-        int totalSeats = busGrade.equals("우등") ? PREMIUM_BUS_TOTAL_SEATS : REGULAR_BUS_TOTAL_SEATS;
+//        int totalSeats = busGrade.equals("우등") ? PREMIUM_BUS_TOTAL_SEATS : REGULAR_BUS_TOTAL_SEATS;
+        int totalSeats = REGULAR_BUS_TOTAL_SEATS;
 
         Bus bus = item.toEntity(depDate,busGrade,totalSeats);
         busRepository.save(bus);
 
         createSeatsForBus(bus,totalSeats);
-        return BusInfoFindResponseDto.of(bus,seatRepository.countByBusAndStatus(bus,SeatStatus.EMPTY));
+        return BusInfoFindResponseDto.of(bus,seatRepository.countByBusAndStatus(bus,SeatStatus.EMPTY),LocalDateTime.now());
     }
 
     private void createSeatsForBus(Bus bus, int totalSeats) {
@@ -113,7 +118,7 @@ public class BusApiService {
             URI uri = new URI(url);
             return restTemplate.getForEntity(uri, String.class);
         } catch (URISyntaxException e) {
-            throw new RuntimeException("유효하지 않은 URL입니다.", e);
+            throw new UrlNotValidException();
         } catch (RestClientException e) {//4xx, 5xx 에러
             throw new RuntimeException("API 호출에 실패했습니다.", e);
         }
@@ -124,8 +129,8 @@ public class BusApiService {
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(jsonBody,OpenApiResult.class);
         } catch (JsonProcessingException e) {
-            log.error("JSON Parsing에 실패했습니다. " + e);
-            return null; //TODO null로 return 해야하나?
+            log.error("JSON Parsing에 실패했습니다. 해당 노선이 없습니다. " + e);
+            throw new BusRouteNotFoundException();
         }
     }
 

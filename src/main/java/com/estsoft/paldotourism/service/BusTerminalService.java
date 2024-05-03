@@ -2,6 +2,7 @@ package com.estsoft.paldotourism.service;
 
 import com.estsoft.paldotourism.dto.bus.BusTerminalResponseDto;
 import com.estsoft.paldotourism.entity.BusTerminal;
+import com.estsoft.paldotourism.exception.bus.TerminalNotFoundException;
 import com.estsoft.paldotourism.repository.BusTerminalRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class BusTerminalService {
 
         if(resultTerminalList.isEmpty()) {
             log.info("해당 터미널은 존재하지 않습니다. 입력한 터미널: {}" , terminalName);
-            throw new IllegalArgumentException("해당 터미널은 존재하지 않는 터미널입니다.");
+            throw new TerminalNotFoundException();
         }
 
         return resultTerminalList.stream().map(BusTerminalResponseDto::of).collect(Collectors.toList());
