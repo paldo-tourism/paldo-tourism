@@ -74,12 +74,22 @@ h3 {
 
 
 /*찜 아이콘 스타일*/
-.like-button{
-  width: 40px;
-  height: 40px;
+.red-heart {
+  width: 28px;
+  height: 28px;
   border: none;
   cursor: pointer;
   background-color: inherit;
+  background: no-repeat center / cover url(../../img/red-heart.png);
+}
+
+.empty-heart {
+  width: 28px;
+  height: 28px;
+  border: none;
+  cursor: pointer;
+  background-color: inherit;
+  background: no-repeat center / cover url(../../img/empty-heart.png);
 }
 
 /*좌석 예약 버튼*/

@@ -54,9 +54,7 @@
           / 28
         </div>
         <div class="item-detail">
-          <button class="like-button"  onclick="clickLikeButton(this)" th:value = "${item.busId}">
-          <img th:src="@{/img/red-heart.png}" src="/static/img/red-heart.png" th:if="${item.isLike}">
-          <img th:src="@{/img/empty-heart.png}" src="/static/img/empty-heart.png" th:unless="${item.isLike}">
+          <button th:class="${item.isLike()} ? 'red-heart' : 'empty-heart'"  onclick="clickLikeButton(this)" th:value = "${item.busId}">
           </button>
         </div>
         <div class="item-detail">
