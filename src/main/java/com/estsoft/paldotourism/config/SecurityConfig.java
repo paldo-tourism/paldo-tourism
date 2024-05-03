@@ -1,5 +1,6 @@
 package com.estsoft.paldotourism.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -12,7 +13,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @EnableWebSecurity
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Bean
     public WebSecurityCustomizer configure() { // 스프링시큐리티 비활성화
@@ -27,7 +31,8 @@ public class SecurityConfig {
                         .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
-                        .defaultSuccessUrl("/login-result-test"))
+                        .failureHandler(customAuthenticationFailureHandler)
+                        .defaultSuccessUrl("/"))
                 .logout(auth -> auth.logoutSuccessUrl("/login")
                         .invalidateHttpSession(true))
                 .csrf(auth -> auth.disable());                  // csrf 비활성화

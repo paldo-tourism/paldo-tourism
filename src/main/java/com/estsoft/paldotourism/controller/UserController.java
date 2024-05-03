@@ -82,4 +82,21 @@ public class UserController {
     }
 
     // 회원 탈퇴 api
+    @PostMapping("/api/delete-account")
+    public ResponseEntity<?> deleteAccount(@RequestBody Map<String, String> credentials,
+                                           HttpServletRequest request, HttpServletResponse response) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String password = credentials.get("password");
+
+        boolean passwordMatch = userService.checkPassword(user, password);
+        if(passwordMatch) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+            userService.deleteUser(user);
+            return ResponseEntity.ok(Map.of("success", true, "message", "계정이 성공적으로 삭제되었습니다."));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("success", false, "message", "비밀번호가 잘못되었습니다."));
+        }
+    }
 }
