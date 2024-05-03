@@ -1,11 +1,15 @@
 package com.estsoft.paldotourism.repository;
 
 import com.estsoft.paldotourism.entity.Reservation;
+import com.estsoft.paldotourism.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface ReservationRepository extends JpaRepository<Reservation,Integer> {
+import java.util.List;
+import java.util.Optional;
+
+public interface ReservationRepository extends JpaRepository<Reservation,Long> {
     @Query("SELECT u.nickName, u.email FROM Reservation r join User u on r.id = u.id")
     Object[] findUserDetails();
 
@@ -17,6 +21,11 @@ public interface ReservationRepository extends JpaRepository<Reservation,Integer
 
     @Query("SELECT r.reservationNumber FROM Reservation r")
     String findReservationDetails();
+
+
+    Optional<Reservation> findByReservationNumber(String reservationNumber);
+
+    List<Reservation> findAllByUser(User user);
 
 
 }
