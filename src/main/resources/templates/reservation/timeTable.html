@@ -41,6 +41,7 @@
       <div class="header-item">등급</div>
       <div class="header-item">요금</div>
       <div class="header-item">잔여 좌석</div>
+      <div class="header-item">찜</div>
       <div class="header-item">선택</div>
     </div>
     <div class="schedule-list">
@@ -53,7 +54,12 @@
           / 28
         </div>
         <div class="item-detail">
-          <button class="seat-select-button" onclick="clickToGoSeatSelectPage()">좌석 선택</button>
+          <button th:class="${item.isLike()} ? 'red-heart' : 'empty-heart'"  onclick="clickLikeButton(this)" th:value = "${item.busId}">
+          </button>
+        </div>
+        <div class="item-detail">
+          <button class="seat-select-button" th:if="${item.canReservation}"  onclick="clickToGoSeatSelectPage()">좌석 선택</button>
+          <button disabled="disabled" class="seat-select-button-non" th:unless="${item.canReservation}"  onclick="clickToGoSeatSelectPage()">예약 불가</button>
         </div>
       </div>
     </div>
