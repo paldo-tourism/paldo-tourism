@@ -34,7 +34,7 @@ public class ArticleController {
   @GetMapping("/article")
   public String articleList(Model model, @PageableDefault(page = 0, size = 15, sort ="createdDateTime",
    direction = Direction.DESC) Pageable pageable, @Nullable String searchType, @Nullable String keyword){
-    PageResponseDTO pageResponseDTO = articleService.articleList(searchType, keyword, getLoginUserName(), pageable);
+    PageResponseDTO<ArticleResponseDTO> pageResponseDTO = articleService.articleList(searchType, keyword, getLoginUserName(), pageable);
 
     model.addAttribute("list", pageResponseDTO);
     model.addAttribute("searchType", searchType);
@@ -53,7 +53,7 @@ public class ArticleController {
     }
     model.addAttribute("article", articleResponseDTO);
 
-    return "/article/read";
+    return "/article/readNew";
   }
 
   // 쓰기
@@ -67,7 +67,9 @@ public class ArticleController {
   @PreAuthorize("isAuthenticated() or hasRole('ROLE_ADMIN')")
   @PostMapping("/article/write")
   public String articleWrite(ArticleRequestDTO articleRequestDTO){
-    articleRequestDTO.setWriter(getLoginUserName());
+    log.info(getLoginUserEmail());
+
+    articleRequestDTO.setAuthorEmail(getLoginUserEmail());
 
     Long articleId = articleService.articleWrite(articleRequestDTO);
 
@@ -111,6 +113,12 @@ public class ArticleController {
   private String getLoginUserName(){
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     return authentication.getName();
+  }
+
+  private String getLoginUserEmail(){
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User user = (User)authentication.getPrincipal();
+    return user.getEmail();
   }
 
   //권한 확인
