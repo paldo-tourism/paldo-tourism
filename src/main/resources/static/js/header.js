@@ -1,9 +1,9 @@
 function clickToGoLoginFormButton() {
-  location.href=""
+  location.href="/login";
 }
 
 function clickToGoSignUpFormButton() {
-  location.href=""
+  location.href="/signup";
 }
 
 function clickLogoutButton() {

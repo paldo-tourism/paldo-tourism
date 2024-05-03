@@ -1,25 +1,63 @@
 package com.estsoft.paldotourism.controller;
 
+import com.estsoft.paldotourism.entity.Reservation;
+import com.estsoft.paldotourism.entity.Seat;
+import com.estsoft.paldotourism.service.PaymentHistoryService;
+import com.estsoft.paldotourism.service.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 @Controller
 @Slf4j
 public class PaymentPageController {
 
-    @GetMapping("/payment")
-    public String getPayment(Model model, Authentication authentication)
+    private PaymentHistoryService paymentHistoryService;
+    private ReservationService reservationService;
+
+    public PaymentPageController(PaymentHistoryService paymentHistoryService, ReservationService reservationService) {
+        this.paymentHistoryService = paymentHistoryService;
+        this.reservationService = reservationService;
+    }
+
+    // 결제 페이지 뷰
+    @GetMapping("/{reservationId}/payment")
+    public String getPayment(Model model, Authentication authentication, @PathVariable Long reservationId)
     {
+        // 페이지에 전달해줄 정보 가져오고 전달
+        Reservation reservation = reservationService.showOneReservation(reservationId);
+        List<Seat> seatList = reservationService.showAllSeatByReservation(reservationId);
+        Long totalCharge = reservationService.getTotalCharge(reservationId);
+
+        model.addAttribute("reservationInfo",reservation);
+        model.addAttribute("seats",seatList);
+        model.addAttribute("totalCharge",totalCharge);
+
 
         return "/payment/payment";
     }
 
-    @GetMapping("/paymentComplete")
-    public String getPaymentComplete(Model model, Authentication authentication)
+    @GetMapping("/{reservationId}/paymentComplete")
+    public String getPaymentComplete(Model model, Authentication authentication,@PathVariable Long reservationId)
     {
+        // 결제 데이터 추가
+        paymentHistoryService.createPaymentHistory(reservationId);
+
+        // 페이지에 전달해줄 정보 가져오고 전달
+        Reservation reservation = reservationService.showOneReservation(reservationId);
+        List<Seat> seatList = reservationService.showAllSeatByReservation(reservationId);
+        Long totalCharge = reservationService.getTotalCharge(reservationId);
+
+        model.addAttribute("reservationInfo",reservation);
+        model.addAttribute("seats",seatList);
+        model.addAttribute("totalCharge",totalCharge);
+
+
         return "/payment/paymentComplete";
     }
 }

@@ -24,9 +24,11 @@ public class PaymentHistoryController {
 
     private final PaymentHistoryService paymentHistoryService;
 
+    // 결제 api 키
     @Value("${imp.api.key}")
     private String apiKey;
 
+    // 결제 api 비밀키
     @Value("${imp.api.secretkey}")
     private String secretKey;
 
@@ -45,7 +47,7 @@ public class PaymentHistoryController {
     public IamportResponse<Payment> paymentByImpUid(@PathVariable("imp_uid") String imp_uid)
             throws IamportResponseException, IOException {
 
-        paymentHistoryService.createPaymentHistory();
+        //paymentHistoryService.createPaymentHistory();
 
 
         log.info("결제 성공");

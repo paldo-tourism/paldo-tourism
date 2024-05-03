@@ -23,6 +23,7 @@ function updateDateOptions() {
   }
 }
 
+// date를 포매팅한 형식으로 return해주는 함수
 function formatDate(date) {
   const weekDays = ['일요일','월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
   const day = weekDays[date.getDay()];
@@ -31,7 +32,6 @@ function formatDate(date) {
   const dd = String(date.getDate()).padStart(2,'0');
 
   return `${yyyy}년 ${mm}월 ${dd}일 ${day}`;
-
 }
 
 //메인화면에서 '조회하기'버튼을 눌렀을때 함수
@@ -65,14 +65,18 @@ function clickToGoTimeTableButton() {
     })
   })
   .then(response => {
-    if(!response.ok) throw new Error("네트워크 오류가 발생했습니다");
+    if(!response.ok) {
+      return response.json().then(error => {
+        alert(error.message);
+        throw new Error(error.message);
+      });
+    }
   })
   .then(data => {
     window.location.href = "/timeTable";
   })
   .catch( error => {
       console.error("에러 발생",error);
-      alert("서버 /api/bus 오류"); //추후 alert 메시지 수정예정
     }
   )
 

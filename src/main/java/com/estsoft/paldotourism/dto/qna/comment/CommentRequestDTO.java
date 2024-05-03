@@ -13,16 +13,15 @@ public class CommentRequestDTO {
 
   private String content;
 
-  private String writer;
+  private String authorEmail;
 
   private Long articleId;
 
   @Builder
-  public CommentRequestDTO(String content, String writer, Long articleId) {
+  public CommentRequestDTO(String content, String authorEmail, Long articleId) {
     this.content = content;
-    this.writer = writer;
+    this.authorEmail = authorEmail;
     this.articleId = articleId;
   }
-
 
 }

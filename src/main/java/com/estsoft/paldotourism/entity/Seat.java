@@ -7,7 +7,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Seat extends BaseTime {
 
@@ -36,5 +35,16 @@ public class Seat extends BaseTime {
         this.seatNumber = seatNumber;
         this.status = status;
         //TODO reservation은 일단 null로 둘 것인지?...
+        this.reservation = null;
+    }
+
+    public void updateStatus(SeatStatus status)
+    {
+        this.status = status;
+    }
+
+    public void updateReservation(Reservation reservation)
+    {
+        this.reservation = reservation;
     }
 }

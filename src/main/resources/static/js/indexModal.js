@@ -97,7 +97,12 @@ function submitForm(type) {
 
   fetch(`/api/search?terminalName=${inputTerminalName}`)
     .then(response => {
-      if(!response.ok) throw new Error('네트워크 오류');
+      if(!response.ok) {
+       return response.json().then (error => {
+         alert(error.message);
+         throw new Error(error.message);
+       })
+      }
       return response.json();
     })
     .then(data => {
@@ -108,24 +113,18 @@ function submitForm(type) {
         li.classList.remove('active');
       });
 
-      if(data.length > 0) {
-        data.forEach(terminal => {
-          const listItem = document.createElement('li');
-          listItem.textContent = terminal.name;
-          listItem.addEventListener('click', () => {
-            document.getElementById(type === 'departure' ? 'selectedDeparture' : 'selectedArrival').textContent = terminal.name;
-          });
-          listContainer.appendChild(listItem);
+      data.forEach(terminal => {
+        const listItem = document.createElement('li');
+        listItem.textContent = terminal.name;
+        listItem.addEventListener('click', () => {
+          document.getElementById(type === 'departure' ? 'selectedDeparture'
+              : 'selectedArrival').textContent = terminal.name;
         });
-      } else {
-        listContainer.innerHTML = '';
-        //TODO 서버에서 발생한 에러 받아오기
-        alert("해당 터미널은 존재하지 않는 터미널입니다.")
-      }
+        listContainer.appendChild(listItem);
+      });
     })
     .catch(error => {
       console.error("에러 발생",error);
-      alert("검색 api 오류");
     })
 
   return false; //폼 제출 막기

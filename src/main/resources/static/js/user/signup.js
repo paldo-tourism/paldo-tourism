@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function (){
             pw_check_msg.style.color = 'green';
         }
         else{
-            pw_check_msg.textContent = '비밀번호 일치하지 않습니다.';
+            pw_check_msg.textContent = '비밀번호가 일치하지 않습니다.';
             pw_check_msg.style.color = 'red';
         }
     });

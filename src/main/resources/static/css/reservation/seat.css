@@ -9,10 +9,6 @@
     margin-right: 20%;
     gap: 200px;
 }
-#bus-area{
-    width: 300px;
-    height: 100%;
-}
 
 .seat-area{
     background-color: #f4f4f4;
@@ -78,6 +74,20 @@ label{
 #bus-area .seatBox:nth-child(4n+3) {
     margin-left: 60px;
 }
+
+/* 버튼이 off 상태일 때 */
+#payment-btn[disabled] {
+    background-color: #818080;
+    color: black;
+    cursor: default;
+}
+
+/* 버튼이 on 상태일 때 */
+#payment-btn:not([disabled]) {
+    background-color: #46b68d;
+    color: black;
+}
+
 
 
 

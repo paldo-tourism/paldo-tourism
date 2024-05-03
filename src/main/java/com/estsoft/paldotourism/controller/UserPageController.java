@@ -48,7 +48,8 @@ public class UserPageController {
 
     // 마이페이지 뷰
     @GetMapping("/myPage")
-    public String myPage() {
+    public String myPage(Model model, @AuthenticationPrincipal UserDetails currentLoginUser) {
+        model.addAttribute("currentLoginUser", currentLoginUser);
         return "user/myPage/myPage-main";
     }
 
