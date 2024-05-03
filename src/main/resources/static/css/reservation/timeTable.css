@@ -30,11 +30,13 @@ h3 {
   font-weight: lighter;
   color: #818181;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .info-item h3 {
   font-size: 1.1em;
   color: #333;
+  text-align: center;
 }
 
 /*사용자가 선택한 정보에 따라 버스 스케줄 표를 보여주는 div*/
@@ -56,6 +58,7 @@ h3 {
 .schedule-header {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  border-top: 1px solid #ddd;
 }
 
 .schedule-item {
@@ -64,12 +67,23 @@ h3 {
 }
 
 .header-item, .item-detail {
-  flex: 1;
+  flex: 1 1 0%;
   text-align: center;
   padding: 5px;
 }
 
-.seat-select-button {
+
+/*찜 아이콘 스타일*/
+.like-button{
+  width: 40px;
+  height: 40px;
+  border: none;
+  cursor: pointer;
+  background-color: inherit;
+}
+
+/*좌석 예약 버튼*/
+.seat-select-button{
   background-color: #007BFF;
   color: white;
   border: none;
@@ -77,12 +91,19 @@ h3 {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-size: 13px;
+}
+
+.seat-select-button-non{
+  background-color: #787e86;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  font-size: 13px;
 }
 
 .seat-select-button:hover {
   filter:brightness(90%);
 }
-
-
-
-
