@@ -22,17 +22,16 @@ class ArticleServiceTest {
 
   User user;
 
-//  @BeforeEach
-//  void setUser(){
-//    user = new User("test@naver.com", "test", "1234", "010-1234-5678", Role.ROLE_USER);
-//    userRepository.save(user);
-//  }
+  @BeforeEach
+  void setUser(){
+    user = userRepository.findByEmail("aa@aaa.com").orElseThrow();
+  }
 
   @Test
   public void writeTest(){
-    IntStream.rangeClosed(1,100).forEach(i->{
+    IntStream.rangeClosed(51,80).forEach(i->{
       ArticleRequestDTO articleDTO = ArticleRequestDTO.builder()
-          .writerEmail(user.getEmail())
+          .authorEmail(user.getEmail())
           .title("title" + i)
           .content("content" + i)
           .category(Category.CATEGORY_QA)

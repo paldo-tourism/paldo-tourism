@@ -24,22 +24,22 @@ public class ArticleService {
   @Autowired
   private UserRepository userRepository;
 
-  public PageResponseDTO articleList(String searchType, String keyword, String loginUserNickname, Pageable pageable){
+  public PageResponseDTO<ArticleResponseDTO> articleList(String searchType, String keyword, String loginUserNickname, Pageable pageable){
 
-    PageResponseDTO responseDTO;
+    PageResponseDTO<ArticleResponseDTO> responseDTO;
 
     if(searchType == null || searchType.isEmpty()){
-      responseDTO = new PageResponseDTO(articleRepository.findAll(pageable).map(this::toDTO));
+      responseDTO = new PageResponseDTO<>(articleRepository.findAll(pageable).map(this::toDTO));
       responseDTO.getDtoList().forEach(x->x.updateIsSecret(loginUserNickname));
       return responseDTO;
     }
 
     if(searchType.equals("t")){
-      responseDTO = new PageResponseDTO(articleRepository.findAllByTitleContains(keyword, pageable).map(this::toDTO));
+      responseDTO = new PageResponseDTO<>(articleRepository.findAllByTitleContains(keyword, pageable).map(this::toDTO));
     }else if(searchType.equals("c")){
-      responseDTO = new PageResponseDTO(articleRepository.findAllByContentContains(keyword, pageable).map(this::toDTO));
+      responseDTO = new PageResponseDTO<>(articleRepository.findAllByContentContains(keyword, pageable).map(this::toDTO));
     }else {
-      responseDTO = new PageResponseDTO(articleRepository.findAllByTitleOrContentContains(keyword, pageable).map(this::toDTO));
+      responseDTO = new PageResponseDTO<>(articleRepository.findAllByTitleOrContentContains(keyword, pageable).map(this::toDTO));
     }
 
     responseDTO.getDtoList().forEach(x->x.updateIsSecret(loginUserNickname));
@@ -71,7 +71,7 @@ public class ArticleService {
   }
 
   private Article toEntity(ArticleRequestDTO dto){
-    User user = userRepository.findByEmail(dto.getWriter()).orElseThrow();
+    User user = userRepository.findByEmail(dto.getAuthorEmail()).orElseThrow();
 
     return Article.builder()
         .user(user)
