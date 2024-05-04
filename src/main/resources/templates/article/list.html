@@ -1,7 +1,11 @@
 <th:block th:replace = "~{/article/articleLayout :: setContent(~{this::content})}">
   <th:block th:fragment="content">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css"/>
-    <link th:href="@{/css/article/articleList.css}" rel="stylesheet">
+    <head>
+      <title>문의 게시판</title>
+      <script src="http://code.jquery.com/jquery-latest.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css"/>
+      <link th:href="@{/css/article/articleList.css}" rel="stylesheet">
+    </head>
 
     <div id="content-wrap" class="flex">
       <h2>문의 게시판</h2>
@@ -16,7 +20,7 @@
           </div>
         </div>
 
-        <a class="row flex article" th:each="dto : ${list.getDtoList()}" th:href="${dto.isSecret ? '#' : '/article/{articleId}(articleId = ${dto.id}'}">
+        <a class="row flex article" th:each="dto : ${list.getDtoList()}" th:attr="href=${dto.isSecret} ? '#' : '/article/' + ${dto.id}">
           <div class="row-wrap flex">
             <span class="col col-id text-center">
               [[${dto.id}]]
@@ -49,47 +53,28 @@
         <a id="btn-write" th:href="@{/article/write}">글쓰기</a>
       </div>
 
-      <ul id="page">
-        <li class="page-item" th:if="${list.prev}">
-          <a th:if="${searchType != null}" th:href="@{/article(page=${list.start - 2}, searchType=${searchType}, keyword=${keyword})}"><</a>
-          <a th:if="${searchType == null}" th:href="@{/article(page=${list.start - 2})}"><</a>
-        </li>
+      <div class="pagination">
+        <ul id="page">
+          <li class="page-prev-arrow" th:if="${list.prev}">
+            <a th:if="${searchType != null}" th:href="@{/article(page=${list.start - 2}, searchType=${searchType}, keyword=${keyword})}"><i class="far fa-caret-left fa-lg" style="color: #63E6BE;"></i></a>
+            <a th:if="${searchType == null}" th:href="@{/article(page=${list.start - 2})}"><i class="far fa-caret-left fa-lg" style="color: #63E6BE;"></i></a>
+          </li>
 
-        <li class="page-item" th:each="page:${list.pageList}">
-          <a th:if="${searchType != null}" th:href="@{/article(page=${page} - 1, searchType=${searchType}, keyword=${keyword})}">
-            [[${page}]]
-          </a>
-          <a th:if="${searchType == null}" th:href="@{/article(page=${page} - 1)}">
-            [[${page}]]
-          </a>
-        </li>
+          <li th:each="pageNum:${list.pageList}" th:class="${list.page == pageNum?'is-active':'not-active'}">
+            <a th:if="${searchType != null}" th:href="@{/article(page=${pageNum} - 1, searchType=${searchType}, keyword=${keyword})}">
+              [[${pageNum}]]
+            </a>
+            <a th:if="${searchType == null}" th:href="@{/article(page=${pageNum} - 1)}" >
+              [[${pageNum}]]
+            </a>
+          </li>
 
-        <li class="page-item" th:if="${list.next}">
-          <a th:if="${searchType != null}" th:href="@{/article(page=${list.end}, searchType=${searchType}, keyword=${keyword})}">></a>
-          <a th:if="${searchType == null}" th:href="@{/article(page=${list.end})}">></a>
-        </li>
-      </ul>
-
-<!--      <div class="pagination">-->
-<!--        <span class="pagination__number-indicator"></span>-->
-<!--        <button class="pagination__arrow">-->
-<!--          <span class="pagination__arrow-half"></span>-->
-<!--          <span class="pagination__arrow-half"></span>-->
-<!--        </button>-->
-<!--        <button class="pagination__number">1</button>-->
-<!--        <button class="pagination__number">2</button>-->
-<!--        <button class="pagination__number">3</button>-->
-<!--        <button class="pagination__number pagination__number&#45;&#45;active">4</button>-->
-<!--        <button class="pagination__number">5</button>-->
-<!--        <button class="pagination__number">6</button>-->
-<!--        <button class="pagination__number">7</button>-->
-<!--        <button class="pagination__arrow pagination__arrow&#45;&#45;right">-->
-<!--          <span class="pagination__arrow-half"></span>-->
-<!--          <span class="pagination__arrow-half"></span>-->
-<!--        </button>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <script src="/js/article/pagination.js" ></script>-->
+          <li class="page-next-arrow" th:if="${list.next}">
+            <a th:if="${searchType != null}" th:href="@{/article(page=${list.end}, searchType=${searchType}, keyword=${keyword})}"><i class="far fa-caret-right fa-lg" style="color: #63E6BE;"></i></a>
+            <a th:if="${searchType == null}" th:href="@{/article(page=${list.end})}"><i class="far fa-caret-right fa-lg" style="color: #63E6BE;"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </th:block>
 </th:block>

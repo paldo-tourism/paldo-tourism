@@ -10,9 +10,9 @@ import org.springframework.data.domain.Pageable;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PageResponseDTO {
+public class PageResponseDTO<T> {
 
-  private List<ArticleResponseDTO> dtoList;
+  private List<T> dtoList;
 
   private int totalPage;
 
@@ -26,7 +26,7 @@ public class PageResponseDTO {
 
   private List<Integer> pageList;
 
-  public PageResponseDTO(Page<ArticleResponseDTO> response){
+  public PageResponseDTO(Page<T> response){
     dtoList = response.getContent();
 
     totalPage = response.getTotalPages();

@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommentResponseDTO {
+  private Long commentId;
 
   private String content;
 
@@ -18,14 +19,15 @@ public class CommentResponseDTO {
 
   private LocalDateTime createdAt;
 
-  private LocalDateTime updatedAT;
+  private LocalDateTime updatedAt;
 
   @Builder
-  public CommentResponseDTO(String content, String writer, LocalDateTime createdAt,
-      LocalDateTime updatedAT) {
+  public CommentResponseDTO(Long commentId, String content, String writer, LocalDateTime createdAt,
+      LocalDateTime updatedAt) {
+    this.commentId = commentId;
     this.content = content;
     this.writer = writer;
     this.createdAt = createdAt;
-    this.updatedAT = updatedAT;
+    this.updatedAt = updatedAt;
   }
 }

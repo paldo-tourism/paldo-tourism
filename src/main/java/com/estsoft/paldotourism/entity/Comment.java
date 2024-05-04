@@ -1,10 +1,13 @@
 package com.estsoft.paldotourism.entity;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @EntityListeners(AuditingEntityListener.class)
@@ -26,6 +29,16 @@ public class Comment extends BaseTime{
 
     @Column
     private String content; // 내용
+
+    @Column
+    private Long parent_id;
+
+    @Column
+    private Long c_path;
+
+    @Column
+    @ColumnDefault("false")
+    private Boolean isDeleted;
 
     @Builder
     public Comment(User user, Article article, String content) {

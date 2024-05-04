@@ -74,4 +74,16 @@ public class UserService {
         return password.toString();
     }
 
+    // 비밀번호 확인
+    public boolean checkPassword(User user, String password) {
+        return encoder.matches(password, user.getPassword());
+    }
+
+    // 회원 탈퇴
+    @Transactional
+    public void deleteUser(User user) {
+        // 회원 탈퇴 시 연관된 정보들도 삭제해야함
+        // 게시글, 댓글, 찜 등에서 해당 user의 정보 삭제후
+        userRepository.delete(user);
+    }
 }

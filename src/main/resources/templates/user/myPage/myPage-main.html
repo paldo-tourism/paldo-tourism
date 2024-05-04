@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>마이페이지</title>
+    <link rel="stylesheet" href="/static/css/layout/header.css" th:href="@{/css/layout/header.css}"/>
 </head>
 <body>
-
+<div th:replace="~{layout/header.html::main-header}"></div>
 <div>
     <h1>내 정보</h1>
     <ul>
