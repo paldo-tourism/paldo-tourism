@@ -1,0 +1,9 @@
+form#form{
+    width: 500px;
+    height: 500px;
+    margin-left: 300px;
+    background-color: #f4f4f4;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
