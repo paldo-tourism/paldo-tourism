@@ -2,7 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const seats = document.querySelectorAll('.seat-select');
     const numOfPeopleDisplay = document.querySelector('.select-info h3');
     const paymentBtn = document.getElementById('payment-btn');
+    const busId = document.getElementById('payment-btn').value;
     let numOfSeatsSelected = 0;
+    console.log(busId);
 
     function updateButtonState() {
         paymentBtn.disabled = numOfSeatsSelected === 0;
@@ -45,20 +47,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const xhr = new XMLHttpRequest();
             // for origin (변수 사용해서 url 만들어줘야함)
-            // const url = '/api/reservation/{busId}';
+            const url = `/api/reservation/${busId}`;
 
-            //for test
-            const url = '/api/reservation/1';
             const data = JSON.stringify({
-                seats: selectedSeats,
+                seatNumbers: selectedSeats,
             });
 
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        //요청 과정 완료 응답을 받고, 서버에서 200 응답을 받으면 alert를 보여줍니다.
-                        //page 이동 부분여기다가 추가하는게 맞는지,,,
+                        const reservationId = JSON.parse(xhr.responseText);
                         alert("결제 페이지로 이동합니다.");
+                        window.location.href = `/${reservationId}/payment`; // 결제 페이지로 리다이렉트
                     } else {
                         alert('서버 오류가 발생했습니다.');
                     }

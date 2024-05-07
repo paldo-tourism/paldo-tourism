@@ -8,10 +8,12 @@ import com.estsoft.paldotourism.entity.Bus;
 import com.estsoft.paldotourism.entity.BusTerminal;
 import com.estsoft.paldotourism.entity.Seat;
 import com.estsoft.paldotourism.entity.SeatStatus;
+import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.exception.openapi.BusRouteNotFoundException;
 import com.estsoft.paldotourism.exception.openapi.UrlNotValidException;
 import com.estsoft.paldotourism.repository.BusRepository;
 import com.estsoft.paldotourism.repository.BusTerminalRepository;
+import com.estsoft.paldotourism.repository.LikesRepository;
 import com.estsoft.paldotourism.repository.SeatRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +40,7 @@ public class BusApiService {
     private final BusRepository busRepository;
     private final SeatRepository seatRepository;
     private final BusTerminalRepository busTerminalRepository;
+    private final LikesRepository likesRepository;
 
     private static final int PREMIUM_BUS = 1;
     private static final int REGULAR_BUS = 2;
@@ -50,7 +53,7 @@ public class BusApiService {
 
 
     @Transactional
-    public List<BusInfoFindResponseDto> getBusInfo(BusInfoFindRequestDto request) {
+    public List<BusInfoFindResponseDto> getBusInfo(BusInfoFindRequestDto request,Optional<User> currentUser) {
         String depTerminalId = convertBusNameToBusId(request.getDepTerminalName()); //출발터미널 이름을 터미널ID로 변환(API요청 때문)
         String arrTerminalId = convertBusNameToBusId(request.getArrTerminalName()); //도착터미널 이름을 터미널ID로 변환(API요청 때문)
 
@@ -61,8 +64,14 @@ public class BusApiService {
 
         if(busInfoList.size() > 0) {//이미 테이블에 관련 데이터가 있다면 DB에 있던 버스데이터를 반환
             log.info("이미 존재하는 버스 데이터 입니다.");
+
+            if(currentUser.isEmpty()) {
+                return busInfoList.stream().map(bus -> BusInfoFindResponseDto.of(bus,seatRepository.countByBusAndStatus(bus,SeatStatus.EMPTY),
+                    LocalDateTime.now(),false)).collect(Collectors.toList());
+            }
+
             return busInfoList.stream().map(bus -> BusInfoFindResponseDto.of(bus,seatRepository.countByBusAndStatus(bus,SeatStatus.EMPTY),
-                LocalDateTime.now())).collect(
+                LocalDateTime.now(),getCurrentUserLiked(currentUser,bus.getId()))).collect(
                 Collectors.toList());
         }
 
@@ -74,6 +83,14 @@ public class BusApiService {
             Collectors.toList());
     }
 
+    private boolean getCurrentUserLiked(Optional<User> currentUser,long busId) {
+        if(currentUser.isPresent()) {
+            return likesRepository.existsByUserIdAndBusId(currentUser.get().getId(),busId);
+        } else {
+            return false;
+        }
+    }
+
     private BusInfoFindResponseDto createBusWithSeats(OpenApiResponseBusItem item, String busGrade, String depDate) {
 //        int totalSeats = busGrade.equals("우등") ? PREMIUM_BUS_TOTAL_SEATS : REGULAR_BUS_TOTAL_SEATS;
         int totalSeats = REGULAR_BUS_TOTAL_SEATS;
@@ -82,7 +99,7 @@ public class BusApiService {
         busRepository.save(bus);
 
         createSeatsForBus(bus,totalSeats);
-        return BusInfoFindResponseDto.of(bus,seatRepository.countByBusAndStatus(bus,SeatStatus.EMPTY),LocalDateTime.now());
+        return BusInfoFindResponseDto.of(bus,seatRepository.countByBusAndStatus(bus,SeatStatus.EMPTY),LocalDateTime.now(),false);
     }
 
     private void createSeatsForBus(Bus bus, int totalSeats) {

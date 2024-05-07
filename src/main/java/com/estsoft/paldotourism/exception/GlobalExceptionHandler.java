@@ -1,14 +1,17 @@
 package com.estsoft.paldotourism.exception;
 
 import com.estsoft.paldotourism.exception.bus.TerminalNotFoundException;
+import com.estsoft.paldotourism.exception.likes.AlreadyLikedException;
 import com.estsoft.paldotourism.exception.openapi.BusRouteNotFoundException;
 import com.estsoft.paldotourism.exception.openapi.UrlNotValidException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RestControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
     //메인화면에서 발생할 수 있는 에러
@@ -31,5 +34,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorForm, HttpStatus.NOT_FOUND);
     }
 
+    //찜 관련 에러
+    @ExceptionHandler(AlreadyLikedException.class)
+    public String AlreadyLikedException(AlreadyLikedException e, RedirectAttributes redirectAttributes) {
+        ErrorForm errorForm = new ErrorForm(HttpStatus.BAD_REQUEST.value(),"해당 노선은 이미 찜 목록에 추가되어 있습니다.");
+        redirectAttributes.addFlashAttribute("error",errorForm);
+        return "redirect:/timeTable";
+    }
 
 }

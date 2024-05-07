@@ -8,13 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class BusInfoFindResponseDto {
+public class SeatBusResponseDto {
 
     private Long busId;
     private String depTerminal;
@@ -22,30 +21,15 @@ public class BusInfoFindResponseDto {
     private String depDate;
     private String busGrade;
     private String depTime;
-    private String arrTime;
-    private Integer charge;
-    //TODO 찜 테이블 고려해서 변경
-    private boolean isLike;
-    private Integer remainingSeats; //남은 좌석 수
-    private Integer totalSeatNumber; //총 좌석 수
-    private boolean canReservation;
 
-
-    public static BusInfoFindResponseDto of(Bus bus, int remainingSeats,LocalDateTime now,boolean isLike) {
-        boolean canReserve = canMakeReservation(bus.getDepTime(),now);
-        return BusInfoFindResponseDto.builder()
+    public static SeatBusResponseDto of(Bus bus) {
+        return SeatBusResponseDto.builder()
             .busId(bus.getId())
             .depTerminal(bus.getDepTerminal())
             .arrTerminal(bus.getArrTerminal())
             .depDate(formatDate(bus.getDepDate()))
             .busGrade(bus.getBusGrade())
             .depTime(formatTime(bus.getDepTime()))
-            .arrTime(formatTime(bus.getArrTime()))
-            .charge(bus.getCharge())
-            .isLike(isLike)
-            .remainingSeats(remainingSeats)
-            .totalSeatNumber(bus.getTotalSeatNumber())
-            .canReservation(canReserve)
             .build();
     }
 
@@ -59,12 +43,5 @@ public class BusInfoFindResponseDto {
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("HH:mm");
         return LocalDateTime.parse(dateTime,inputFormatter).format(outputFormatter);
-    }
-
-    private static boolean canMakeReservation(String busDepTime,LocalDateTime now) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
-        LocalDateTime depDateTime = LocalDateTime.parse(busDepTime, formatter);
-        LocalDateTime closeTime = depDateTime.minusMinutes(10); //출발시간 10분전까지만 예약이 가능
-        return now.isBefore(closeTime);
     }
 }
