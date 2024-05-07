@@ -67,16 +67,13 @@ div.form-ai{
     display: flex;
     margin-left: 20px;
     align-items: center;
+    margin-bottom: 8px;
 }
 
 div#form-list{
     display: flex;
     flex-direction: column;
     margin-top: 15px;
-}
-
-.form-ai{
-    margin-bottom: 20px;
 }
 
 .form-ai p{
@@ -88,6 +85,7 @@ div#form-list{
     width: 220px;
     height: 25px;
     margin-left: 10px;
+    border-radius: 5px;
 }
 
 .button-zone{
