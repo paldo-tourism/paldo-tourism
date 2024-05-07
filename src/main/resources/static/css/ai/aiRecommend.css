@@ -1,0 +1,112 @@
+/* 입력 요소(input) 및 선택 요소(select)의 CSS 초기화 */
+
+/* 모든 입력 요소에 대한 일반적인 스타일 초기화 */
+input {
+    /* 모든 입력 요소에 대한 박스 모델 초기화 */
+    box-sizing: border-box;
+    /* 사용자 선택 방지 */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* 기본 패딩 및 여백 제거 */
+    padding: 0;
+    margin: 0;
+    /* 폰트 크기 및 글꼴 설정 */
+    font-size: inherit;
+    font-family: inherit;
+    /* 테두리 스타일 초기화 */
+    border: none;
+    /* 기본 커서 설정 */
+    cursor: auto;
+}
+
+/* 선택 요소(select)에 대한 스타일 초기화 */
+select {
+    /* 모든 선택 요소에 대한 박스 모델 초기화 */
+    box-sizing: border-box;
+    /* 기본 패딩 제거 */
+    padding: 0;
+    /* 글꼴 및 크기 설정 */
+    font-size: inherit;
+    font-family: inherit;
+    /* 테두리 스타일 초기화 */
+    border: none;
+    /* 기본 커서 설정 */
+    cursor: auto;
+    /* 사용자 선택 방지 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+
+form#form{
+    width: 500px;
+    height: 500px;
+    background-color: #f4f4f4;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+}
+
+div#main-area{
+    margin-top: 100px;
+    background-color: #f4f4f4;
+    border-radius: 15px;
+    padding: 30px;
+    display: flex;
+}
+
+div.form-ai{
+    display: flex;
+    margin-left: 20px;
+    align-items: center;
+}
+
+div#form-list{
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.form-ai{
+    margin-bottom: 20px;
+}
+
+.form-ai p{
+    margin-right: 65px;
+    font-weight: bold;
+}
+
+.input{
+    width: 220px;
+    height: 25px;
+    margin-left: 10px;
+}
+
+.button-zone{
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.button-zone .recommend-button{
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 13px;
+}
+
+h1{
+    font-size: 23px;
+}
