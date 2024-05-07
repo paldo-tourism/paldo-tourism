@@ -25,13 +25,13 @@ public class BusInfoFindResponseDto {
     private String arrTime;
     private Integer charge;
     //TODO 찜 테이블 고려해서 변경
-    private boolean isLike = false;
+    private boolean isLike;
     private Integer remainingSeats; //남은 좌석 수
     private Integer totalSeatNumber; //총 좌석 수
     private boolean canReservation;
 
 
-    public static BusInfoFindResponseDto of(Bus bus, int remainingSeats,LocalDateTime now) {
+    public static BusInfoFindResponseDto of(Bus bus, int remainingSeats,LocalDateTime now,boolean isLike) {
         boolean canReserve = canMakeReservation(bus.getDepTime(),now);
         return BusInfoFindResponseDto.builder()
             .busId(bus.getId())
@@ -42,6 +42,7 @@ public class BusInfoFindResponseDto {
             .depTime(formatTime(bus.getDepTime()))
             .arrTime(formatTime(bus.getArrTime()))
             .charge(bus.getCharge())
+            .isLike(isLike)
             .remainingSeats(remainingSeats)
             .totalSeatNumber(bus.getTotalSeatNumber())
             .canReservation(canReserve)
