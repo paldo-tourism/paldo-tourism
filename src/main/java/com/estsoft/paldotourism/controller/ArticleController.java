@@ -33,7 +33,7 @@ public class ArticleController {
   //목록
   @GetMapping("/article")
   public String articleList(Model model, @PageableDefault(page = 0, size = 15, sort ="createdDateTime",
-   direction = Direction.DESC) Pageable pageable, @Nullable String searchType, @Nullable String keyword){
+          direction = Direction.DESC) Pageable pageable, @Nullable String searchType, @Nullable String keyword){
     PageResponseDTO<ArticleResponseDTO> pageResponseDTO = articleService.articleList(searchType, keyword, getLoginUserName(), pageable);
 
     model.addAttribute("list", pageResponseDTO);
@@ -52,6 +52,9 @@ public class ArticleController {
       throw new AuthorizationServiceException("접근 권한이 없습니다.");
     }
     model.addAttribute("article", articleResponseDTO);
+    model.addAttribute("commentList", articleResponseDTO.getCommentList());
+//    model.addAttribute("commentList", commentService.getCommentList(articleId,
+//            PageRequest.of(0,10, Sort.Direction.ASC, "path")));
 
     return "/article/readNew";
   }

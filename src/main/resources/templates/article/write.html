@@ -1,21 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-  <form method="post" action="/article/write">
-    <select name="category">
-      <option value="" selected>카테고리</option>
-      <option value="CATEGORY_ANNOUNCEMENT">공지</option>
-      <option value="CATEGORY_QA">문의</option>
-    </select>
-    <p>제목</p><input type="text" name="title">
-    <p>내용</p><input type="text" name="content">
-    <label><input name="isSecret" type="checkbox">비밀글</label>
-    <input type="hidden" name="_isSecret" value="on">
-    <button type="submit">작성</button>
-  </form>
-</body>
-</html>
+<th:block th:replace = "~{/article/articleLayout :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <head>
+      <meta charset="UTF-8">
+      <title>문의 남기기</title>
+      <link th:href="@{/css/article/articleWrite.css}" rel="stylesheet">
+    </head>
+
+    <div id="content-wrap" class="flex">
+      <h2>문의 남기기</h2>
+      <form method="post" action="/article/write">
+        <select id="category" name="category">
+          <option value="" selected>카테고리</option>
+          <option th:if="${#authorization.expression('hasRole(''ADMIN'')')}" value="CATEGORY_ANNOUNCEMENT">공지</option>
+          <option value="CATEGORY_QA">문의</option>
+        </select>
+        <input id="article-title" type="text" name="title">
+        <textarea id="article-content" name="content"></textarea>
+        <label><input name="isSecret" type="checkbox">비밀글</label>
+        <input type="hidden" name="_isSecret" value="on">
+        <button type="submit">작성</button>
+      </form>
+    </div>
+  </th:block>
+</th:block>

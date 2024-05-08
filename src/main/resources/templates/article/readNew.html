@@ -1,12 +1,11 @@
 <th:block th:replace = "~{/article/articleLayout :: setContent(~{this::content})}">
   <th:block th:fragment="content">
     <head>
-      <title>글읽기</title>
-      <script src="http://code.jquery.com/jquery-latest.js"></script>
-      <script src="/static/css/article/articleRead.css"></script>
+      <link th:href="@{/css/article/articleRead.css}" rel="stylesheet">
     </head>
+
     <div id="content-wrap" class="flex">
-      <h5>문의 게시판</h5>
+      <h2>문의 게시판</h2>
       <div id="article-header">
         <div id="article-header-top">
           <p th:if="${article.category != null}" id="category-article" th:text="'[' + ${article.category} + ']'"></p><p id="title-article" th:text="${article.title}"></p>
@@ -23,7 +22,7 @@
           </div>
           <textarea id="content-article" th:text="${article.content}" readonly></textarea>
         </div>
-    
+
         <!--  댓글 영역 시작 -->
         <div id="comment-area">
           <div id="comment-area-header">
@@ -31,29 +30,33 @@
             <button id="btn-refresh">↻ 새로고침</button>
           </div>
           <!--  댓글 입력-->
-          <div class="comment-input-area">
+          <div sec:authorize="isAuthenticated()" class="comment-input-area">
             <form id="form-comment">
               <input type="hidden" id="input-board-id" th:value="${article.id}">
               <input type="hidden" id="input-comment-page" th:value="${commentList.page}">
-              <textarea id="input-comment" class="comment-input-common" type="text" placeholder="댓글을 입력하세요."></textarea>
+              <textarea id="input-comment" class="comment-input-common" placeholder="댓글을 입력하세요."></textarea>
               <button id="btn-comment-submit" class="comment-btn-common" type="submit">작성</button>
             </form>
           </div>
-    
+
+          <div sec:authorize="isAnonymous()" class="comment-input-area">
+            <textarea id="anonymous-comment" class="comment-input-common" placeholder="로그인 후 댓글 입력 가능합니다." readonly></textarea>
+          </div>
+
           <!--  모든 댓글-->
-          <div id="all-comment">
-    
+          <div th:if="${commentList != null}" id="all-comment">
+
             <!--  댓글 목록-->
             <ul id="comment-list">
-              <li class="list-item" th:each="comment : ${commentList.dtoList}" th:attr="data-depth=${comment.co_depth}, data-order=${comment.co_order}" th:style="'margin-left: '+ ${comment.co_depth}*6+'%;'">
-                <input class="comment-id" type="hidden" name="comment-id" th:value="${comment.id}">
+              <li class="list-item" th:each="comment : ${commentList.dtoList}" th:attr="data-depth=${comment.depth}" th:style="'margin-left: '+ ${comment.depth}*6+'%;'">
+                <input class="comment-id" type="hidden" name="comment-id" th:value="${comment.commentId}">
                 <div class="comment-header">
                   <div class="comment-header-left">
-                    <p class="comment-writer" th:text="${comment.userName}"></p>
-                    <p class="comment-create" th:text="${#temporals.format(comment.created_at, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                    <p class="comment-author">[[${comment.author}]]</p>
+                    <p class="comment-create" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></p>
                   </div>
                   <div class="comment-btn-area">
-                    <div th:if="${user_id} == ${comment.user_id}">
+                    <div th:if="${#authorization.authentication.name} == ${comment.author}">
                       <button class="btn-modify">수정</button>
                       <button class="btn-delete">삭제</button>
                     </div>
@@ -63,25 +66,25 @@
                 <textarea class="comment-content" th:text="${comment.content}"></textarea>
               </li>
             </ul>
-    
+
             <!--  댓글 페이지 목록-->
             <ul id="comment-page-list">
               <li th:if="${commentList.prev}">
                 <button class="page-list-item" id="comment-page-prev" tabindex="-1"><</button>
               </li>
-    
+
               <li th:each="page : ${commentList.pageList}">
                 <button class="comment-page-number page-list-item" th:attr="data-page=${page}" th:text="${page}"></button>
               </li>
-    
+
               <li th:if="${commentList.next}">
                 <button class="page-list-item" id="comment-page-next" >></button>
               </li>
             </ul>
-    
+
             <a th:href="@{/article}"><button id="btn-article-list">목록</button></a>
           </div>
-    
+
           <!--  대댓글 입력 폼-->
           <div id="form-reply" class="comment-input-area" style="display: none">
             <form>
@@ -89,7 +92,7 @@
               <button id="btn-reply-submit" class="comment-btn-common" type="button">등록</button>
             </form>
           </div>
-    
+
           <!--  수정 입력 폼-->
           <div id="form-modify" class="comment-input-area" style="display: none">
             <form>
@@ -97,8 +100,249 @@
               <button id="btn-modify-submit" class="comment-btn-common" type="button">등록</button>
             </form>
           </div>
-    
-          <script th:inline="javascript" src="/static/js/article/articleRead.js">
+
+          <script th:inline="javascript">
+            var articleId = $('#input-board-id').val();
+            var commentPage = $('#input-comment-page').val();
+
+            $(document).ready(function(){
+
+              //글 삭제
+              function deleteArticle(){
+                if(!confirm('삭제하시면 복구할수 없습니다. \n 정말로 삭제하시겠습니까??')){
+                  return false;
+                }
+
+                $.ajax({
+                  url:"/article/delete/" + articleId,
+                  method: "delete",
+                  success(){
+                    console.log("삭제 성공");
+                    // location.href
+                  }
+                })
+              }
+
+              $(document).on("click","#btn-delete-article",deleteArticle);
+
+              function updateArticle(){
+                location.href = "/article/update/" + articleId;
+              }
+
+              $(document).on("click","#btn-modify-article",updateArticle);
+
+              // 댓글 등록 버튼
+              $('#form-comment').submit(function(event) {
+                event.preventDefault(); // 폼 기본 동작 방지
+                var content = $('#input-comment').val(); // 입력된 댓글 텍스트 가져오기
+                console.log(content, articleId);
+
+                $.ajax({
+                  url: '/comment/write',
+                  method: 'POST',
+                  contentType : 'application/json; charset=utf-8',
+                  data: JSON.stringify({
+                    content: content,
+                    articleId: articleId
+                  }),
+                  success: function() {
+                    // 댓글 등록 성공 시, 목록 다시 불러오기
+                    console.log("댓글 등록 성공")
+                    $('#input-comment').val(''); // 입력 필드 비우기
+                  }
+                }).done(loadComment);
+              });
+
+              //토글 입력폼 나타내기 버튼
+              function displayReplyForm (){
+                $('#form-reply').appendTo($(this).parent().parent().parent()).toggle();
+              }
+
+              $(document).on('click', '.btn-reply-toggle', displayReplyForm);
+
+              //대댓글 등록 버튼
+              function writeReply(){
+
+                var $parentComment = $(this).closest('.list-item');
+
+                var parentId = $parentComment.children('.comment-id').val();
+                var parent_depth = $parentComment.data('depth');
+                var content = $(this).prev().val();
+
+                console.log(parentId + " / " + content + "/" + parent_depth + " / ");
+
+                $.ajax({
+                  url : '/comment/write',
+                  method: 'post',
+                  contentType: 'application/json; charset=utf-8',
+                  data: JSON.stringify({
+                    parentId: parentId,
+                    content: content,
+                    articleId: articleId
+                  }),
+                  success: function(){
+                    console.log("대댓글 등록 성공")
+                    $("#form-reply").css("display","none").appendTo("body");
+                    $("#input-reply").val("");
+                  }
+                }).done(loadComment);
+              }
+
+              $(document).on('click', '#btn-reply-submit', writeReply);
+
+              //수정 버튼
+              function displayModifyForm (){
+                var originalContent = $(this).closest('.list-item').children('.comment-content').val();
+
+                $('#input-modify').val(originalContent);
+                $('#form-modify').appendTo($(this).parent().parent().parent().parent()).toggle();
+              }
+              $(document).on('click', '.btn-modify', displayModifyForm)
+
+              function modifyComment(){
+
+                var commentId = $(this).closest('.list-item').children('.comment-id').val();
+                var author = $(this).closest('.list-item').find('.comment-author').text();
+                var content = $('#input-modify').val();
+
+                console.log(commentId + " / " + content);
+
+                $.ajax({
+                  url : '/comment/' + commentId,
+                  method: 'put',
+                  contentType: 'application/json; charset=utf-8',
+                  data: JSON.stringify({
+                    articleId: articleId,
+                    content: content,
+                    author: author
+                  }),
+                  success: function(){
+                    console.log("댓글 수정 성공")
+                    $("#form-modify").css("display","none").appendTo("body");
+                    $("#input-modify").val("");
+                  }
+                }).done(loadComment);
+              }
+
+              $(document).on('click', '#btn-modify-submit', modifyComment);
+
+
+              // 삭제 버튼
+              function deleteComment(){
+                var commentId = $(this).closest('.list-item').children('.comment-id').val();
+                var author = $(this).closest('.list-item').find('.comment-author').text();
+
+                console.log(commentId);
+
+                $.ajax({
+                  url: '/comment/' + commentId,
+                  method: 'delete',
+                  data: {
+                    articleId : articleId,
+                    author : author
+                  },
+                  success: function (){
+                    console.log("삭제 성공")
+                  }
+                }).done(loadComment);
+              }
+
+              $(document).on('click', '.btn-delete', deleteComment);
+
+              //새로고침
+              function loadComment() {
+                var loadRequestInfo = {
+                  articleId : articleId,
+                  page : [[${commentList.page}]] - 1
+                };
+
+                console.log(loadRequestInfo)
+
+                $.ajax({
+                  url: '/comment',
+                  method: 'get',
+                  data: loadRequestInfo,
+                  success: function () {
+                    console.log("새로고침 성공");
+                  }
+                })
+                        .done(function (fragment){
+                          $('#all-comment').replaceWith(fragment);
+                        });
+              }
+
+              // 댓글 새로고침 버튼 클릭 이벤트
+              $('#btn-refresh').click(function() {
+                loadComment();
+              });
+
+              function pageMove() {
+
+                var loadRequestInfo = {
+                  articleId : articleId,
+                  page : $(this).data("page")
+                };
+
+                $.ajax({
+                  url: '/comment',
+                  method: 'get',
+                  data: loadRequestInfo,
+                  success: function () {
+                    console.log("페이지 이동 성공");
+                  }
+                })
+                        .done(function (fragment){
+                          $('#all-comment').replaceWith(fragment);
+                        });
+              }
+
+              $(document).on("click", ".comment-page-number", pageMove)
+
+              // 이전 페이지
+              function prevMove() {
+                var loadRequestInfo = {
+                  articleId : articleId,
+                  page : [[${commentList.start - 2}]]
+                };
+
+                $.ajax({
+                  url: '/comment',
+                  method: 'get',
+                  data: loadRequestInfo,
+                  success: function () {
+                    console.log("이전페이지 이동 성공");
+                  }
+                })
+                        .done(function (fragment){
+                          $('#all-comment').replaceWith(fragment);
+                        });
+              }
+
+              $(document).on("click", "#comment-page-prev", prevMove)
+
+              // 다음 페이지
+              function nextMove() {
+                var loadRequestInfo = {
+                  articleId : articleId,
+                  page : [[${commentList.end}]]
+                };
+
+                $.ajax({
+                  url: '/comment',
+                  method: 'get',
+                  data: loadRequestInfo,
+                  success: function () {
+                    console.log("다음페이지 이동 성공");
+                  }
+                })
+                        .done(function (fragment){
+                          $('#all-comment').replaceWith(fragment);
+                        });
+              }
+
+              $(document).on("click", "#comment-page-next", nextMove)
+
+            })
           </script>
         </div>
       </div>
