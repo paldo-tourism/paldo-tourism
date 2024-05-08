@@ -25,6 +25,7 @@ public class CommentController {
   @Autowired
   private CommentService commentService;
 
+
   @GetMapping("")
   public String getCommentList(Long articleId, Model model,
                                @PageableDefault(page = 0, size = 10, sort = "path", direction = Direction.ASC) Pageable pageable){
@@ -97,5 +98,7 @@ public class CommentController {
       throw new AuthorizationServiceException("권한이 없습니다");
     }
   }
+
+   */
 
 }

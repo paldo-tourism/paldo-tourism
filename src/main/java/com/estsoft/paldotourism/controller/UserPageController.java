@@ -1,6 +1,8 @@
 package com.estsoft.paldotourism.controller;
 
 import com.estsoft.paldotourism.dto.user.AddUserRequestDto;
+import com.estsoft.paldotourism.service.ReservationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -9,7 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequiredArgsConstructor
 public class UserPageController {
+
+    private final ReservationService reservationService;
 
     // 회원가입 뷰
     @GetMapping("/signup")
@@ -32,24 +37,23 @@ public class UserPageController {
         return "user/login-result-test";
     }
 
-    // 헤더 테스트 뷰
-    // 로그인 후 헤더에 유저 정보 있는지 확인용
-    @GetMapping("/header-test")
-    public String headerTest(@AuthenticationPrincipal UserDetails currentLoginUser, Model model) {
-        model.addAttribute("currentLoginUser", currentLoginUser);
-        return "layout/header";
-    }
-
     // 비밀번호 찾기 뷰
     @GetMapping("/forgot-pw")
     public String forgotPw() {
         return "user/forgot-pw";
     }
 
+    /*
     // 마이페이지 뷰
     @GetMapping("/myPage")
     public String myPage(Model model, @AuthenticationPrincipal UserDetails currentLoginUser) {
         model.addAttribute("currentLoginUser", currentLoginUser);
+        return "user/myPage/myPage-main";
+    }
+     */
+    // 마이페이지 뷰(메인 - 예매내역)
+    @GetMapping("/myPage")
+    public String myPage() {
         return "user/myPage/myPage-main";
     }
 
@@ -57,5 +61,11 @@ public class UserPageController {
     @GetMapping("/myPage/edit")
     public String myPageEdit() {
         return "user/myPage/myPage-edit";
+    }
+
+    // 마이페이지 - 찜
+    @GetMapping("/myPage/likes")
+    public String myPageLikes() {
+        return "user/myPage/myPage-likes";
     }
 }

@@ -24,6 +24,10 @@ public class PaymentHistoryController {
 
     private final PaymentHistoryService paymentHistoryService;
 
+    //결제 상점키
+    @Value("${imp.code}")
+    private String storeCode;
+
     // 결제 api 키
     @Value("${imp.api.key}")
     private String apiKey;
