@@ -1,10 +1,11 @@
-package com.estsoft.paldotourism.repository;
+package com.estsoft.paldotourism.service;
 
 import com.estsoft.paldotourism.dto.qna.article.ArticleRequestDTO;
 import com.estsoft.paldotourism.dto.qna.article.ArticleResponseDTO;
 import com.estsoft.paldotourism.entity.Category;
 import com.estsoft.paldotourism.entity.User;
-import com.estsoft.paldotourism.service.ArticleService;
+import com.estsoft.paldotourism.repository.UserRepository;
+
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

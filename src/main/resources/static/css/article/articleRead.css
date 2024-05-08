@@ -1,9 +1,9 @@
-.content-wrap p{
+#content-wrap p{
   margin: 0;
   display: inline-block;
 }
 
-.content-wrap li {
+#content-wrap li {
   list-style: none;
   display: block;
 }
@@ -12,9 +12,8 @@
   display: inline;
 }
 
-.content-wrap button{
+#content-wrap button{
   border : none;
-  background-color: #F2F2F2;
   font-weight: bold;
   cursor: pointer;
 }
@@ -22,7 +21,7 @@
 textarea{
   box-sizing: border-box;
   border: none;
-  background-color: #F2F2F2;
+  background-color: #ffffff;
   resize: none;
   display: block;
 }
@@ -35,11 +34,11 @@ textarea:focus{
   outline: none;
 }
 
-.content-wrap{
+#content-wrap{
   box-sizing: border-box;
-  width: 980px;
+  width: 55%;
   margin: 0 auto;
-  background-color: #F2F2F2;
+  background-color: #ffffff;
   align-items: center;
 }
 
@@ -52,8 +51,8 @@ textarea:focus{
   margin-top: 30px;
 }
 
-#category-article{
-  width: 70px;
+#article-header-top #category-article{
+  /*width: 70px;*/
   margin-right: 20px;
 }
 
@@ -72,6 +71,7 @@ textarea:focus{
   width: 100%;
   height: 70px;
   padding: 10px;
+  margin-bottom: 20px;
   background-color: #46B78E;
   color: #f7f7f7;
   text-align: left;
@@ -84,10 +84,6 @@ textarea:focus{
 
 #article-header-bottom p:first-child{
   float: left;
-}
-
-#article-header-bottom p:last-child{
-  float: right;
 }
 
 #count-article-view{
@@ -107,7 +103,7 @@ textarea:focus{
 #writer-btn-box{
   float: right;
   justify-content: space-between;
-  margin: 20px 0;
+  margin-bottom: 20px;
 }
 
 #btn-modify-article{
@@ -141,6 +137,11 @@ textarea:focus{
 
 #btn-refresh{
   float: right;
+  background-color: #ffffff;
+}
+
+#comment-list{
+  padding: 0;
 }
 
 .comment-input-area {
