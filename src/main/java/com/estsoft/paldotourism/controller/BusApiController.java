@@ -31,10 +31,12 @@ public class BusApiController {
     private final UserDetailService userDetailService;
     private final SeatService seatService;
 
+    /*
     @GetMapping("")
     public String index() {
         return "index";
     }
+     */
 
     //메인화면에서 사용자가 출발지/목적지/출발날짜/버스등급을 입력
     @GetMapping("/timeTable")
