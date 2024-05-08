@@ -1,6 +1,7 @@
 package com.estsoft.paldotourism.service;
 
 import com.estsoft.paldotourism.entity.PaymentHistory;
+import com.estsoft.paldotourism.entity.PaymentStatus;
 import com.estsoft.paldotourism.entity.Reservation;
 import com.estsoft.paldotourism.entity.Status;
 import com.estsoft.paldotourism.repository.PaymentHistoryRepository;
@@ -24,7 +25,7 @@ public class PaymentHistoryService {
     public void createPaymentHistory(Long reservationId) {
 
         // 결제 데이터를 결제 기록 테이블에 저장
-        PaymentHistory paymentHistory = PaymentHistory.builder().paymentStatus(true).build();
+        PaymentHistory paymentHistory = PaymentHistory.builder().paymentStatus(PaymentStatus.PAYMENT_STATUS_SUCCESS).build();
         paymentHistoryRepository.save(paymentHistory);
 
         // 예약 테이블의 예약 데이터에 결제 외래키 연결 및 예약 상태 변경
@@ -51,7 +52,7 @@ public class PaymentHistoryService {
 
     // 결제 기록 변경(구현 하긴했으나 아래의 결제 취소 함수만 사용하면 될 것 같음)
     @Transactional
-    public PaymentHistory updatePaymentHistory (Long reservationId, Boolean status) {
+    public PaymentHistory updatePaymentHistory (Long reservationId, PaymentStatus status) {
 
         Reservation reservation = reservationRepository.findById(reservationId).get();
         reservation.updateReservationStatus(Status.STATUS_CANCEL);
@@ -73,7 +74,7 @@ public class PaymentHistoryService {
 
         PaymentHistory paymentHistory = reservation.getPaymentHistory();
 
-        paymentHistory.update(false);
+        paymentHistory.update(PaymentStatus.PAYMENT_STATUS_CANCEL);
 
     }
 
