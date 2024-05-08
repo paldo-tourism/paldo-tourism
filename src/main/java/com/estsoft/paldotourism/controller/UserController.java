@@ -1,29 +1,28 @@
 package com.estsoft.paldotourism.controller;
 
-import com.estsoft.paldotourism.dto.MailDto;
 import com.estsoft.paldotourism.dto.user.AddUserRequestDto;
 import com.estsoft.paldotourism.dto.user.AddUserResponseDto;
 import com.estsoft.paldotourism.dto.user.PasswordChangeDto;
 import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.service.MailService;
+import com.estsoft.paldotourism.service.UserDetailService;
 import com.estsoft.paldotourism.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +30,7 @@ public class UserController {
 
     private final UserService userService;
     private final MailService mailService;
+    private final UserDetailService userDetailService;
 
     // User 회원가입 api
     @PostMapping("/api/signup")
@@ -97,6 +97,16 @@ public class UserController {
             return ResponseEntity.ok(Map.of("success", true, "message", "계정이 성공적으로 삭제되었습니다."));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("success", false, "message", "비밀번호가 잘못되었습니다."));
+        }
+    }
+
+    @GetMapping("/api/auth/status")
+    public ResponseEntity<?> getUserAuthStatus() {
+        Optional<User> user = userDetailService.getCurrentUser();
+        if(user.isPresent()) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 }

@@ -16,71 +16,46 @@
 <div id="main-area">
     <section class="seat-area">
         <div id="bus-area">
-        <span th:each="seatNum : ${#numbers.sequence(1, 40)}" class="seatBox">
-            <input type="checkbox" th:id="'seatNum' + ${seatNum}" th:value="${seatNum}" class="seat-select">
-            <label class="seat" th:for="'seatNum' + ${seatNum}" th:text="${seatNum}"></label>
-        </span>
-        <span class="last-seatBox">
-            <input type="checkbox" id="seatNum41" value="41" class="seat-select">
-            <label class="seat" for="seatNum41">41</label>
-        </span>
-        <span class="last-seatBox">
-            <input type="checkbox" id="seatNum42" value="42" class="seat-select">
-            <label class="seat" for="seatNum42">42</label>
-        </span>
-        <span class="last-seatBox">
-            <input type="checkbox" id="seatNum43" value="43" class="seat-select">
-            <label class="seat" for="seatNum43">43</label>
-        </span>
-        <span class="last-seatBox">
-            <input type="checkbox" id="seatNum44" value="44" class="seat-select">
-            <label class="seat" for="seatNum44">44</label>
-        </span>
-        <span class="last-seatBox">
-            <input type="checkbox" id="seatNum45" value="45" class="seat-select">
-            <label class="seat" for="seatNum45">45</label>
-        </span>
-
+            <span th:each="seat : ${seats}" th:classappend="${seat.getSeatNumber()} >= 41 ? 'last-seatBox' : ''"
+                  class="seatBox">
+                <input type="checkbox" th:id="${seat.getId()}" th:value="${seat.getSeatNumber()}" class="seat-select" th:disabled="${seat.getStatus().name() ne 'EMPTY'}">
+                <label class="seat" th:for="${seat.getId()}" th:text ="${seat.getSeatNumber()}"
+                    th:classappend="${seat.getStatus().name() == 'EMPTY' ? 'available' : 'unavailable'}"></label>
+            </span>
         </div>
     </section>
+
     <section class="bus-info">
-        <!--  사용자가 선택한 출발지,도착지,날짜,등급 정보를 간단히 보여주는 div-->
         <div class="schedule-container">
             <div class="info-item">
                 <h4>출발지</h4>
-                <h3 th:text="${depTerminal}">여주프리미엄아울렛</h3>
+                <h3 th:text="${bus.getDepTerminal()}">여주프리미엄아울렛</h3>
             </div>
             <div class="info-item">
                 <h4>도착지</h4>
-                <h3 th:text="${arrTerminal}">여주부산대구터미널</h3>
+                <h3 th:text="${bus.getArrTerminal()}">여주부산대구터미널</h3>
             </div>
             <div class="info-item">
                 <h4>날짜</h4>
-                <h3 th:text="${depDateTime}">2024-04-24</h3>
+                <h3 th:text="${bus.getDepDate()}">2024-04-24</h3>
             </div>
             <div class="info-item">
                 <h4>시간</h4>
-                <h3 th:text="${depTime}">13:50</h3>
-<!--                수정필요합니다-->
+                <h3 th:text="${bus.getDepTime()}">13:50</h3>
             </div>
         </div>
 
         <div class="select-info">
             <h4>인원</h4>
-            <h3></h3>
+            <h3>0</h3>
 
             <h4>등급</h4>
-<!--            <div class="item-detail" th:text="${item.busGrade}">일반</div>-->
-            <div class="item-detail">일반</div>
+            <div th:text="${bus.getBusGrade()}" class="item-detail">일반</div>
         </div>
 
-        <button id="payment-btn">결제</button>
+        <button id="payment-btn" th:value="${bus.getBusId()}">결제</button>
     </section>
 </div>
-
-
-
-
 </body>
 <script src="/static/js/header.js" th:src="@{/js/header.js}"></script>
 <script src="/static/js/reservation/seatSelect.js" th:src="@{/js/reservation/seatSelect.js}"></script>

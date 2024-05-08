@@ -58,7 +58,7 @@
           </button>
         </div>
         <div class="item-detail">
-          <button class="seat-select-button" th:if="${item.canReservation}"  onclick="clickToGoSeatSelectPage()">좌석 선택</button>
+          <button class="seat-select-button" th:if="${item.canReservation}"  onclick="clickToGoSeatSelectPage(this)" th:value = "${item.busId}">좌석 선택</button>
           <button disabled="disabled" class="seat-select-button-non" th:unless="${item.canReservation}"  onclick="clickToGoSeatSelectPage()">예약 불가</button>
         </div>
       </div>
