@@ -21,6 +21,7 @@ public class CommentController {
   @Autowired
   private CommentService commentService;
 
+  /*
   @GetMapping("/")
   public String getCommentList(Long articleId, Model model,
       @PageableDefault(page = 0, size = 10, sort = "createdDateTime", direction = Direction.ASC) Pageable pageable){
@@ -40,5 +41,7 @@ public class CommentController {
   public void deleteComment(@RequestParam Long commentId){
     commentService.deleteComment(commentId);
   }
+
+   */
 
 }

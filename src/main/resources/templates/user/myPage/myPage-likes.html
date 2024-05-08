@@ -20,19 +20,18 @@
     </div>
     <div class="content">
 
-        <div class="reservation-container" >
-            <h1>내 예매 정보</h1>
-            <div th:unless="${reservations}" class="no-reservation">
-                예매 내역이 없습니다.
+        <div class="likes-container" >
+            <h1>내 찜 내역</h1>
+            <div th:unless="${likes}" class="no-likes">
+                찜 내역이 없습니다.
             </div>
-            <div class="reservation-card" th:if="${reservations}">
-                <div th:each="reservation : ${reservations}" class="reservation-card">
+            <div class="likes-card" th:if="${likes}">
+                <div th:each="like : ${likes}" class="likes-card">
                     <div class="route-info">
-                        <span class="city" th:text="${reservation.bus.depTerminal} + ' → ' + ${reservation.bus.arrTerminal}">부산 → 서울</span>
-                        <span class="date-time" th:text="${reservation.bus.depTime}">24.04.24 14:00</span>
+                        <span class="city" th:text="${like.fromCity} + ' → ' + ${like.toCity}">부산 → 서울</span>
+                        <span class="date-time" th:text="${like.dateTime}">24.04.24 14:00</span>
                     </div>
                     <div class="actions">
-                        <button class="btn btn-change">좌석/시간 변경</button>
                         <button class="btn btn-cancel">취소</button>
                     </div>
                 </div>
