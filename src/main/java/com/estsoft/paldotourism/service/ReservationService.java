@@ -35,7 +35,7 @@ public class ReservationService {
 
     @Transactional
     // 예약 추가(예약 데이터를 테이블에 추가함)
-    public void addReservation(Long busId, ReservationRequestDto requestDto, String userName) {
+    public Long addReservation(Long busId, ReservationRequestDto requestDto, String userName) {
 
         // 필요한 정보 가져옴
         Bus bus = busRepository.findById(busId).get();
@@ -46,7 +46,7 @@ public class ReservationService {
         
         // DTO를 엔티티 타입으로 변환 후 테이블에 추가
         Reservation reservation = requestDto.toEntity(bus, user, testReservationCode);
-        reservationRepository.save(reservation);
+        Reservation saveReservation = reservationRepository.save(reservation);
 
 
         // 선택한 좌석들을 가져와 상태를 선택중으로 변경
@@ -57,6 +57,8 @@ public class ReservationService {
             updateSeatReservation(reservation,bus,seat);
 
         }
+
+        return saveReservation.getId();
     }
 
     // 예약 ID로 예약 1개 반환
