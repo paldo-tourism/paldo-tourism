@@ -22,18 +22,20 @@ public class ReservationService {
     private final SeatRepository seatRepository;
     private final UserRepository userRepository;
 
+    private final PaymentHistoryService paymentHistoryService;
 
-    public ReservationService(ReservationRepository reservationRepository, BusRepository busRepository, SeatRepository seatRepository, UserRepository userRepository) {
+
+    public ReservationService(ReservationRepository reservationRepository, BusRepository busRepository, SeatRepository seatRepository, UserRepository userRepository, PaymentHistoryService paymentHistoryService) {
         this.reservationRepository = reservationRepository;
         this.busRepository = busRepository;
         this.seatRepository = seatRepository;
         this.userRepository = userRepository;
+        this.paymentHistoryService = paymentHistoryService;
     }
-
 
     @Transactional
     // 예약 추가(예약 데이터를 테이블에 추가함)
-    public void addReservation(Long busId, ReservationRequestDto requestDto, String userName) {
+    public Long addReservation(Long busId, ReservationRequestDto requestDto, String userName) {
 
         // 필요한 정보 가져옴
         Bus bus = busRepository.findById(busId).get();
@@ -44,7 +46,7 @@ public class ReservationService {
         
         // DTO를 엔티티 타입으로 변환 후 테이블에 추가
         Reservation reservation = requestDto.toEntity(bus, user, testReservationCode);
-        reservationRepository.save(reservation);
+        Reservation saveReservation = reservationRepository.save(reservation);
 
 
         // 선택한 좌석들을 가져와 상태를 선택중으로 변경
@@ -55,6 +57,8 @@ public class ReservationService {
             updateSeatReservation(reservation,bus,seat);
 
         }
+
+        return saveReservation.getId();
     }
 
     // 예약 ID로 예약 1개 반환
@@ -89,6 +93,11 @@ public class ReservationService {
             Integer seatNumber = seat.getSeatNumber();
             updateSeatReservationStatus(reservationedBus, seatNumber, SeatStatus.EMPTY);
         }
+
+        //결제 상태 취소로 변경
+        paymentHistoryService.cancelPaymentHistory(reservationId);
+
+
 
 
         // 예약 변경(실제로는 예약 테이블에 새로운 예약 데이터를 추가하는 것과 동일함)
@@ -130,6 +139,9 @@ public class ReservationService {
             Integer seatNumber = seat.getSeatNumber();
             updateSeatReservationStatus(reservationedBus, seatNumber, SeatStatus.EMPTY);
         }
+
+        //결제 상태 취소로 변경
+        paymentHistoryService.cancelPaymentHistory(reservationId);
     }
 
     
@@ -211,5 +223,16 @@ public class ReservationService {
         }
 
         return totalCharge;
+    }
+
+    // 총 인원(좌석) 수 반환
+    public Long getTotalSeat(Long reservationId) {
+
+        Long totalSeat = 0L;
+        Reservation reservation = reservationRepository.findById(reservationId).get();
+
+        totalSeat = seatRepository.countByReservation(reservation);
+
+        return totalSeat;
     }
 }

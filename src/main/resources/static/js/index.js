@@ -36,6 +36,7 @@ function formatDate(date) {
 
 //메인화면에서 '조회하기'버튼을 눌렀을때 함수
 function clickToGoTimeTableButton() {
+  event.preventDefault();
   //사용자가 입력한 출발지,도착지,출발날짜,버스등급 값을 가져온다
   let depTerminalName = document.getElementById('depTerminalName').value
   let arrTerminalName = document.getElementById('arrTerminalName').value
@@ -52,35 +53,33 @@ function clickToGoTimeTableButton() {
     return false
   }
 
-  fetch('/api/bus', {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      depTerminalName: depTerminalName,
-      arrTerminalName: arrTerminalName,
-      depDate: depDate,
-      busGrade: busGrade
-    })
-  })
+  const params = new URLSearchParams({
+    depTerminalName: depTerminalName,
+    arrTerminalName: arrTerminalName,
+    depDate: depDate,
+    busGrade: busGrade
+  }).toString();
+
+  fetch(`/timeTable?${params}`)
   .then(response => {
-    if(!response.ok) {
-      return response.json().then(error => {
-        alert(error.message);
-        throw new Error(error.message);
-      });
-    }
+        if (!response.ok) {
+          return response.json().then(error => {
+            alert(error.message);
+            throw new Error(error.message);
+          });
+        }
+      }
+  ).then(data => {
+    window.location.href = `/timeTable?${params}`;
   })
-  .then(data => {
-    window.location.href = "/timeTable";
-  })
-  .catch( error => {
-      console.error("에러 발생",error);
-    }
+  .catch(error => {
+        console.error("에러 발생", error);
+      }
   )
 
   return false;
+
+  window.location.href = `/timeTable?${params}`; // URL 변경과 페이지 리다이렉트
 }
 
 document.addEventListener('DOMContentLoaded',updateDateOptions); //메인페이지가 로드되면 updateDateOptions 실행

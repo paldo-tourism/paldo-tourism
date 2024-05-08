@@ -1,11 +1,12 @@
 package com.estsoft.paldotourism.entity;
 
 import jakarta.persistence.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Likes {
+@NoArgsConstructor
+public class Likes extends BaseTime{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +20,9 @@ public class Likes {
     @JoinColumn
     private Bus bus; // 버스 정보(FK)
 
+    @Builder
+    private Likes(User user,Bus bus) {
+        this.user = user;
+        this.bus = bus;
+    }
 }

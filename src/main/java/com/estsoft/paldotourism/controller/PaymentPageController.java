@@ -1,5 +1,6 @@
 package com.estsoft.paldotourism.controller;
 
+import com.estsoft.paldotourism.entity.PaymentHistory;
 import com.estsoft.paldotourism.entity.Reservation;
 import com.estsoft.paldotourism.entity.Seat;
 import com.estsoft.paldotourism.service.PaymentHistoryService;
@@ -27,35 +28,39 @@ public class PaymentPageController {
 
     // 결제 페이지 뷰
     @GetMapping("/{reservationId}/payment")
-    public String getPayment(Model model, Authentication authentication, @PathVariable Long reservationId)
+    public String getPayment(Model model, @PathVariable Long reservationId)
     {
         // 페이지에 전달해줄 정보 가져오고 전달
         Reservation reservation = reservationService.showOneReservation(reservationId);
         List<Seat> seatList = reservationService.showAllSeatByReservation(reservationId);
         Long totalCharge = reservationService.getTotalCharge(reservationId);
+        Long totalSeat = reservationService.getTotalSeat(reservationId);
 
         model.addAttribute("reservationInfo",reservation);
         model.addAttribute("seats",seatList);
         model.addAttribute("totalCharge",totalCharge);
+        model.addAttribute("totalSeat",totalSeat);
 
 
         return "/payment/payment";
     }
 
     @GetMapping("/{reservationId}/paymentComplete")
-    public String getPaymentComplete(Model model, Authentication authentication,@PathVariable Long reservationId)
+    public String getPaymentComplete(Model model, @PathVariable Long reservationId)
     {
-        // 결제 데이터 추가
-        paymentHistoryService.createPaymentHistory(reservationId);
+        // 결제 데이터 추가(PaymentHistoryController에서 추가해줌)
+        //paymentHistoryService.createPaymentHistory(reservationId);
 
         // 페이지에 전달해줄 정보 가져오고 전달
         Reservation reservation = reservationService.showOneReservation(reservationId);
         List<Seat> seatList = reservationService.showAllSeatByReservation(reservationId);
         Long totalCharge = reservationService.getTotalCharge(reservationId);
+        Long totalSeat = reservationService.getTotalSeat(reservationId);
 
         model.addAttribute("reservationInfo",reservation);
         model.addAttribute("seats",seatList);
         model.addAttribute("totalCharge",totalCharge);
+        model.addAttribute("totalSeat",totalSeat);
 
 
         return "/payment/paymentComplete";
