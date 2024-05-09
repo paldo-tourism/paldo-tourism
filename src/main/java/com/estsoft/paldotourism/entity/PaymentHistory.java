@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class PaymentHistory {
+public class PaymentHistory extends BaseTime{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +26,6 @@ public class PaymentHistory {
     @Enumerated(EnumType.STRING)
     @Column
     private PaymentStatus paymentStatus; // 결제 상태(성공, 실패)
-
-    @CreationTimestamp
-    @Column
-    private LocalDateTime createdAt;
 
     @Builder
     public PaymentHistory(PaymentStatus paymentStatus)
