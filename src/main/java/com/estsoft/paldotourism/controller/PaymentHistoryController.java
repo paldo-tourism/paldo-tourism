@@ -9,6 +9,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,11 +48,11 @@ public class PaymentHistoryController {
 
 
     @ResponseBody
-    @RequestMapping("/verify/{imp_uid}")
-    public IamportResponse<Payment> paymentByImpUid(@PathVariable("imp_uid") String imp_uid)
+    @RequestMapping("/verify/{imp_uid}/{reservationId}")
+    public IamportResponse<Payment> paymentByImpUid(@PathVariable("imp_uid") String imp_uid, @PathVariable("reservationId") Long reservationId)
             throws IamportResponseException, IOException {
 
-        //paymentHistoryService.createPaymentHistory();
+        paymentHistoryService.createPaymentHistory(reservationId);
 
 
         log.info("결제 성공");
