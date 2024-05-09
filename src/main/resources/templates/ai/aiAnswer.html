@@ -19,7 +19,7 @@
                     <h3 th:text="${response}"></h3>
                 </div>
                 <div class="button-zone">
-                    <button class="recommend-button" onclick="location.href = '../reservation/main.html'">예약하러가기</button>
+                    <button class="recommend-button" onclick=clickToGoMainButton()>예약하러가기</button>
                 </div>
             </div>
     </div>
@@ -27,4 +27,5 @@
 </main>
 </body>
 <script src="/static/js/header.js" th:src="@{/js/header.js}"></script>
+<script src="/static/js/ai/aiAnswer.js" th:src="@{/js/ai/aiAnswer.js}"></script>
 </html>

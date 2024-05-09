@@ -22,4 +22,9 @@ public class AlanController {
         model.addAttribute("response",aiResponse);
         return "/ai/aiAnswer";
     }
+
+    @GetMapping("/main")
+    public String goMain() {
+        return "/index";
+    }
 }
