@@ -1,8 +1,10 @@
 package com.estsoft.paldotourism.controller;
 
 import com.estsoft.paldotourism.dto.user.AddUserRequestDto;
+import com.estsoft.paldotourism.entity.Likes;
 import com.estsoft.paldotourism.entity.Reservation;
 import com.estsoft.paldotourism.entity.User;
+import com.estsoft.paldotourism.service.LikesService;
 import com.estsoft.paldotourism.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -21,6 +23,7 @@ import java.util.List;
 public class UserPageController {
 
     private final ReservationService reservationService;
+    private final LikesService likesService;
 
     // 회원가입 뷰
     @GetMapping("/signup")
@@ -70,7 +73,14 @@ public class UserPageController {
 
     // 마이페이지 - 찜
     @GetMapping("/myPage/likes")
-    public String myPageLikes() {
+    public String myPageLikes(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) authentication.getPrincipal();
+        List<Likes> likes = likesService.showAllLikes(currentUser.getEmail());
+        if(likes.isEmpty()) {
+            likes = null;
+        }
+        model.addAttribute("likes", likes);
         return "user/myPage/myPage-likes";
     }
 }

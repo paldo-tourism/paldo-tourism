@@ -41,89 +41,71 @@ body {
 
 
 .content {
-    flex-grow: 1; /* 남은 공간을 모두 채움 */
+    flex-grow: 1;
     padding: 20px;
 }
 
 .reservation-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.reservation-container {
-    width: 50%; /* 컨테이너의 전체 너비를 줄임 */
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 그림자 추가 */
+    background: white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
     padding: 20px;
-    background-color: #fff; /* 배경색 변경 */
-    border-radius: 10px; /* 둥근 모서리 */
+    border-radius: 5px;
 }
 
 .reservation-card {
-    background-color: #e4fcef;
-    border: 1px solid #d4e2d4;
-    padding: 20px; /* 패딩 증가 */
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.reservation-card:last-child {
+    border-bottom: none;
+}
+
+.reservation-number {
+    font-weight: bold;
+    margin-right: 20px; /* 예약 정보와의 간격 */
+    color: #333;
+    font-size: 16px;
 }
 
 .route-info {
-    display: flex;
-    align-items: center;
-    gap: 30px; /* 간격 증가 */
+    font-size: 16px;
 }
 
-.city {
-    font-size: 20px; /* 글씨 크기 증가 */
-    font-weight: bold;
+.date-date, .date-time, .bus-grade, .reservation-status {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
 }
 
-.date-time {
-    color: #555;
-    font-size: 18px; /* 글씨 크기 증가 */
-}
 .actions {
-    display: flex;
-    gap: 10px;
+    margin-left: auto; /* 액션 버튼을 오른쪽으로 정렬 */
 }
 
 .btn {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    text-transform: uppercase; /* 버튼 텍스트를 대문자로 */
+    padding: 8px 16px;
+    margin-left: 10px; /* 버튼 간 간격 조정 */
 }
 
-.btn-change {
+.btn-change, .btn-do-reservation {
     background-color: #4CAF50;
-    color: white;
-}
-
-.btn-change:hover {
-    background-color: #45a049;
 }
 
 .btn-cancel {
     background-color: #f44336;
-    color: white;
 }
 
-.btn-cancel:hover {
-    background-color: #d32f2f;
+.btn:hover {
+    opacity: 0.9;
 }
 
 .no-reservation {
-    font-size: 16px;
-    color: #666;
-    padding: 20px;
     text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 16px;
 }
+
 
 /* myPage-likes(내 찜) */
 
