@@ -6,14 +6,13 @@ import com.estsoft.paldotourism.repository.BusRepository;
 import com.estsoft.paldotourism.repository.ReservationRepository;
 import com.estsoft.paldotourism.repository.SeatRepository;
 import com.estsoft.paldotourism.repository.UserRepository;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class ReservationService {
@@ -24,23 +23,39 @@ public class ReservationService {
 
     private final PaymentHistoryService paymentHistoryService;
 
+    private final SeatService seatService;
 
-    public ReservationService(ReservationRepository reservationRepository, BusRepository busRepository, SeatRepository seatRepository, UserRepository userRepository, PaymentHistoryService paymentHistoryService) {
+
+    public ReservationService(ReservationRepository reservationRepository, BusRepository busRepository, SeatRepository seatRepository, UserRepository userRepository, PaymentHistoryService paymentHistoryService, SeatService seatService) {
         this.reservationRepository = reservationRepository;
         this.busRepository = busRepository;
         this.seatRepository = seatRepository;
         this.userRepository = userRepository;
         this.paymentHistoryService = paymentHistoryService;
+        this.seatService = seatService;
     }
 
     @Transactional
     // 예약 추가(예약 데이터를 테이블에 추가함)
     public Long addReservation(Long busId, ReservationRequestDto requestDto, String userName) {
 
+
         // 필요한 정보 가져옴
         Bus bus = busRepository.findById(busId).get();
         User user = userRepository.findByEmail(userName).get();
-        
+
+
+        // 선택한 좌석이 빈 좌석이 아닌지 체크
+        for (int i = 0; i < requestDto.getSeatNumbers().size(); i++) {
+            Integer seatNumber = requestDto.getSeatNumbers().get(i);
+
+            Boolean check = checkDuplication(bus,seatNumber);
+            if(!check)
+            {
+                return 0L;
+            }
+        }
+
         // 예약 코드 생성 함수 호출
         String testReservationCode = generateReservationCode();
         
@@ -51,15 +66,17 @@ public class ReservationService {
 
         // 선택한 좌석들을 가져와 상태를 선택중으로 변경
         for (int i = 0; i < requestDto.getSeatNumbers().size(); i++) {
-            Integer seat = requestDto.getSeatNumbers().get(i);
+            Integer seatNumber = requestDto.getSeatNumbers().get(i);
 
-            updateSeatReservationStatus(bus, seat, SeatStatus.SELECTED);
-            updateSeatReservation(reservation,bus,seat);
+            updateSeatReservationStatus(bus, seatNumber, SeatStatus.SELECTED);
+            updateSeatReservation(reservation,bus,seatNumber);
 
         }
 
         return saveReservation.getId();
     }
+
+
 
     // 예약 ID로 예약 1개 반환
     public Reservation showOneReservation(Long reservationId)
@@ -98,11 +115,21 @@ public class ReservationService {
         paymentHistoryService.cancelPaymentHistory(reservationId);
 
 
-
-
         // 예약 변경(실제로는 예약 테이블에 새로운 예약 데이터를 추가하는 것과 동일함)
         Bus bus = busRepository.findById(busId).get();
         User user = userRepository.findByEmail(userName).get();
+
+
+        // 선택한 좌석이 빈 좌석이 아닌지 체크
+        for (int i = 0; i < requestDto.getSeatNumbers().size(); i++) {
+            Integer seatNumber = requestDto.getSeatNumbers().get(i);
+
+            Boolean check = checkDuplication(bus,seatNumber);
+            if(!check)
+            {
+                return;
+            }
+        }
 
         // 예약 코드 생성 함수 호출
         String testReservationCode = generateReservationCode();
@@ -180,6 +207,19 @@ public class ReservationService {
         seat.updateReservation(reservation);
     }
 
+    // 좌석 중복 체크
+    private Boolean checkDuplication(Bus bus, Integer seatNumber) {
+        Seat seat = seatRepository.findByBusAndSeatNumber(bus, seatNumber);
+        if(seat.getStatus() != SeatStatus.EMPTY)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
 
 
     // 예약 코드 생성
@@ -235,4 +275,30 @@ public class ReservationService {
 
         return totalSeat;
     }
+
+    // 스케줄링(10분 마다 실행)
+    // 좌석 상태가 변경된지 10분이 지난 것만 제거
+    @Transactional
+    @Scheduled(fixedDelay = 600000)
+    public void autoScheduled()
+    {
+        List<Seat> seatList = seatRepository.findAllByStatus(SeatStatus.SELECTED);
+        LocalDateTime now = LocalDateTime.now();
+        Set<Reservation> reservationList = new HashSet<>();
+
+
+        seatList.forEach(seat -> {
+            if (seat.getModifiedDateTime().plusMinutes(10).isBefore(now)) {
+                Reservation reservation = seat.getReservation();
+                reservationList.add(reservation);
+                seat.updateStatus(SeatStatus.EMPTY);
+            }
+        });
+
+        List<Reservation> resultReservationList = reservationList.stream().toList();
+
+        reservationRepository.deleteAll(resultReservationList);
+
+    }
+
 }
