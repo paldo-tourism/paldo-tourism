@@ -3,8 +3,11 @@ package com.estsoft.paldotourism.dto.qna.article;
 import com.estsoft.paldotourism.dto.qna.comment.CommentResponseDTO;
 import com.estsoft.paldotourism.entity.Category;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import com.estsoft.paldotourism.entity.Role;
+import com.estsoft.paldotourism.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +20,7 @@ import lombok.ToString;
 public class ArticleResponseDTO {
   private Long id;
 
-  private String writer;
+  private String author;
 
   private String title;
 
@@ -35,11 +38,13 @@ public class ArticleResponseDTO {
 
   private Integer commentCount;
 
+  private Boolean statement;
+
   @Builder
-  public ArticleResponseDTO(Long id, String writer, String title, String content, Category category, LocalDateTime createdAt,
-                            LocalDateTime updatedAt, boolean isSecret, Integer commentCount) {
+  public ArticleResponseDTO(Long id, String author, String title, String content, Category category, LocalDateTime createdAt,
+                            LocalDateTime updatedAt, boolean isSecret, Integer commentCount, Boolean statement) {
     this.id = id;
-    this.writer = writer;
+    this.author = author;
     this.title = title;
     this.content = content;
     this.category = category;
@@ -47,11 +52,12 @@ public class ArticleResponseDTO {
     this.updatedAt = updatedAt;
     this.isSecret = isSecret;
     this.commentCount = commentCount;
+    this.statement = statement;
   }
 
-  public void updateIsSecret(String loginUserNickName){
+  public void updateIsSecret(String author, Role role){
     if(this.isSecret){
-      if(loginUserNickName.equals(this.writer)){
+      if(role == Role.ROLE_ADMIN || author.equals(this.author)){
         this.isSecret = false;
       }
     }
@@ -59,5 +65,43 @@ public class ArticleResponseDTO {
 
   public void updateCommentList(PageResponseDTO<CommentResponseDTO> commentList){
     this.commentList = commentList;
+  }
+
+  public void updateStatement(Boolean statement){
+    this.statement = statement;
+  }
+
+  public String convertLocaldatetimeToTime() {
+    final int SEC = 60;
+    final int MIN = 60;
+    final int HOUR = 24;
+    final int DAY = 30;
+    final int MONTH = 12;
+
+    LocalDateTime now = LocalDateTime.now();
+
+    long diffTime = createdAt.until(now, ChronoUnit.SECONDS); // now보다 이후면 +, 전이면 -
+
+    if (diffTime < SEC){
+      return diffTime + "초전";
+    }
+    diffTime = diffTime / SEC;
+    if (diffTime < MIN) {
+      return diffTime + "분 전";
+    }
+    diffTime = diffTime / MIN;
+    if (diffTime < HOUR) {
+      return diffTime + "시간 전";
+    }
+    diffTime = diffTime / HOUR;
+    if (diffTime < DAY) {
+      return diffTime + "일 전";
+    }
+    diffTime = diffTime / DAY;
+    if (diffTime < MONTH) {
+      return diffTime + "개월 전";
+    }
+    diffTime = diffTime / MONTH;
+      return diffTime + "년 전";
   }
 }

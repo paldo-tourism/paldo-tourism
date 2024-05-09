@@ -3,7 +3,6 @@
     <head>
       <title>문의 게시판</title>
       <script src="http://code.jquery.com/jquery-latest.js"></script>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css"/>
       <link th:href="@{/css/article/articleList.css}" rel="stylesheet">
     </head>
 
@@ -14,8 +13,10 @@
         <div class="row head flex">
           <div class="row-wrap flex">
             <span class="col col-id text-center">번호</span>
-            <span class="col col-title text-left">제목</span>
-            <span class="col col-writer text-left">작성자</span>
+            <span class="col col-id text-center">문의유형</span>
+            <span class="col col-title text-center">제목</span>
+            <span class="col col-writer text-center">상태</span>
+            <span class="col col-writer text-center">작성자</span>
             <span class="col col-time text-center">작성일</span>
           </div>
         </div>
@@ -25,15 +26,16 @@
             <span class="col col-id text-center">
               [[${dto.id}]]
             </span>
-            <span class="col col-title" th:if="${!dto.isSecret()}">
-              [[${dto.title}]] [ [[${dto.commentCount}]] ]
+            <span class="col col-id text-center" th:text="${dto.category.getCategoryName()}"></span>
+            <span class="col col-title" th:if="${!dto.isSecret()}" th:text="${dto.title}+' ['+${dto.commentCount}+']'">
             </span>
             <span class="col col-title isSecret" th:if="${dto.isSecret()}">
               <i class="fad fa-lock" style="--fa-primary-color: #939393; --fa-secondary-color: #939393;"></i>
               비밀글입니다.
             </span>
-            <span class="col col-writer text-left">[[${dto.writer}]]</span>
-            <span class="col col-time text-center">[[${#temporals.format(dto.createdAt, 'yyyy/MM/dd')}]]</span>
+            <span class="col col-writer text-center">[[${dto.statement}]]</span>
+            <span class="col col-writer text-center">[[${dto.author}]]</span>
+            <span class="col col-time text-center" th:text="${dto.convertLocaldatetimeToTime()}"></span>
           </div>
         </a>
       </div>
@@ -57,7 +59,7 @@
         <ul id="page">
           <li class="page-prev-arrow" th:if="${list.prev}">
             <a th:if="${searchType != null}" th:href="@{/article(page=${list.start - 2}, searchType=${searchType}, keyword=${keyword})}"><i class="far fa-caret-left fa-lg" style="color: #63E6BE;"></i></a>
-            <a th:if="${searchType == null}" th:href="@{/article(page=${list.start - 2})}"><i class="far fa-caret-left fa-lg" style="color: #63E6BE;"></i></a>
+            <a th:if="${searchType == null}" th:href="@{/article(page=${list.start - 2})}"><i class="fas fa-caret-left fa-lg" style="color: #63E6BE;"></i></a>
           </li>
 
           <li th:each="pageNum:${list.pageList}" th:class="${list.page == pageNum?'is-active':'not-active'}">
@@ -71,7 +73,7 @@
 
           <li class="page-next-arrow" th:if="${list.next}">
             <a th:if="${searchType != null}" th:href="@{/article(page=${list.end}, searchType=${searchType}, keyword=${keyword})}"><i class="far fa-caret-right fa-lg" style="color: #63E6BE;"></i></a>
-            <a th:if="${searchType == null}" th:href="@{/article(page=${list.end})}"><i class="far fa-caret-right fa-lg" style="color: #63E6BE;"></i></a>
+            <a th:if="${searchType == null}" th:href="@{/article(page=${list.end})}"><i class="fas fa-caret-right fa-lg" style="color: #63E6BE;"></i></a>
           </li>
         </ul>
       </div>

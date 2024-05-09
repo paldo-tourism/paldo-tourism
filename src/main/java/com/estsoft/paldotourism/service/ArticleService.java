@@ -33,13 +33,11 @@ public class ArticleService {
   @Autowired
   private UserRepository userRepository;
 
-  public PageResponseDTO<ArticleResponseDTO> articleList(String searchType, String keyword, String loginUserNickname, Pageable pageable){
-
+  public PageResponseDTO<ArticleResponseDTO> articleList(String searchType, String keyword, Pageable pageable){
     PageResponseDTO<ArticleResponseDTO> responseDTO;
 
     if(searchType == null || searchType.isEmpty()){
       responseDTO = new PageResponseDTO<>(articleRepository.findAll(pageable).map(this::toDTO));
-      responseDTO.getDtoList().forEach(x->x.updateIsSecret(loginUserNickname));
       return responseDTO;
     }
 
@@ -50,8 +48,6 @@ public class ArticleService {
     }else {
       responseDTO = new PageResponseDTO<>(articleRepository.findAllByTitleOrContentContains(keyword, pageable).map(this::toDTO));
     }
-
-    responseDTO.getDtoList().forEach(x->x.updateIsSecret(loginUserNickname));
 
     return responseDTO;
   }
@@ -102,7 +98,7 @@ public class ArticleService {
             .title(article.getTitle())
             .content(article.getContent())
             .category(article.getCategory())
-            .writer(article.getUser().getNickName())
+            .author(article.getUser().getNickName())
             .createdAt(article.getCreatedDateTime())
             .updatedAt(article.getModifiedDateTime())
             .isSecret(article.getIsSecret())
