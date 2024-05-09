@@ -1,0 +1,48 @@
+
+main{
+    display: flex;
+    justify-content: center;
+}
+
+div#main-area{
+    margin-top: 100px;
+    background-color: #f4f4f4;
+    border-radius: 15px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 500px;
+
+}
+
+div#ai-answer{
+    height: 315px;
+}
+
+div#form-list{
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.button-zone{
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.button-zone .recommend-button{
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 13px;
+}
+
+h1{
+    font-size: 23px;
+}
