@@ -39,7 +39,7 @@
                                 th:data-depDate="${reservation.bus.depDate}"
                                 th:data-busGrade="${reservation.bus.busGrade}"
                                 onclick="redirectToTimeTable(this)">시간 변경</button>
-                        <button class="btn btn-cancel">취소</button>
+                        <button class="btn btn-cancel" th:data-id="${reservation.id}" onclick="cancelReservation(this)">취소</button>
                     </div>
                 </div>
             </div>
