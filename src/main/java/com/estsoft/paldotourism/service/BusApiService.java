@@ -9,6 +9,7 @@ import com.estsoft.paldotourism.entity.BusTerminal;
 import com.estsoft.paldotourism.entity.Seat;
 import com.estsoft.paldotourism.entity.SeatStatus;
 import com.estsoft.paldotourism.entity.User;
+import com.estsoft.paldotourism.exception.bus.TerminalNotFoundException;
 import com.estsoft.paldotourism.exception.openapi.BusRouteNotFoundException;
 import com.estsoft.paldotourism.exception.openapi.UrlNotValidException;
 import com.estsoft.paldotourism.repository.BusRepository;
@@ -63,8 +64,6 @@ public class BusApiService {
         );
 
         if(busInfoList.size() > 0) {//이미 테이블에 관련 데이터가 있다면 DB에 있던 버스데이터를 반환
-            log.info("이미 존재하는 버스 데이터 입니다.");
-
             if(currentUser.isEmpty()) {
                 return busInfoList.stream().map(bus -> BusInfoFindResponseDto.of(bus,seatRepository.countByBusAndStatus(bus,SeatStatus.EMPTY),
                     LocalDateTime.now(),false)).collect(Collectors.toList());
@@ -155,7 +154,7 @@ public class BusApiService {
         Optional<BusTerminal> terminal = busTerminalRepository.findByName(TerminalName);
 
         if(terminal.isEmpty()) {
-            throw new IllegalStateException("해당 터미널은 존재하지 않는 터미널입니다.");
+            throw new TerminalNotFoundException();
         }
 
         return terminal.get().getId();
