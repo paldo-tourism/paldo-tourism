@@ -7,6 +7,8 @@ import com.estsoft.paldotourism.exception.likes.AlreadyLikedException;
 import com.estsoft.paldotourism.exception.likes.NotLikedYetException;
 import com.estsoft.paldotourism.repository.BusRepository;
 import com.estsoft.paldotourism.repository.LikesRepository;
+
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,5 +52,9 @@ public class LikesService {
 
     private Bus validateBus(Long busId) {
         return busRepository.findById(busId).orElseThrow(IllegalArgumentException::new);
+    }
+
+    public List<Likes> showAllLikes(String email) {
+        return likesRepository.findByUserEmail(email);
     }
 }

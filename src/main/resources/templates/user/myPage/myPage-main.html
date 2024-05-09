@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>마이페이지</title>
@@ -19,29 +18,39 @@
         </ul>
     </div>
     <div class="content">
-
         <div class="reservation-container" >
             <h1>내 예매 정보</h1>
             <div th:unless="${reservations}" class="no-reservation">
                 예매 내역이 없습니다.
             </div>
-            <div class="reservation-card" th:if="${reservations}">
-                <div th:each="reservation : ${reservations}" class="reservation-card">
-                    <div class="route-info">
-                        <span class="city" th:text="${reservation.bus.depTerminal} + ' → ' + ${reservation.bus.arrTerminal}">부산 → 서울</span>
-                        <span class="date-time" th:text="${reservation.bus.depTime}">24.04.24 14:00</span>
-                    </div>
-                    <div class="actions">
-                        <button class="btn btn-change">좌석/시간 변경</button>
-                        <button class="btn btn-cancel">취소</button>
-                    </div>
+            <div class="reservation-card" th:each="reservation : ${reservations}" th:if="${reservations}">
+                <span class="reservation-number" th:text="'예매 번호 ' + ${reservation.reservationNumber}">12345</span>
+                <div class="route-info">
+                    <span class="city" th:text="${reservation.bus.depTerminal} + ' → ' + ${reservation.bus.arrTerminal}">부산 → 서울</span>
+                    <span class="date-date" th:text="'출발 날짜 ' + ${#strings.substring(reservation.bus.depDate, 0, 4) + '-' + #strings.substring(reservation.bus.depDate, 4, 6) + '-' + #strings.substring(reservation.bus.depDate, 6, 8)}">2024-04-24</span>
+                    <span class="date-time" th:text="'출발 시간 ' + ${#strings.substring(reservation.bus.depTime, 8, 10) + ':' + #strings.substring(reservation.bus.depTime, 10, 12)}">14:00</span>
+                    <span class="bus-grade" th:text="'버스 등급 ' + ${reservation.bus.busGrade}">우등</span>
+                    <!--
+                    <span class="reservation-status" th:text="${reservation.reservationStatus == 'STATUS_RESERVATIONING' ? '예매중' : (reservation.reservationStatus == 'STATUS_RESERVATION' ? '예매완료' : '취소')}"></span>
+                    -->
+                    <span class="reservation-status" th:if="${reservation.reservationStatus.name() == 'STATUS_RESERVATIONING'}">예매 중</span>
+                    <span class="reservation-status" th:if="${reservation.reservationStatus.name() == 'STATUS_RESERVATION'}">예매 완료</span>
+                    <span class="reservation-status" th:if="${reservation.reservationStatus.name() == 'STATUS_CANCEL'}">예매 취소</span>
+                </div>
+                <div class="actions" th:if="${reservation.reservationStatus.name() != 'STATUS_CANCEL'}">
+                    <button class="btn btn-change" th:data-id="${reservation.id}"
+                            th:data-depTerminal="${reservation.bus.depTerminal}"
+                            th:data-arrTerminal="${reservation.bus.arrTerminal}"
+                            th:data-depDate="${reservation.bus.depDate}"
+                            th:data-busGrade="${reservation.bus.busGrade}"
+                            onclick="redirectToTimeTable(this)">시간 변경</button>
+                    <button class="btn btn-cancel" th:data-id="${reservation.id}" onclick="cancelReservation(this)">취소</button>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-
+<script src="js/header.js" th:src="@{/js/header.js}"></script>
+<script src="js/user/myPage/myPage.js" th:src="@{/js/user/myPage/myPage.js}" ></script>
 </body>
-<script src="js/header.js"></script>
 </html>

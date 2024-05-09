@@ -20,19 +20,22 @@
     </div>
     <div class="content">
 
-        <div class="likes-container" >
+        <div class="reservation-container" >
             <h1>내 찜 내역</h1>
-            <div th:unless="${likes}" class="no-likes">
+            <div th:unless="${likes}" class="no-reservation">
                 찜 내역이 없습니다.
             </div>
-            <div class="likes-card" th:if="${likes}">
-                <div th:each="like : ${likes}" class="likes-card">
+            <div class="reservation-card" th:if="${likes}">
+                <div th:each="like : ${likes}" class="reservation-card">
                     <div class="route-info">
-                        <span class="city" th:text="${like.fromCity} + ' → ' + ${like.toCity}">부산 → 서울</span>
-                        <span class="date-time" th:text="${like.dateTime}">24.04.24 14:00</span>
+                        <span class="city" th:text="${like.bus.depTerminal} + ' → ' + ${like.bus.arrTerminal}">부산 → 서울</span>
+                        <span class="date-date" th:text="'출발 날짜 ' + ${#strings.substring(like.bus.depDate, 0, 4) + '-' + #strings.substring(like.bus.depDate, 4, 6) + '-' + #strings.substring(like.bus.depDate, 6, 8)}">2024-04-24</span>
+                        <span class="date-time" th:text="'출발 시간 ' + ${#strings.substring(like.bus.depTime, 8, 10) + ':' + #strings.substring(like.bus.depTime, 10, 12)}">14:00</span>
+                        <span class="bus-grade" th:text="'버스 등급 ' + ${like.bus.busGrade}">우등</span>
                     </div>
                     <div class="actions">
-                        <button class="btn btn-cancel">취소</button>
+                        <button class="btn btn-do-reservation" th:data-id="${like.bus.id}" onclick="doReservation(this)">예매하기</button>
+                        <button class="btn btn-cancel" th:data-id="${like.bus.id}" onclick="cancelLike(this)">취소</button>
                     </div>
                 </div>
             </div>
@@ -42,5 +45,6 @@
 </div>
 
 </body>
-<script src="js/header.js"></script>
+<script src="js/header.js" th:src="@{/js/header.js}"></script>
+<script src="js/user/myPage/myPage-likes.js" th:src="@{/js/user/myPage/myPage-likes.js}"></script>
 </html>
