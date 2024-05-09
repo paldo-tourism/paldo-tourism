@@ -3,6 +3,7 @@ package com.estsoft.paldotourism.controller;
 import com.estsoft.paldotourism.dto.qna.article.ArticleRequestDTO;
 import com.estsoft.paldotourism.dto.qna.article.ArticleResponseDTO;
 import com.estsoft.paldotourism.dto.qna.article.PageResponseDTO;
+import com.estsoft.paldotourism.entity.Role;
 import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.service.ArticleService;
 import jakarta.annotation.Nullable;
@@ -14,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +36,11 @@ public class ArticleController {
   @GetMapping("/article")
   public String articleList(Model model, @PageableDefault(page = 0, size = 15, sort ="createdDateTime",
           direction = Direction.DESC) Pageable pageable, @Nullable String searchType, @Nullable String keyword){
-    PageResponseDTO<ArticleResponseDTO> pageResponseDTO = articleService.articleList(searchType, keyword, getLoginUserName(), pageable);
+    PageResponseDTO<ArticleResponseDTO> pageResponseDTO = articleService.articleList(searchType, keyword, pageable);
+
+    if(!getLoginUserName().equals("anonymousUser")) {
+      pageResponseDTO.getDtoList().forEach(x->x.updateIsSecret(getLoginUser().getNickName(), getLoginUser().getRole()));
+    }
 
     model.addAttribute("list", pageResponseDTO);
     model.addAttribute("searchType", searchType);
@@ -48,8 +54,8 @@ public class ArticleController {
   public String articleRead(@PathVariable Long articleId, Model model){
     ArticleResponseDTO articleResponseDTO = articleService.articleRead(articleId);
 
-    if(articleResponseDTO.isSecret() && (!articleResponseDTO.getWriter().equals(getLoginUserName()))){
-      throw new AuthorizationServiceException("접근 권한이 없습니다.");
+    if(articleResponseDTO.isSecret()){
+      identityVerification(articleResponseDTO.getAuthor(), getLoginUser());
     }
     model.addAttribute("article", articleResponseDTO);
     model.addAttribute("commentList", articleResponseDTO.getCommentList());
@@ -70,9 +76,8 @@ public class ArticleController {
   @PreAuthorize("isAuthenticated() or hasRole('ROLE_ADMIN')")
   @PostMapping("/article/write")
   public String articleWrite(ArticleRequestDTO articleRequestDTO){
-    log.info(getLoginUserEmail());
 
-    articleRequestDTO.setAuthorEmail(getLoginUserEmail());
+    articleRequestDTO.setAuthorEmail(getLoginUser().getEmail());
 
     Long articleId = articleService.articleWrite(articleRequestDTO);
 
@@ -85,8 +90,6 @@ public class ArticleController {
   public String articleUpdatePage(Model model, @PathVariable Long articleId){
     ArticleResponseDTO articleResponseDTO = articleService.articleRead(articleId);
 
-    identityVerification(articleResponseDTO.getWriter());
-
     model.addAttribute("article",articleResponseDTO);
     return "/article/update";
   }
@@ -94,6 +97,7 @@ public class ArticleController {
   @PreAuthorize("isAuthenticated() or hasRole('ROLE_ADMIN')")
   @PutMapping("/article/update/{articleId}")
   public String articleUpdate(ArticleRequestDTO articleRequestDTO, @PathVariable Long articleId){
+
     articleService.articleUpdate(articleRequestDTO, articleId);
 
     return "redirect:/article/"+articleId;
@@ -104,8 +108,6 @@ public class ArticleController {
   @DeleteMapping("/article/delete/{articleId}")
   public String articleDelete(@PathVariable Long articleId){
     ArticleResponseDTO articleResponseDTO = articleService.articleRead(articleId);
-
-    identityVerification(articleResponseDTO.getWriter());
 
     articleService.articleDelete(articleId);
 
@@ -118,17 +120,17 @@ public class ArticleController {
     return authentication.getName();
   }
 
-  private String getLoginUserEmail(){
+  private User getLoginUser(){
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    User user = (User)authentication.getPrincipal();
-    return user.getEmail();
+    return (User)authentication.getPrincipal();
   }
 
   //권한 확인
-  private void identityVerification(String writer){
-    if(!writer.equals( getLoginUserName())){
-      throw new AuthorizationServiceException("권한이 없습니다");
+  private void identityVerification(String writer, User user){
+    if(writer.equals( user.getNickName()) || user.getRole() == Role.ROLE_ADMIN){
+      return;
     }
+    throw new AuthorizationServiceException("권한이 없습니다");
   }
 
 }

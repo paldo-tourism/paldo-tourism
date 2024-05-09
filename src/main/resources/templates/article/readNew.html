@@ -8,17 +8,17 @@
       <h2>문의 게시판</h2>
       <div id="article-header">
         <div id="article-header-top">
-          <p th:if="${article.category != null}" id="category-article" th:text="'[' + ${article.category} + ']'"></p><p id="title-article" th:text="${article.title}"></p>
+          <p th:if="${article.category != null}" id="category-article" th:text="'[' + ${article.category.getCategoryName()} + ']'"></p><p id="title-article" th:text="${article.title}"></p>
         </div>
         <div id="article-header-bottom">
-          <p><span id="writer-article" th:text="${article.writer}"></span><span id="article-created-at" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+          <p><span id="writer-article" th:text="${article.author}"></span><span id="article-created-at" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
         </div>
       </div>
       <div id="article-body">
         <div id="article">
-          <div id="writer-btn-box" th:if="${article.writer} == ${#authorization.authentication.name}">
-            <button id="btn-modify-article">수정</button>
-            <button id="btn-delete-article">삭제</button>
+          <div id="writer-btn-box" th:if="${article.author} == ${#authorization.authentication.name} or ${#authorization.expression('hasRole(''ADMIN'')')}">
+            <button id="btn-modify-article" class="btn-small">수정</button>
+            <button id="btn-delete-article" class="btn-small">삭제</button>
           </div>
           <textarea id="content-article" th:text="${article.content}" readonly></textarea>
         </div>
@@ -27,7 +27,7 @@
         <div id="comment-area">
           <div id="comment-area-header">
             <h3>댓글</h3>
-            <button id="btn-refresh">↻ 새로고침</button>
+            <button id="btn-refresh"><i class="fas fa-sync-alt"></i> 새로고침</button>
           </div>
           <!--  댓글 입력-->
           <div sec:authorize="isAuthenticated()" class="comment-input-area">
@@ -56,11 +56,11 @@
                     <p class="comment-create" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></p>
                   </div>
                   <div class="comment-btn-area">
-                    <div th:if="${#authorization.authentication.name} == ${comment.author}">
+                    <div th:if="${#authorization.authentication.name} == ${comment.author} or ${#authorization.expression('hasRole(''ADMIN'')')}">
                       <button class="btn-modify">수정</button>
                       <button class="btn-delete">삭제</button>
                     </div>
-                    <button class="btn-reply-toggle">답글</button>
+                    <button sec:authorize="isAuthenticated()" class="btn-reply-toggle">답글</button>
                   </div>
                 </div>
                 <textarea class="comment-content" th:text="${comment.content}"></textarea>
@@ -82,7 +82,7 @@
               </li>
             </ul>
 
-            <a th:href="@{/article}"><button id="btn-article-list">목록</button></a>
+            <a th:href="@{/article}"><button id="btn-article-list" class="btn-small">목록</button></a>
           </div>
 
           <!--  대댓글 입력 폼-->
