@@ -47,11 +47,6 @@ public class BusApiController {
         Optional<User> currentUser = userDetailService.getCurrentUser();
         List<BusInfoFindResponseDto> busList = busApiService.getBusInfo(request, currentUser);
 
-        if (busList.isEmpty()) {
-            model.addAttribute("errorMessage", "해당 노선이 없습니다.");
-            return "/reservation/timeTable";  // 버스 목록이 비어 있을 경우, 에러 메시지를 모델에 추가
-        }
-
         model.addAttribute("schedules", busList);
         return "/reservation/timeTable";  // 타임 테이블 페이지 렌더링
     }
@@ -71,6 +66,7 @@ public class BusApiController {
     @GetMapping("/seatSelect")
     @PreAuthorize("isAuthenticated() or hasRole('ROLE_ADMIN')")
     public String showSeatSelect(@RequestParam("busId") Long busId,Model model) {
+        //TODO busID가 유효한지 검증
         List<SeatResponseDto> seats = seatService.getSeatsByBusId(busId);
         SeatBusResponseDto busInfo = seatService.getBusByBusId(busId);
 

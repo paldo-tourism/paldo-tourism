@@ -98,7 +98,4 @@ public class CommentController {
       throw new AuthorizationServiceException("권한이 없습니다");
     }
   }
-
-   
-
 }

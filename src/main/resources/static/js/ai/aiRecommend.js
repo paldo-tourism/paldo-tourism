@@ -1,5 +1,3 @@
-
-// 현재 날짜를 가져오는 함수
 function getCurrentDate() {
     let today = new Date();
     let year = today.getFullYear();
@@ -12,8 +10,18 @@ function getCurrentDate() {
     return year + '-' + month + '-' + day;
 }
 
-// 페이지가 로드될 때 실행되는 함수
 window.onload = function() {
-    // input 요소의 min 속성에 현재 날짜를 설정합니다.
     document.getElementById('travelDate').setAttribute('min', getCurrentDate());
 };
+
+document.addEventListener("DOMContentLoaded", function() {
+    var form = document.getElementById("form");
+    form.addEventListener("submit", function(event) {
+        var travelDate = document.getElementById("travelDate").value;
+
+        if (travelDate === "") {
+            event.preventDefault(); // 제출 중단
+            alert("여행 날짜를 입력해주세요.");
+        }
+    });
+});
