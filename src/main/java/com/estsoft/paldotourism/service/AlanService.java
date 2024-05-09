@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class AlanService {
@@ -37,14 +39,10 @@ public class AlanService {
         return jsonObject.getString("content");
     }
 
-    private String removeSource(String requestJson) {
-        try {
-            // 출처 및 링크 제거
-            return requestJson.replaceAll("출처\\d*\\s*\\(.*?\\)", "");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Error occurred while processing the request";
-        }
+    private static String removeSource(String sentence) {
+        Pattern pattern = Pattern.compile("\\[([^\\[\\]]+)\\]\\([^()]+\\)|:.+|\\*");
+        Matcher matcher = pattern.matcher(sentence);
+        return matcher.replaceAll("");
     }
 
 

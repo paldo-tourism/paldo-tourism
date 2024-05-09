@@ -78,8 +78,6 @@ function clickToGoTimeTableButton() {
   )
 
   return false;
-
-  window.location.href = `/timeTable?${params}`; // URL 변경과 페이지 리다이렉트
 }
 
 document.addEventListener('DOMContentLoaded',updateDateOptions); //메인페이지가 로드되면 updateDateOptions 실행

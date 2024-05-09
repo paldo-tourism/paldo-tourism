@@ -3,6 +3,7 @@ package com.estsoft.paldotourism.service;
 import com.estsoft.paldotourism.dto.bus.SeatBusResponseDto;
 import com.estsoft.paldotourism.dto.bus.SeatResponseDto;
 import com.estsoft.paldotourism.entity.Bus;
+import com.estsoft.paldotourism.exception.bus.BusNotFoundException;
 import com.estsoft.paldotourism.repository.BusRepository;
 import com.estsoft.paldotourism.repository.SeatRepository;
 import java.util.List;
@@ -23,19 +24,14 @@ public class SeatService {
 
     @Transactional(readOnly = true)
     public List<SeatResponseDto> getSeatsByBusId(Long busId) {
-        //TODO seat 인덱싱
         return seatRepository.findByBusId(busId).stream().map(SeatResponseDto::of).collect(
             Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public SeatBusResponseDto getBusByBusId(Long busId) {
-        Optional<Bus> bus = busRepository.findById(busId);
+        Bus bus = busRepository.findById(busId).orElseThrow(BusNotFoundException::new);
 
-        if(bus.isEmpty()) {
-            throw new IllegalArgumentException("해당 버스는 존재하지 않습니다.");
-        }
-
-        return SeatBusResponseDto.of(bus.get());
+        return SeatBusResponseDto.of(bus);
     }
 }

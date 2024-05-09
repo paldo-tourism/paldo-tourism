@@ -24,14 +24,13 @@ public class AlanDto {
                 .append(travelStart)
                 .append("에서 출발하는 여행을 찾고 있고, 여행 인원은 ")
                 .append(travelNumber)
-                .append("명 여행 유형은 ")
+                .append("명 여행을 가서")
                 .append(travelType)
-                .append("여행 경비는 ")
+                .append("을 하고싶어 여행 경비는 ")
                 .append(travelExpenses)
                 .append("정도를 생각하고 있어")
-                .append("적절한 국내 여행지 중 고속터미널이 있는 지역을 하나만 추천해주고 해당 여행지와 가장 가까운 고속 터미널도 이 중에서 찾아줘, 답변형식에 맞춰서 답변해줘 ")
-                .append("답변형식은 다음과 같은 조건에 맞춰서 부탁해 추천해준 목적지, 목적지와 가까운 고속 터미널, 해당 목적지를 추천해준 이유를 적는다. 출처는 모두 모아 맨 마지막에 붙인다.");
-
+                .append("적절한 국내 여행지 중 도시 한 곳을 추천해주고 꼭 버스를 타고 가야하니까 고속터미널이 있는 도시를 추천해줘")
+                .append("답변 마지막에는 버스터미널을 명시해주고, 해당 지역에 가서 유형에 맞는 가볼만한 곳 몇가지 말해줘 예를들어 내가 데이트를 선택하면 데이트 코스, 등산을 선택하면 유명한 산 같이");
         log.info(messageBuilder.toString());
         return messageBuilder.toString();
     }

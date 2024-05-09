@@ -4,8 +4,11 @@ import com.estsoft.paldotourism.entity.Bus;
 import com.estsoft.paldotourism.entity.Likes;
 import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.exception.likes.AlreadyLikedException;
+import com.estsoft.paldotourism.exception.likes.NotLikedYetException;
 import com.estsoft.paldotourism.repository.BusRepository;
 import com.estsoft.paldotourism.repository.LikesRepository;
+
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,7 +44,7 @@ public class LikesService {
         Optional<Likes> like = likesRepository.findByUserIdAndBusId(currentUser.getId(),bus.getId());
 
         if(like.isEmpty()) {
-            throw new IllegalArgumentException("해당 노선은 이미 찜 목록에 추가되어 있지 않습니다.");
+            throw new NotLikedYetException();
         }
 
         likesRepository.delete(like.get());
@@ -49,5 +52,9 @@ public class LikesService {
 
     private Bus validateBus(Long busId) {
         return busRepository.findById(busId).orElseThrow(IllegalArgumentException::new);
+    }
+
+    public List<Likes> showAllLikes(String email) {
+        return likesRepository.findByUserEmail(email);
     }
 }
