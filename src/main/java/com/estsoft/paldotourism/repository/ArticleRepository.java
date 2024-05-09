@@ -7,7 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
   @EntityGraph(attributePaths = {"user"})
   Optional<Article> findById(Long id);
