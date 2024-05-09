@@ -1,14 +1,20 @@
 package com.estsoft.paldotourism.controller;
 
 import com.estsoft.paldotourism.dto.user.AddUserRequestDto;
+import com.estsoft.paldotourism.entity.Reservation;
+import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.service.ReservationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,17 +49,16 @@ public class UserPageController {
         return "user/forgot-pw";
     }
 
-    /*
-    // 마이페이지 뷰
-    @GetMapping("/myPage")
-    public String myPage(Model model, @AuthenticationPrincipal UserDetails currentLoginUser) {
-        model.addAttribute("currentLoginUser", currentLoginUser);
-        return "user/myPage/myPage-main";
-    }
-     */
     // 마이페이지 뷰(메인 - 예매내역)
     @GetMapping("/myPage")
-    public String myPage() {
+    public String myPage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) authentication.getPrincipal();
+        List<Reservation> reservations = reservationService.showAllReservation(currentUser.getEmail());
+        if(reservations.isEmpty()) {
+            reservations = null;
+        }
+        model.addAttribute("reservations", reservations);
         return "user/myPage/myPage-main";
     }
 

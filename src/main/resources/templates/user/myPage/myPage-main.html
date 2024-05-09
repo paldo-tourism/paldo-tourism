@@ -29,10 +29,16 @@
                 <div th:each="reservation : ${reservations}" class="reservation-card">
                     <div class="route-info">
                         <span class="city" th:text="${reservation.bus.depTerminal} + ' → ' + ${reservation.bus.arrTerminal}">부산 → 서울</span>
-                        <span class="date-time" th:text="${reservation.bus.depTime}">24.04.24 14:00</span>
+                        <span class="date-date" th:text="${reservation.bus.depDate}">24.04.24</span>
+                        <span class="date-time" th:text="${reservation.bus.depTime}">14:00</span>
                     </div>
                     <div class="actions">
-                        <button class="btn btn-change">좌석/시간 변경</button>
+                        <button class="btn btn-change" th:data-id="${reservation.id}"
+                                th:data-depTerminal="${reservation.bus.depTerminal}"
+                                th:data-arrTerminal="${reservation.bus.arrTerminal}"
+                                th:data-depDate="${reservation.bus.depDate}"
+                                th:data-busGrade="${reservation.bus.busGrade}"
+                                onclick="redirectToTimeTable(this)">시간 변경</button>
                         <button class="btn btn-cancel">취소</button>
                     </div>
                 </div>
@@ -44,4 +50,5 @@
 
 </body>
 <script src="js/header.js"></script>
+<script src="js/user/myPage/myPage.js"></script>
 </html>
