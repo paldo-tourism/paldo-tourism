@@ -23,4 +23,7 @@ public interface SeatRepository extends JpaRepository<Seat,Long> {
     Long countByReservation(Reservation reservation);
 
     List<Seat> findByBusId(Long busId);
+
+
+    List<Seat> findAllByStatus(SeatStatus seatStatus);
 }

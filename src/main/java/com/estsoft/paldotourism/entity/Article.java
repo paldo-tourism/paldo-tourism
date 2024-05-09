@@ -46,6 +46,11 @@ public class Article extends BaseTime {
     @Formula("(select count(1) from comment c where c.article_id = id)")
     private int commentCount;
 
+    @Column
+    @ColumnDefault("false")
+    private Boolean statement;
+
+
     @Builder
     public Article(User user, Category category, String title, String content, Boolean isSecret) {
         this.user = user;

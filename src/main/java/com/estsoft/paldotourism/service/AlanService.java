@@ -40,7 +40,7 @@ public class AlanService {
     }
 
     private static String removeSource(String sentence) {
-        Pattern pattern = Pattern.compile("\\*|\\[([^\\[\\]]+)\\]\\([^()]+\\)|:\\s*[^:]*$");
+        Pattern pattern = Pattern.compile("\\[([^\\[\\]]+)\\]\\([^()]+\\)|:.+|\\*");
         Matcher matcher = pattern.matcher(sentence);
         return matcher.replaceAll("");
     }

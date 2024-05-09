@@ -20,6 +20,11 @@ public class AlanController {
         String aiResponse = alanService.askAi(alanDto);
 
         model.addAttribute("response",aiResponse);
-        return "/ai/test";
+        return "/ai/aiAnswer";
+    }
+
+    @GetMapping("/main")
+    public String goMain() {
+        return "/index";
     }
 }

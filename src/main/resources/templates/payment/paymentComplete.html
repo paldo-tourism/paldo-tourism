@@ -47,14 +47,14 @@
                         </tr>
                         <tr>
                             <th>결제 시간</th>
-                            <td th:text="${reservationInfo.paymentHistory.createdAt}">결제시간</td>
+                            <td th:text="${#temporals.format(reservationInfo.paymentHistory.createdDateTime, 'yyyy-MM-dd HH:mm')}">결제시간</td>
                         </tr>
                     </table>
                 </div>
             </div>
             <div class="button-flex">
                 <button type="button" class="link-button">메인</button>
-                <button type="button" class="link-button">예매 내역 확인</button>
+                <button type="button" class="link-button"><a th:href="@{'/myPage'}">예매 내역 확인</a></button>
             </div>
         </div>
 
