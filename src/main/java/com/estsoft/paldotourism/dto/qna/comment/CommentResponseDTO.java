@@ -15,18 +15,21 @@ public class CommentResponseDTO {
 
   private String content;
 
-  private String writer;
+  private String author;
+
+  private Integer depth;
 
   private LocalDateTime createdAt;
 
   private LocalDateTime updatedAt;
 
   @Builder
-  public CommentResponseDTO(Long commentId, String content, String writer, LocalDateTime createdAt,
-      LocalDateTime updatedAt) {
+  public CommentResponseDTO(Long commentId, String content, String author, Integer depth, LocalDateTime createdAt,
+                            LocalDateTime updatedAt) {
     this.commentId = commentId;
     this.content = content;
-    this.writer = writer;
+    this.author = author;
+    this.depth = depth;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }

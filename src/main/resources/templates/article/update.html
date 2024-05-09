@@ -1,23 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-<form th:method="put" th:action="@{/article/update/{articleId}(articleId=${articleId})}">
-  <input type="hidden" name="_method" value="PUT">
-  <input type="hidden" name="articleId" th:value="${articleId}">
-  <select name="category" required>
-    <option value="">카테고리</option>
-    <option value="CATEGORY_ANNOUNCEMENT" th:selected="${article.category.equals('CATEGORY_ANNOUNCEMENT') ? 'selected' : '' }">공지</option>
-    <option value="CATEGORY_QA" th:selected="${article.category.equals('CATEGORY_QA') ? 'selected' : '' }">문의</option>
-  </select>
-  <p>제목</p><input type="text" name="title" th:value="${article.title}" required>
-  <p>내용</p><input type="text" name="content" th:value="${article.content}" required>
-  <label><input name="isSecret" type="checkbox" th:checked="${article.isSecret}">비밀글</label>
-  <input type="hidden" name="_isSecret" value="on">
-  <button type="submit">수정</button>
-</form>
-</body>
-</html>
+<th:block th:replace = "~{/article/articleLayout :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <head>
+      <meta charset="UTF-8">
+      <title>Title</title>
+      <link rel="stylesheet" th:href="@{/css/article/articleWrite.css}"></link>
+    </head>
+    <div id="content-wrap">
+      <h2>문의 남기기</h2>
+      <form th:method="put" th:action="@{/article/update/{articleId}(articleId=${articleId})}">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="articleId" th:value="${articleId}">
+        <select id="category" name="category" required>
+          <option value="">카테고리</option>
+          <option value="CATEGORY_ANNOUNCEMENT" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:selected="${article.category.equals('CATEGORY_ANNOUNCEMENT') ? 'selected' : '' }">공지</option>
+          <option value="CATEGORY_QA" th:selected="${article.category.equals('CATEGORY_QA') ? 'selected' : '' }">문의</option>
+        </select>
+        <input id="article-title" type="text" name="title" th:value="${article.title}" required>
+        <textarea id="article-content" name="content" th:text="${article.content}" required></textarea>
+        <label><input name="isSecret" type="checkbox" th:checked="${article.isSecret}">비밀글</label>
+        <input type="hidden" name="_isSecret" value="on">
+        <button type="submit">수정</button>
+      </form>
+    </div>
+  </th:block>
+</th:block>

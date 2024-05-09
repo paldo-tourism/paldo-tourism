@@ -3,14 +3,20 @@ package com.estsoft.paldotourism.service;
 import com.estsoft.paldotourism.dto.qna.article.ArticleRequestDTO;
 import com.estsoft.paldotourism.dto.qna.article.ArticleResponseDTO;
 import com.estsoft.paldotourism.dto.qna.article.PageResponseDTO;
+import com.estsoft.paldotourism.dto.qna.comment.CommentResponseDTO;
 import com.estsoft.paldotourism.entity.Article;
 import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.repository.ArticleRepository;
+import com.estsoft.paldotourism.repository.CommentRepository;
 import com.estsoft.paldotourism.repository.UserRepository;
 import jakarta.transaction.Transactional;
+
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -20,6 +26,9 @@ public class ArticleService {
 
   @Autowired
   private ArticleRepository articleRepository;
+
+  @Autowired
+  private CommentService commentService;
 
   @Autowired
   private UserRepository userRepository;
@@ -49,8 +58,13 @@ public class ArticleService {
 
   public ArticleResponseDTO articleRead(Long articleId){
     Article article = articleRepository.findById(articleId).orElseThrow(()-> new NoSuchElementException("없는 글입니다."));
+    ArticleResponseDTO articleResponseDTO = toDTO(article);
 
-    return toDTO(article);
+    PageResponseDTO<CommentResponseDTO> commentList = commentService.getCommentList(articleId,
+            PageRequest.of(0,10, Sort.Direction.ASC, "path"));
+    articleResponseDTO.updateCommentList(commentList);
+
+    return articleResponseDTO;
   }
 
   public Long articleWrite(ArticleRequestDTO articleRequestDTO){
@@ -74,31 +88,32 @@ public class ArticleService {
     User user = userRepository.findByEmail(dto.getAuthorEmail()).orElseThrow();
 
     return Article.builder()
-        .user(user)
-        .title(dto.getTitle())
-        .content(dto.getContent())
-        .category(dto.getCategory())
-        .isSecret(dto.getIsSecret())
-        .build();
+            .user(user)
+            .title(dto.getTitle())
+            .content(dto.getContent())
+            .category(dto.getCategory())
+            .isSecret(dto.getIsSecret())
+            .build();
   }
 
   private ArticleResponseDTO toDTO(Article article){
     return ArticleResponseDTO.builder()
-        .id(article.getId())
-        .title(article.getTitle())
-        .content(article.getContent())
-        .category(article.getCategory())
-        .writer(article.getUser().getNickName())
-        .createdAt(article.getCreatedDateTime())
-        .updatedAt(article.getModifiedDateTime())
-        .isSecret(article.getIsSecret())
-        .build();
+            .id(article.getId())
+            .title(article.getTitle())
+            .content(article.getContent())
+            .category(article.getCategory())
+            .writer(article.getUser().getNickName())
+            .createdAt(article.getCreatedDateTime())
+            .updatedAt(article.getModifiedDateTime())
+            .isSecret(article.getIsSecret())
+            .commentCount(article.getCommentCount())
+            .build();
   }
 
   //유저 정보 가져오기
   private User getAuthenticatedUser() {
     String username = SecurityContextHolder.getContext().getAuthentication().getName();
     return userRepository.findByEmail(username)
-        .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+            .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
   }
 }

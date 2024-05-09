@@ -1,0 +1,190 @@
+body {
+    display: flex;
+    flex-direction: column; /* 방향을 수직으로 설정 */
+}
+
+.main-container {
+    display: flex;
+    flex-direction: row; /* 사이드바와 콘텐츠 영역을 수평으로 배치 */
+    height: calc(100vh - 60px); /* 헤더 높이를 제외한 전체 높이 */
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    height: 100%; /* 부모 컨테이너의 높이에 맞춤 */
+}
+
+.sidebar h1 {
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    background-color: #ddd;
+}
+
+
+/* myPage-main(내 예매내역) */
+
+
+.content {
+    flex-grow: 1; /* 남은 공간을 모두 채움 */
+    padding: 20px;
+}
+
+.reservation-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.reservation-container {
+    width: 50%; /* 컨테이너의 전체 너비를 줄임 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 그림자 추가 */
+    padding: 20px;
+    background-color: #fff; /* 배경색 변경 */
+    border-radius: 10px; /* 둥근 모서리 */
+}
+
+.reservation-card {
+    background-color: #e4fcef;
+    border: 1px solid #d4e2d4;
+    padding: 20px; /* 패딩 증가 */
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.route-info {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* 간격 증가 */
+}
+
+.city {
+    font-size: 20px; /* 글씨 크기 증가 */
+    font-weight: bold;
+}
+
+.date-time {
+    color: #555;
+    font-size: 18px; /* 글씨 크기 증가 */
+}
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: uppercase; /* 버튼 텍스트를 대문자로 */
+}
+
+.btn-change {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-change:hover {
+    background-color: #45a049;
+}
+
+.btn-cancel {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #d32f2f;
+}
+
+.no-reservation {
+    font-size: 16px;
+    color: #666;
+    padding: 20px;
+    text-align: center;
+}
+
+/* myPage-likes(내 찜) */
+
+.likes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.likes-container {
+    width: 50%; /* 컨테이너의 전체 너비를 줄임 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 그림자 추가 */
+    padding: 20px;
+    background-color: #fff; /* 배경색 변경 */
+    border-radius: 10px; /* 둥근 모서리 */
+}
+
+.likes-card {
+    background-color: #e4fcef;
+    border: 1px solid #d4e2d4;
+    padding: 20px; /* 패딩 증가 */
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.route-info {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* 간격 증가 */
+}
+
+.city {
+    font-size: 20px; /* 글씨 크기 증가 */
+    font-weight: bold;
+}
+
+.date-time {
+    color: #555;
+    font-size: 18px; /* 글씨 크기 증가 */
+}
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: uppercase; /* 버튼 텍스트를 대문자로 */
+}
+
+.no-likes {
+    font-size: 16px;
+    color: #666;
+    padding: 20px;
+    text-align: center;
+}

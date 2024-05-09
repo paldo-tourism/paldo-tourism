@@ -33,8 +33,9 @@ public class SecurityConfig {
                 .formLogin(auth -> auth.loginPage("/login")
                         .failureHandler(customAuthenticationFailureHandler)
                         .defaultSuccessUrl("/"))
-                .logout(auth -> auth.logoutSuccessUrl("/login")
-                        .invalidateHttpSession(true))
+                .logout(auth -> auth.logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID"))
                 .csrf(auth -> auth.disable());                  // csrf 비활성화
         return httpSecurity.build();
     }
