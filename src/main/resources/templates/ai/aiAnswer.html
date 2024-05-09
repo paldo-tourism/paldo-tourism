@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>AI 추천</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/layout/header.css" th:href="@{/css/layout/header.css}"/>
+    <link rel="stylesheet" href="/static/css/ai/aiAnswer.css" th:href="@{/css/ai/aiAnswer.css}"/>
+</head>
+<body>
+<div th:replace="~{layout/header.html::main-header}"></div>
+<main>
+    <div id="main-area">
+
+            <h1> 선택해주신 여행 항목으로 추천된 여행 정보입니다! </h1>
+
+            <div id="form-list">
+                <div id="ai-answer">
+                    <h3 th:text="${response}"></h3>
+                </div>
+                <div class="button-zone">
+                    <button class="recommend-button" onclick="location.href = '../reservation/main.html'">예약하러가기</button>
+                </div>
+            </div>
+    </div>
+
+</main>
+</body>
+<script src="/static/js/header.js" th:src="@{/js/header.js}"></script>
+</html>
