@@ -26,7 +26,7 @@
               [[${dto.id}]]
             </span>
             <span class="col col-title" th:if="${!dto.isSecret()}">
-              [[${dto.title}]]
+              [[${dto.title}]] [ [[${dto.commentCount}]] ]
             </span>
             <span class="col col-title isSecret" th:if="${dto.isSecret()}">
               <i class="fad fa-lock" style="--fa-primary-color: #939393; --fa-secondary-color: #939393;"></i>

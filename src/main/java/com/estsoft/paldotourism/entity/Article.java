@@ -7,7 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Formula;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.List;
 
 @DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
@@ -36,6 +39,12 @@ public class Article extends BaseTime {
     @Column
     @ColumnDefault("false")
     private Boolean isSecret;
+
+    @OneToMany(mappedBy = "id", orphanRemoval = true)
+    private List<Comment> comment;
+
+    @Formula("(select count(1) from comment c where c.article_id = id)")
+    private int commentCount;
 
     @Builder
     public Article(User user, Category category, String title, String content, Boolean isSecret) {

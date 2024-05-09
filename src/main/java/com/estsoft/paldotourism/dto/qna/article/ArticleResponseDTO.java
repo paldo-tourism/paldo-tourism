@@ -1,7 +1,10 @@
 package com.estsoft.paldotourism.dto.qna.article;
 
+import com.estsoft.paldotourism.dto.qna.comment.CommentResponseDTO;
 import com.estsoft.paldotourism.entity.Category;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,9 +31,13 @@ public class ArticleResponseDTO {
 
   private boolean isSecret;
 
+  private PageResponseDTO<CommentResponseDTO> commentList;
+
+  private Integer commentCount;
+
   @Builder
   public ArticleResponseDTO(Long id, String writer, String title, String content, Category category, LocalDateTime createdAt,
-      LocalDateTime updatedAt, boolean isSecret) {
+                            LocalDateTime updatedAt, boolean isSecret, Integer commentCount) {
     this.id = id;
     this.writer = writer;
     this.title = title;
@@ -39,6 +46,7 @@ public class ArticleResponseDTO {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.isSecret = isSecret;
+    this.commentCount = commentCount;
   }
 
   public void updateIsSecret(String loginUserNickName){
@@ -47,5 +55,9 @@ public class ArticleResponseDTO {
         this.isSecret = false;
       }
     }
+  }
+
+  public void updateCommentList(PageResponseDTO<CommentResponseDTO> commentList){
+    this.commentList = commentList;
   }
 }

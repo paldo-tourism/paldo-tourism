@@ -1,0 +1,64 @@
+input:focus{
+    outline: none;
+}
+
+textarea{
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+    background-color: #ffffff;
+    resize: none;
+    display: block;
+    padding: 10px;
+}
+
+textarea:hover{
+    outline: none;
+}
+
+textarea:focus{
+    outline: none;
+}
+
+#content-wrap button{
+    border : none;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #46B78E;
+    float: right;
+    width: 50px;
+    height: 30px;
+    border-radius: 5px;
+}
+
+#content-wrap{
+    box-sizing: border-box;
+    width: 55%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    align-items: center;
+}
+
+#category, #article-title, #article-content{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#category, #article-title{
+    height: 30px;
+}
+
+#article-title{
+    padding-left: 10px;
+}
+
+#category{
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+}
+
+#article-content{
+    height: 500px;
+}
+
