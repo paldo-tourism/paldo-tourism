@@ -48,8 +48,6 @@ public class PaymentPageController {
     @GetMapping("/{reservationId}/paymentComplete")
     public String getPaymentComplete(Model model, @PathVariable Long reservationId)
     {
-        // 결제 데이터 추가(PaymentHistoryController에서 추가해줌)
-        //paymentHistoryService.createPaymentHistory(reservationId);
 
         // 페이지에 전달해줄 정보 가져오고 전달
         Reservation reservation = reservationService.showOneReservation(reservationId);
