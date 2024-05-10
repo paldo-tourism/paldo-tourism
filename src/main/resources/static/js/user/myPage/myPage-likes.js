@@ -1,7 +1,23 @@
 // 예매하기 버튼 클릭 이벤트
 function doReservation(button) {
     const busId = button.getAttribute('data-id');
-    window.location.href = `/seatSelect?busId=${busId}`;
+    let result = confirm("해당 노선 찜을 예약하시겠습니까?")
+
+    if(result) {
+        fetch(`/seatSelect?busId=${busId}`)
+            .then(response => {
+                if(!response.ok) {
+                    return response.json().then(error => {
+                        alert(error.message);
+                        throw new Error(error.message);
+                    })
+                }
+                window.location.href = `/seatSelect?busId=${busId}`
+            })
+        .catch(error => {
+                console.log(error);
+        })
+    }
 }
 
 // 취소 버튼 이벤트 핸들러
