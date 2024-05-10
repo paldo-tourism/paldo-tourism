@@ -12,6 +12,8 @@ import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.exception.bus.TerminalNotFoundException;
 import com.estsoft.paldotourism.exception.openapi.BusRouteNotFoundException;
 import com.estsoft.paldotourism.exception.openapi.UrlNotValidException;
+import com.estsoft.paldotourism.exception.request.InvalidBusGradeRequestException;
+import com.estsoft.paldotourism.exception.request.InvalidDateRequestException;
 import com.estsoft.paldotourism.repository.BusRepository;
 import com.estsoft.paldotourism.repository.BusTerminalRepository;
 import com.estsoft.paldotourism.repository.LikesRepository;
@@ -20,7 +22,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,6 +53,7 @@ public class BusApiService {
     private static final int REGULAR_BUS = 2;
     private static final int PREMIUM_BUS_TOTAL_SEATS = 28;
     private static final int REGULAR_BUS_TOTAL_SEATS = 45;
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     @Value("${apis.bus.key}") //openapi 버스 serviceKey
     private String apiKey;
@@ -55,6 +62,7 @@ public class BusApiService {
 
     @Transactional
     public List<BusInfoFindResponseDto> getBusInfo(BusInfoFindRequestDto request,Optional<User> currentUser) {
+        validateRequest(request);
         String depTerminalId = convertBusNameToBusId(request.getDepTerminalName()); //출발터미널 이름을 터미널ID로 변환(API요청 때문)
         String arrTerminalId = convertBusNameToBusId(request.getArrTerminalName()); //도착터미널 이름을 터미널ID로 변환(API요청 때문)
 
@@ -64,6 +72,7 @@ public class BusApiService {
         );
 
         if(busInfoList.size() > 0) {//이미 테이블에 관련 데이터가 있다면 DB에 있던 버스데이터를 반환
+            log.info("이미존재하는버스입니다.");
             if(currentUser.isEmpty()) {
                 return busInfoList.stream().map(bus -> BusInfoFindResponseDto.of(bus,seatRepository.countByBusAndStatus(bus,SeatStatus.EMPTY),
                     LocalDateTime.now(),false)).collect(Collectors.toList());
@@ -82,6 +91,23 @@ public class BusApiService {
             Collectors.toList());
     }
 
+    private void validateRequest(BusInfoFindRequestDto request) {
+        LocalDate depDate;
+        try {
+            depDate = LocalDate.parse(request.getDepDate(), FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new InvalidDateRequestException();
+        }
+
+        if (depDate.isBefore(LocalDate.now()) || depDate.isAfter(LocalDate.now().plusDays(2))) {
+            throw new InvalidDateRequestException();
+        }
+
+        if (!Arrays.asList("우등", "일반").contains(request.getBusGrade())) {
+            throw new InvalidBusGradeRequestException();
+        }
+    }
+
     private boolean getCurrentUserLiked(Optional<User> currentUser,long busId) {
         if(currentUser.isPresent()) {
             return likesRepository.existsByUserIdAndBusId(currentUser.get().getId(),busId);
@@ -91,7 +117,6 @@ public class BusApiService {
     }
 
     private BusInfoFindResponseDto createBusWithSeats(OpenApiResponseBusItem item, String busGrade, String depDate) {
-//        int totalSeats = busGrade.equals("우등") ? PREMIUM_BUS_TOTAL_SEATS : REGULAR_BUS_TOTAL_SEATS;
         int totalSeats = REGULAR_BUS_TOTAL_SEATS;
 
         Bus bus = item.toEntity(depDate,busGrade,totalSeats);
