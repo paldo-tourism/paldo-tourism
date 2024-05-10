@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @EnableWebSecurity
@@ -28,15 +29,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()
                         .requestMatchers("/myPage/**").authenticated()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
                         .failureHandler(customAuthenticationFailureHandler)
                         .defaultSuccessUrl("/"))
+                .exceptionHandling(auth -> auth.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login?denied=true")))
                 .logout(auth -> auth.logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID"))
+                .exceptionHandling(auth -> auth.accessDeniedPage("/error"))
                 .csrf(auth -> auth.disable());                  // csrf 비활성화
         return httpSecurity.build();
     }
