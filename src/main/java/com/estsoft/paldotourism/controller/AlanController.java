@@ -27,4 +27,9 @@ public class AlanController {
     public String goMain() {
         return "/index";
     }
+
+    @GetMapping("/aiRecommend")
+    public String goAiRecommendMain() {
+        return "/ai/aiRecommend";
+    }
 }
