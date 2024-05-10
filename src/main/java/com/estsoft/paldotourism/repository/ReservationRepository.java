@@ -1,6 +1,7 @@
 package com.estsoft.paldotourism.repository;
 
 import com.estsoft.paldotourism.entity.Reservation;
+import com.estsoft.paldotourism.entity.Status;
 import com.estsoft.paldotourism.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,6 +29,9 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
     Optional<Reservation> findByReservationNumber(String reservationNumber);
 
     List<Reservation> findAllByUser(User user);
+
+
+    List<Reservation> findAllByUserAndReservationStatusIn(User user, List<Status> statusList);
 
 
 }
