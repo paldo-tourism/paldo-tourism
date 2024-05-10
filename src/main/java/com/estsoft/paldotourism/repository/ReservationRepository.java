@@ -1,6 +1,7 @@
 package com.estsoft.paldotourism.repository;
 
 import com.estsoft.paldotourism.entity.Reservation;
+import com.estsoft.paldotourism.entity.Seat;
 import com.estsoft.paldotourism.entity.Status;
 import com.estsoft.paldotourism.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,14 +16,10 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation,Long> {
 
     @Query("SELECT b.depTerminal, b.arrTerminal, b.depTime, b.arrTime, b.charge, b.busGrade FROM Reservation r join Bus b on r.bus.id = b.id")
-    Object[] findBusDetails();
+    List<String> findBusDetails();
 
-    @Query("SELECT s.seatNumber FROM Reservation r join Seat s on r.bus.id = s.reservation.id")
-    String[] findSeatDetails();
-
-    @Query("SELECT r.reservationNumber FROM Reservation r")
-    String findReservationDetails();
-
+    @Query("SELECT s.seatNumber FROM Reservation r join Seat s on r.id = s.reservation.id")
+    List<String> findSeatDetails();
 
     Optional<Reservation> findByReservationNumber(String reservationNumber);
 
