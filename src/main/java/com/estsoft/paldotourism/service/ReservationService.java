@@ -93,6 +93,20 @@ public class ReservationService {
         return reservationRepository.findAllByUser(user);
     }
 
+    // 유저와 예약 상태(예약 완료, 예약 취소)로 예약들 반환
+    public List<Reservation> showAllReservationByStatus(String userName)
+    {
+        // 필요한 정보 가져옴
+        User user = userRepository.findByEmail(userName).get();
+
+        List<Status> statusList = Arrays.asList(Status.STATUS_RESERVATION, Status.STATUS_CANCEL);
+
+        List<Reservation> reservationList = reservationRepository.findAllByUserAndReservationStatusIn(user, statusList);
+
+        return reservationList;
+
+    }
+
 
     // 예약 변경(기존 예약 데이터의 예약 상태를 취소로 바꾸고 새로운 예약 데이터를 테이블에 추가함)
     @Transactional
