@@ -31,13 +31,6 @@ public class BusApiController {
     private final UserDetailService userDetailService;
     private final SeatService seatService;
 
-    /*
-    @GetMapping("")
-    public String index() {
-        return "index";
-    }
-     */
-
     //메인화면에서 사용자가 출발지/목적지/출발날짜/버스등급을 입력
     @GetMapping("/timeTable")
     public String showBusTimeTable(@RequestParam("depTerminalName") String depTerminalName,
@@ -66,9 +59,8 @@ public class BusApiController {
     @GetMapping("/seatSelect")
     @PreAuthorize("isAuthenticated() or hasRole('ROLE_ADMIN')")
     public String showSeatSelect(@RequestParam("busId") Long busId,Model model) {
-        //TODO busID가 유효한지 검증
-        List<SeatResponseDto> seats = seatService.getSeatsByBusId(busId);
         SeatBusResponseDto busInfo = seatService.getBusByBusId(busId);
+        List<SeatResponseDto> seats = seatService.getSeatsByBusId(busId);
 
         model.addAttribute("bus",busInfo);
         model.addAttribute("seats",seats);
