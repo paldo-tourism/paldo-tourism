@@ -22,35 +22,46 @@ public class MailService {
     private static final String FROM_ADDRESS = "naverkakao0622@gmail.com";
     private static final String TITLE = "paldo-tourism에서 예약하신 버스예약 정보 입니다 !";
 
-    private User getAuthenticatedUser() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
-    }
 
     public MailDto setMailDto(){
         MailDto mailDto = MailDto.builder().build();
+        String total_seat = "";
 
-
-        Object[] userDetails = reservationRepository.findUserDetails();
         Object[] busDetails = reservationRepository.findBusDetails();
-        String seatNumber = reservationRepository.findSeatDetails();
+        String[] seatNumber = reservationRepository.findSeatDetails();
         String reservationNumber = reservationRepository.findReservationDetails();
 
         mailDto.setNickname(getAuthenticatedUser().getNickName());
         mailDto.setEmail(getAuthenticatedUser().getEmail());
-//        mailDto.setNickname((String) userDetails[0]);
-//        mailDto.setEmail((String) userDetails[1]);
         mailDto.setDep_terminal((String) busDetails[0]);
         mailDto.setArr_terminal((String) busDetails[1]);
         mailDto.setDep_time((String) busDetails[2]);
         mailDto.setArr_time((String) busDetails[3]);
         mailDto.setCharge((Integer) busDetails[4]);
         mailDto.setBus_grade((String) busDetails[5]);
-        mailDto.setSeatNumber(seatNumber);
+        total_seat = getTotalSeat(seatNumber, total_seat);
+        mailDto.setSeatNumber(total_seat);
         mailDto.setReservationNumber(reservationNumber);
 
         return mailDto;
+    }
+
+    private User getAuthenticatedUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    }
+
+    private static String getTotalSeat(String[] seatNumber, String total_seat) {
+        for (int i = 0; i < seatNumber.length; i++) {
+            if (seatNumber.length-1 == i){
+                total_seat = seatNumber[i];
+            }
+            else {
+                total_seat = seatNumber[i] + ", ";
+            }
+        }
+        return total_seat;
     }
 
     public void mailSend(MailDto mailDto){
