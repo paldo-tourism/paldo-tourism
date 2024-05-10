@@ -1,13 +1,13 @@
 package com.estsoft.paldotourism.service;
 
-import com.estsoft.paldotourism.entity.PaymentHistory;
-import com.estsoft.paldotourism.entity.PaymentStatus;
-import com.estsoft.paldotourism.entity.Reservation;
-import com.estsoft.paldotourism.entity.Status;
+import com.estsoft.paldotourism.entity.*;
 import com.estsoft.paldotourism.repository.PaymentHistoryRepository;
 import com.estsoft.paldotourism.repository.ReservationRepository;
+import com.estsoft.paldotourism.repository.SeatRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class PaymentHistoryService {
@@ -15,9 +15,13 @@ public class PaymentHistoryService {
     private final PaymentHistoryRepository paymentHistoryRepository;
     private final ReservationRepository reservationRepository;
 
-    public PaymentHistoryService(PaymentHistoryRepository paymentHistoryRepository, ReservationRepository reservationRepository) {
+
+    private final SeatRepository seatRepository;
+
+    public PaymentHistoryService(PaymentHistoryRepository paymentHistoryRepository, ReservationRepository reservationRepository, SeatRepository seatRepository) {
         this.paymentHistoryRepository = paymentHistoryRepository;
         this.reservationRepository = reservationRepository;
+        this.seatRepository = seatRepository;
     }
 
     @Transactional
@@ -30,9 +34,20 @@ public class PaymentHistoryService {
 
         // 예약 테이블의 예약 데이터에 결제 외래키 연결 및 예약 상태 변경
         Reservation reservation = reservationRepository.findById(reservationId).get();
-
         reservation.updatePaymentHistory(paymentHistory);
         reservation.updateReservationStatus(Status.STATUS_RESERVATION);
+
+        // 좌석 상태를 선택 중에서 예약 완료로 변경
+        Bus reservationedBus = reservation.getBus();
+        List<Seat> seatList = seatRepository.findAllByReservation(reservation);
+
+        for (Seat seat : seatList) {
+            Integer seatNumber = seat.getSeatNumber();
+
+            // ReservationService에 있는 updateSeatReservationStatus 함수를 의존성 문제로 내부 코드만 가져옴
+            Seat resultSeat = seatRepository.findByBusAndSeatNumber(reservationedBus, seatNumber);
+            resultSeat.updateStatus(SeatStatus.OCCUPIED);
+        }
 
     }
 
@@ -70,7 +85,7 @@ public class PaymentHistoryService {
 
         Reservation reservation = reservationRepository.findById(reservationId).get();
 
-        reservation.updateReservationStatus(Status.STATUS_CANCEL);
+        //reservation.updateReservationStatus(Status.STATUS_CANCEL);
 
         PaymentHistory paymentHistory = reservation.getPaymentHistory();
 
