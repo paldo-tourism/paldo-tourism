@@ -81,3 +81,6 @@ function clickToGoTimeTableButton() {
 }
 
 document.addEventListener('DOMContentLoaded',updateDateOptions); //메인페이지가 로드되면 updateDateOptions 실행
+function clickToGoAiRecommendButton() {
+  window.location.href = `/aiRecommend`;
+}
