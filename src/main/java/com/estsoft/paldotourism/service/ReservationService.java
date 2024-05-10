@@ -64,7 +64,7 @@ public class ReservationService {
         Reservation saveReservation = reservationRepository.save(reservation);
 
 
-        // 선택한 좌석들을 가져와 상태를 선택중으로 변경
+        // 선택한 좌석들을 가져와 상태를 선택중으로 변경 및 좌석들에 예약 외래키 연결
         for (int i = 0; i < requestDto.getSeatNumbers().size(); i++) {
             Integer seatNumber = requestDto.getSeatNumbers().get(i);
 
@@ -116,13 +116,14 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId).get();
         reservation.updateReservationStatus(Status.STATUS_CANCEL);
 
-        // 기존 예약의 좌석 상태를 빈 자리로 변경
+        // 기존 예약의 좌석 상태를 빈 자리로 변경 및 좌석 테이블의 예약 외래키 해제
         Bus reservationedBus = reservation.getBus();
-        List<Seat> seatList = seatRepository.findAllByBus(reservationedBus);
+        List<Seat> seatList = seatRepository.findAllByReservation(reservation);
 
         for (Seat seat : seatList) {
             Integer seatNumber = seat.getSeatNumber();
             updateSeatReservationStatus(reservationedBus, seatNumber, SeatStatus.EMPTY);
+            updateSeatReservation(null, reservationedBus, seatNumber);
         }
 
         //결제 상태 취소로 변경
@@ -171,14 +172,15 @@ public class ReservationService {
         reservation.updateReservationStatus(Status.STATUS_CANCEL);
 
 
-        // 예약의 좌석 상태를 빈 자리로 변경
+        // 예약의 좌석 상태를 빈 자리로 변경 및 좌석과 연결된 예약 외래키 해제
         Bus reservationedBus = reservation.getBus();
-        List<Seat> seatList = seatRepository.findAllByBus(reservationedBus);
+        List<Seat> seatList = seatRepository.findAllByReservation(reservation);
 
 
         for (Seat seat : seatList) {
             Integer seatNumber = seat.getSeatNumber();
             updateSeatReservationStatus(reservationedBus, seatNumber, SeatStatus.EMPTY);
+            updateSeatReservation(null, reservationedBus, seatNumber);
         }
 
         //결제 상태 취소로 변경
@@ -303,9 +305,14 @@ public class ReservationService {
 
         seatList.forEach(seat -> {
             if (seat.getModifiedDateTime().plusMinutes(10).isBefore(now)) {
-                Reservation reservation = seat.getReservation();
-                reservationList.add(reservation);
-                seat.updateStatus(SeatStatus.EMPTY);
+
+                if(seat.getReservation() != null)
+                {
+                    Reservation reservation = seat.getReservation();
+                    reservationList.add(reservation);
+                    seat.updateStatus(SeatStatus.EMPTY);
+                    seat.updateReservation(null);
+                }
             }
         });
 

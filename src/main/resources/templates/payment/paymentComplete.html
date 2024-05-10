@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample Payment Complete</title>
+    <title>결제 완료</title>
 
     <link rel="stylesheet" href="/static/css/payment/paymentComplete.css" th:href="@{/css/payment/paymentComplete.css}">
     <link rel="stylesheet" href="/static/css/layout/header.css" th:href="@{/css/layout/header.css}"/>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="button-flex">
-                <button type="button" class="link-button">메인</button>
+                <button type="button" class="link-button"><a th:href="@{'/'}">메인</a></button>
                 <button type="button" class="link-button"><a th:href="@{'/myPage'}">예매 내역 확인</a></button>
             </div>
         </div>
