@@ -57,7 +57,7 @@ public class UserPageController {
     public String myPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = (User) authentication.getPrincipal();
-        List<Reservation> reservations = reservationService.showAllReservation(currentUser.getEmail());
+        List<Reservation> reservations = reservationService.showAllReservationByStatus(currentUser.getEmail());
         if(reservations.isEmpty()) {
             reservations = null;
         }

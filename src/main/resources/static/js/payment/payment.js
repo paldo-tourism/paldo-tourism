@@ -38,7 +38,6 @@ function requestPay() {
 
 function handlePaymentSuccess() {
     sendEmail();
-    redirectToPaymentCompletePage();
 }
 
 //메일 전송
@@ -49,10 +48,12 @@ function sendEmail() {
         success: function (response) {
             // /mail 엔드포인트로의 POST 요청이 성공한 경우 처리
             console.log("메일 전송 성공:", response);
+            redirectToPaymentCompletePage();
         },
         error: function (xhr, status, error) {
             // /mail 엔드포인트로의 POST 요청이 실패한 경우 처리
             console.log("메일 전송 실패:", xhr.responseText);
+            redirectToPaymentCompletePage();
         }
     });
 }
