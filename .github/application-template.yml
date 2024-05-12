@@ -51,10 +51,10 @@ spring:
 
 
   datasource:
-    url: jdbc:h2:mem:~/paldoTourismApplication
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
 
 
   jpa:
