@@ -22,9 +22,9 @@ imp:
     secretkey: ${IMP_SECRETKEY}
 
 sms:
- api:
- key: ${SMS_KEY}
- secretkey: ${SMS_SECRECTKEY}
+  api:
+     key: ${SMS_KEY}
+     secretkey: ${SMS_SECRECTKEY}
 
 ---
 spring:
