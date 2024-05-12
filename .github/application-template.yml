@@ -26,6 +26,9 @@ sms:
     key: ${SMS_KEY}
     secretkey: ${SMS_SECRECTKEY}
 
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
 ---
 spring:
   datasource:
