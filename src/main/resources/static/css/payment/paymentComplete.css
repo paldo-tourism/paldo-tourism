@@ -62,3 +62,7 @@ td {
     display: flex;
     justify-content: right;
 }
+
+p{
+    display: inline;
+}

@@ -37,9 +37,10 @@
                         <div class="payment-box">
                             <div class="title">결제 방법</div>
                             <div class="options">
-                                <label><input type="radio" name="payment" value="credit"> 신용 카드</label>
-                                <label><input type="radio" name="payment" value="kakao"> 카카오페이</label>
-                                <label><input type="radio" name="payment" value="naver"> 네이버 페이</label>
+                                <p name="payment" value="kakao">카카오페이</p>
+<!--                                <label><input type="radio" name="payment" value="credit"> 신용 카드</label>-->
+<!--                                <label><input type="radio" name="payment" value="kakao"> 카카오페이</label>-->
+<!--                                <label><input type="radio" name="payment" value="naver"> 네이버 페이</label>-->
                             </div>
                         </div>
                         <div class="payment-box">
@@ -85,8 +86,8 @@
                                 <th>등급</th>
                                 <td th:text="${reservationInfo.bus.busGrade}">등급</td>
                                 <th>좌석</th>
-                                <td th:each="seat : ${seats}">
-                                    <p th:text="${seat.seatNumber}">좌석번호</p>
+                                <td>
+                                    <p th:each="seat : ${seats}" th:text="${seat.seatNumber} + ' '"></p>
                                 </td>
                             </tr>
                         </table>
