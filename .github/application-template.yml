@@ -21,14 +21,11 @@ imp:
     key: ${IMP_KEY}
     secretkey: ${IMP_SECRETKEY}
 
- sms:
+sms:
   api:
-    key: ${SMS_KEY}
-    secretkey: ${SMS_SECRECTKEY}
+     key: ${SMS_KEY}
+     secretkey: ${SMS_SECRECTKEY}
 
-#spring:
-#  thymeleaf:
-#    prefix: classpath:/templates/
 ---
 spring:
   datasource:
