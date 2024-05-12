@@ -5,6 +5,8 @@ import com.estsoft.paldotourism.entity.Reservation;
 import com.estsoft.paldotourism.entity.Seat;
 import com.estsoft.paldotourism.entity.SeatStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,6 +26,8 @@ public interface SeatRepository extends JpaRepository<Seat,Long> {
 
     List<Seat> findByBusId(Long busId);
 
+    @Query("SELECT s FROM Seat s JOIN s.reservation r WHERE r.reservationNumber = :reservationNumber")
+    List<Seat> findByReservationNumber(@Param("reservationNumber") String reservationNumber);
 
     List<Seat> findAllByStatus(SeatStatus seatStatus);
 }
