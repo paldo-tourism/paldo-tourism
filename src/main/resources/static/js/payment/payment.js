@@ -1,6 +1,19 @@
 var IMP = window.IMP;
 IMP.init("imp26578218");
 
+document.addEventListener('DOMContentLoaded', function() {
+    const paymentButton = document.querySelector('.submit-button'); // 결제 버튼 선택
+    paymentButton.addEventListener('click', function(event) {
+        const selectedIssue = document.querySelector('input[name="issue"]:checked');
+        if (!selectedIssue) {
+            alert("발급 방법을 선택해주세요."); // 발급 방법이 선택되지 않았다면 경고 메시지 표시
+            event.preventDefault(); // 이벤트의 기본 동작을 중단 (결제 처리를 막음)
+        } else {
+            requestPay(); // 결제 처리 함수 호출
+        }
+    });
+});
+
 function requestPay() {
     IMP.request_pay({
             pg: "kakaopay",
@@ -13,6 +26,9 @@ function requestPay() {
             buyer_tel: reservationData.userPhone
         },
         function (rsp) {
+
+            const issueMethod = document.querySelector('input[name="issue"]:checked').value; // 선택된 발급 방법
+            console.log("선택된 발급 방법:", issueMethod);
             //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
             if (rsp.success) {
                 $.ajax({
@@ -22,7 +38,16 @@ function requestPay() {
                     // 가맹점 서버 결제 API 성공시 로직
                     if (rsp.paid_amount === data.response.amount) {
                         alert("결제 성공");
-                        handlePaymentSuccess()
+
+                        if(issueMethod === "email")
+                        {
+                            sendEmail();
+                        }
+                        else if(issueMethod === "message")
+                        {
+                            sendMessage()
+                        }
+
                     } else {
                         alert("결제 금액 불일치");
                     }
@@ -34,9 +59,6 @@ function requestPay() {
     );
 }
 
-function handlePaymentSuccess() {
-    sendEmail();
-}
 
 //메일 전송
 function sendEmail() {
@@ -52,6 +74,25 @@ function sendEmail() {
         error: function (xhr, status, error) {
             // /mail 엔드포인트로의 POST 요청이 실패한 경우 처리
             console.log("메일 전송 실패:", xhr.responseText);
+            redirectToPaymentCompletePage();
+        }
+    });
+}
+
+function sendMessage() {
+    $.ajax({
+
+        url: '/message',
+        method: "POST",
+        data: {reservationId: reservationData.reservationId},
+        success: function (response) {
+            // /mail 엔드포인트로의 POST 요청이 성공한 경우 처리
+            console.log("문자 전송 성공:", response);
+            redirectToPaymentCompletePage();
+        },
+        error: function (xhr, status, error) {
+            // /mail 엔드포인트로의 POST 요청이 실패한 경우 처리
+            console.log("문자 전송 실패:", xhr.responseText);
             redirectToPaymentCompletePage();
         }
     });
