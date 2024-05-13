@@ -42,7 +42,7 @@ public class PaymentPageController {
         model.addAttribute("totalSeat",totalSeat);
 
 
-        return "/payment/payment";
+        return "payment/payment";
     }
 
     @GetMapping("/{reservationId}/paymentComplete")
@@ -61,6 +61,6 @@ public class PaymentPageController {
         model.addAttribute("totalSeat",totalSeat);
 
 
-        return "/payment/paymentComplete";
+        return "payment/paymentComplete";
     }
 }
