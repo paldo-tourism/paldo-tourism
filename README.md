@@ -29,7 +29,7 @@
 - **Database** :  <img src = "https://img.shields.io/badge/Amazon RDS-527FFF?&logo=Amazon RDS&logoColor=white">, <img src = "https://img.shields.io/badge/MySQL-4479A1?&logo=MySQL&logoColor=white">
 - **Server** : <img src = "https://img.shields.io/badge/Amazon EC2-FF9900?&logo=amazonec2&logoColor=white">
 - **WS/WAS** : <img src = "https://img.shields.io/badge/Apachetomcat-F8DC75?&logo=apachetomcat&logoColor=white">
-- **Meeting** : <img src = "https://img.shields.io/badge/Discord-5865F2?&logo=discord&logoColor=white">, <a href="https://www.notion.so/oreumi/13-ad824ce6537d40ea965e67bef0a8988e?pvs=4"><img src = "https://img.shields.io/badge/Notion (Link)-000000?&logo=Notion&logoColor=white"> </a>
+- **Meeting** : <img src = "https://img.shields.io/badge/Discord-5865F2?&logo=discord&logoColor=white">, <img src = "https://img.shields.io/badge/Notion (Link)-000000?&logo=Notion&logoColor=white">
 - **Front-end** : <img src = "https://img.shields.io/badge/HTML-E34F26?&logo=html5&logoColor=white">, <img src = "https://img.shields.io/badge/CSS3-1572B6?&logo=css3&logoColor=white">, <img src = "https://img.shields.io/badge/Javascript-F7DF1E?&logo=javascript&logoColor=white">,  <img src = "https://img.shields.io/badge/Thymeleaf-005F0F?&logo=thymeleaf&logoColor=white">
 - **CI/CD** :  <img src = "https://img.shields.io/badge/GitHub Actions-181717?&logo=github&logoColor=white">, <img src = "https://img.shields.io/badge/Amazon EC2-FF9900?&logo=amazonec2&logoColor=white">, <img src = "https://img.shields.io/badge/Amazon S3-569A31?&logo=Amazon S3&logoColor=white">
 
@@ -62,13 +62,13 @@
 
 |||
 |-|-|
-|<img src="./assets/login.png" width="100%">로그인 화면|<img src="./assets/My-Page.png" width="100%">내 정보 화면|
-|<img src="./assets/findPassword.png" width="100%">비밀번호 찾기 화면|<img src="./assets/login.png" width="100%">로그인 화면|
-|<img src="./assets/reviewCommunity.png" width="100%">리뷰 메인 화면|<img src="./assets/detailedPage.png" width="100%">리뷰 상세 화면|
-|<img src="./assets/createReviewPage.png" width="100%">리뷰 등록, 수정 화면|<img src="./assets/meetingCommunity.png" width="100%">모임 모집 게시글 화면|
-|<img src="./assets/detailedPage-meeting.png" width="100%">모임 게시판 상세 화면|<img src="./assets/createMeetingPage.png" width="100%">모임 모집 등록, 수정 화면|
-|<img src="./assets/Manage-Restaurants.png" width="100%">식당 관리 메인 화면|<img src="./assets/Register-restaurants.png" width="100%">식당 추가, 수정 화면|
-|<img src="./assets/manage-user.png" width="100%">유저 관리 화면|
+|<img src="./assets/main-view.png" width="100%">메인 화면|<img src="./assets/ai-view.png" width="100%">AI 추천 화면|
+|<img src="./assets/time-table-view.png" width="100%">버스 시간표 화면|<img src="./assets/seat-select-view.png" width="100%">좌석 선택 화면|
+|<img src="./assets/payment-view.png" width="100%">결제 화면|<img src="./assets/payment-complete-view.png" width="100%">결제 완료 화면|
+|<img src="./assets/qna-board-view.png" width="100%">QnA 메인 화면|<img src="./assets/qna-read-view.png" width="100%">Qna-read 화면|
+|<img src="./assets/qna-write-view.png" width="100%">QnA-write 화면|<img src="./assets/login-view.png" width="100%">로그인 화면|
+|<img src="./assets/signup-view.png" width="100%">회원가입 화면|<img src="./assets/mypage-reservation-view.png" width="100%">내 예매 정보 화면|
+|<img src="./assets/mypage-likes-view.png" width="100%">내 노선 찜 화면|
 
 ## 7. ERD 설계
 [ERD CLOUD](https://www.erdcloud.com/d/TYp6nBDBZw94StuBx)
