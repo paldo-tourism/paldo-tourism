@@ -16,11 +16,11 @@
 * 프로젝트 발표: 05/17(금)
 
 ## 🧑‍🤝‍🧑 3. 멤버 구성
-- 김용준 (팀장) : 
-- 강한주 (팀원) : 
-- 김정용 (팀원) : 
-- 박지수 (팀원) : 
-- 안태규 (팀원) : 
+- 김용준 (팀장) : 무슨일 했는지 작성~
+- 강한주 (팀원) : 무슨일 했는지 작성~
+- 김정용 (팀원) : 무슨일 했는지 작성~
+- 박지수 (팀원) : 무슨일 했는지 작성~
+- 안태규 (팀원) : 무슨일 했는지 작성~
 
 ## ⚙️ 4. 개발 환경
 - **Java** : <img src = "https://img.shields.io/badge/Java 17-007396?&logo=java&logoColor=white">
@@ -92,10 +92,10 @@
 | Message |  |  |  |
 |  | 예매 확인용 메일 전송 | POST | /send-one/{reservationId} |
 | User |  |  |  |
-|  | 회원가입 | PUT | /api/signup |
-|  | 비밀번호 찾기 | PUT | /api/forgot-pw |
-|  | 회원탈퇴 | PUT | /api/delete-account |
-|  | 비밀번호 변경 | PUT | /api/change-pw |
+|  | 회원가입 | POST | /api/signup |
+|  | 비밀번호 찾기 | POST | /api/forgot-pw |
+|  | 회원탈퇴 | POST | /api/delete-account |
+|  | 비밀번호 변경 | POST | /api/change-pw |
 |  | 닉네임 확인 | GET | /api/check-nickname |
 |  | 이메일 확인 | GET | /api/check-email |
 | Like |  |  |  |
