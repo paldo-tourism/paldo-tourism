@@ -15,6 +15,17 @@ header {
   height: auto;
 }
 
+.login-controls a {
+  color: inherit;
+  text-decoration: none;
+  margin-right: 30px;
+  font-size: 20px;
+}
+
+.login-controls a:hover {
+  color: white;
+}
+
 .login-controls button{
   margin-right: 10px;
   padding: 8px 16px;
