@@ -2,6 +2,7 @@ package com.estsoft.paldotourism.controller;
 
 import com.estsoft.paldotourism.dto.reservation.ReservationRequestDto;
 import com.estsoft.paldotourism.entity.User;
+import com.estsoft.paldotourism.exception.reservation.ReservationNotAllowedException;
 import com.estsoft.paldotourism.service.ReservationService;
 import com.estsoft.paldotourism.service.UserDetailService;
 import java.security.Principal;
@@ -31,6 +32,10 @@ public class ReservationController {
     {
         Optional<User> currentUser = userDetailService.getCurrentUser();
         String userName = currentUser.get().getEmail();
+
+        if(requestDto.getSeatNumbers().size() < 1 || requestDto.getSeatNumbers().size() > 10) {
+            throw new ReservationNotAllowedException();
+        }
 
         Long reservationId = reservationService.addReservation(busId, requestDto,userName);
         return ResponseEntity.ok(reservationId);

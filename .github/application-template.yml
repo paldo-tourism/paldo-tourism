@@ -1,0 +1,70 @@
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: naverkakao0622@gmail.com
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+apis:
+  bus:
+    key: ${BUS_KEY}
+
+imp:
+  code: imp26578218
+  api:
+    key: ${IMP_KEY}
+    secretkey: ${IMP_SECRETKEY}
+
+sms:
+  api:
+     key: ${SMS_KEY}
+     secretkey: ${SMS_SECRECTKEY}
+
+---
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  h2:
+    console:
+      enabled: true

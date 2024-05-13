@@ -54,7 +54,7 @@
           / 28
         </div>
         <div class="item-detail">
-          <button th:class="${item.isLike()} ? 'red-heart' : 'empty-heart'"  onclick="clickLikeButton(this)" th:value = "${item.busId}">
+          <button th:class="${item.isLike()} ? 'red-heart' : 'empty-heart'"  th:disabled="${!item.canReservation}" onclick="clickLikeButton(this)" th:value = "${item.busId}">
           </button>
         </div>
         <div class="item-detail">

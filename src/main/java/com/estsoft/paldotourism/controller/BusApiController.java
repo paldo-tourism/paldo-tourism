@@ -23,20 +23,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class BusApiController {
 
     private final BusApiService busApiService;
     private final BusTerminalService busTerminalService;
     private final UserDetailService userDetailService;
     private final SeatService seatService;
-
-    /*
-    @GetMapping("")
-    public String index() {
-        return "index";
-    }
-     */
 
     //메인화면에서 사용자가 출발지/목적지/출발날짜/버스등급을 입력
     @GetMapping("/timeTable")
@@ -48,7 +40,7 @@ public class BusApiController {
         List<BusInfoFindResponseDto> busList = busApiService.getBusInfo(request, currentUser);
 
         model.addAttribute("schedules", busList);
-        return "/reservation/timeTable";  // 타임 테이블 페이지 렌더링
+        return "reservation/timeTable";  // 타임 테이블 페이지 렌더링
     }
 
     @GetMapping("/api/terminals")
@@ -66,13 +58,12 @@ public class BusApiController {
     @GetMapping("/seatSelect")
     @PreAuthorize("isAuthenticated() or hasRole('ROLE_ADMIN')")
     public String showSeatSelect(@RequestParam("busId") Long busId,Model model) {
-        //TODO busID가 유효한지 검증
-        List<SeatResponseDto> seats = seatService.getSeatsByBusId(busId);
         SeatBusResponseDto busInfo = seatService.getBusByBusId(busId);
+        List<SeatResponseDto> seats = seatService.getSeatsByBusId(busId);
 
         model.addAttribute("bus",busInfo);
         model.addAttribute("seats",seats);
-        return "/reservation/seatSelect";
+        return "reservation/seatSelect";
     }
 
 }

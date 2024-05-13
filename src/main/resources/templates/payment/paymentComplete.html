@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample Payment Complete</title>
+    <title>결제 완료</title>
 
     <link rel="stylesheet" href="/static/css/payment/paymentComplete.css" th:href="@{/css/payment/paymentComplete.css}">
     <link rel="stylesheet" href="/static/css/layout/header.css" th:href="@{/css/layout/header.css}"/>
@@ -33,8 +33,8 @@
                         </tr>
                         <tr>
                             <th>좌석</th>
-                            <td th:each="seat : ${seats}">
-                                <p th:text="${seat.seatNumber}">좌석번호</p>
+                            <td>
+                                <p th:each="seat : ${seats}" th:text="${seat.seatNumber} + ' '"></p>
                             </td>
                             <th>인원</th>
                             <td th:text="${totalSeat}">인원</td>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="button-flex">
-                <button type="button" class="link-button">메인</button>
+                <button type="button" class="link-button"><a th:href="@{'/'}">메인</a></button>
                 <button type="button" class="link-button"><a th:href="@{'/myPage'}">예매 내역 확인</a></button>
             </div>
         </div>
@@ -62,4 +62,5 @@
     </main>
 </div>
 </body>
+<script src="/static/js/header.js" th:src="@{/js/header.js}"></script>
 </html>
