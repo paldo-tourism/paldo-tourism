@@ -35,31 +35,31 @@
 
 
 ## 🔨 5. 프로젝트 구조
+
 ```
-.├─main
+├─main
 │  ├─java
 │  │  └─com
 │  │      └─estsoft
 │  │          └─paldotourism
-│  │              ├─config
-│  │              ├─controller
-│  │              ├─dto
-│  │              ├─entity
-│  │              ├─exception
-│  │              ├─repository
-│  │              └─service
+│  │              ├─config      # 애플리케이션 설정 파일
+│  │              ├─controller  # 컨트롤러 클래스
+│  │              ├─dto         # 데이터전송객체
+│  │              ├─entity      # 엔티티
+│  │              ├─exception   # 예외처리관련
+│  │              ├─repository  # 레포지토리
+│  │              └─service     # 서비스 클래스
 │  └─resources
-│      ├─static
-│      │  ├─css
-│      │  ├─img
-│      │  └─js
-│      └─templates
-
+│      ├─static    # 정적 파일
+│      │  ├─css    
+│      │  ├─img    
+│      │  └─js     
+│      └─templates # HTML + Thymleaf 파일
 
 ```
-## 6. 프로젝트 아키텍처
+## 📔 6. 프로젝트 아키텍처
 ![architecture](./assets/archi.png)
-## 6. UI 설계
+## 📺 7. UI 설계
 [figma_link](https://www.figma.com/file/U5E9NIldaSkr28AP0Eebyp/8%EB%8F%84%EA%B4%80%EA%B4%91-%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84?type=design&node-id=2-3&mode=design&t=JHOtFtCp44wTFtkn-0)
 
 |||
@@ -67,16 +67,16 @@
 |<img src="./assets/main-view.png" width="100%">메인 화면|<img src="./assets/ai-view.png" width="100%">AI 추천 화면|
 |<img src="./assets/time-table-view.png" width="100%">버스 시간표 화면|<img src="./assets/seat-select-view.png" width="100%">좌석 선택 화면|
 |<img src="./assets/payment-view.png" width="100%">결제 화면|<img src="./assets/payment-complete-view.png" width="100%">결제 완료 화면|
-|<img src="./assets/qna-board-view.png" width="100%">QnA 메인 화면|<img src="./assets/qna-read-view.png" width="100%">Qna-read 화면|
+|<img src="./assets/qna-board-view.png" width="100%">QnA 메인 화면|<img src="./assets/qna-read-view.png" width="100%">QnA-read 화면|
 |<img src="./assets/qna-write-view.png" width="100%">QnA-write 화면|<img src="./assets/login-view.png" width="100%">로그인 화면|
 |<img src="./assets/signup-view.png" width="100%">회원가입 화면|<img src="./assets/mypage-reservation-view.png" width="100%">내 예매 정보 화면|
 |<img src="./assets/mypage-likes-view.png" width="100%">내 노선 찜 화면|
 
-## 7. ERD 설계
+## 💾 8. ERD 설계
 [ERD CLOUD](https://www.erdcloud.com/d/TYp6nBDBZw94StuBx)
-<img src="./assets/db.png" width="100%">
+<img src="./assets/erd.png" width="100%">
 
-## 8. API 명세
+## 9. API 명세
 
 
-## 📌 9. 주요 기능
+## 📌 10. 주요 기능
