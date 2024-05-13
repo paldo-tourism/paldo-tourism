@@ -16,11 +16,11 @@
 * 프로젝트 발표: 05/17(금)
 
 ## 🧑‍🤝‍🧑 3. 멤버 구성
-- 김용준 (팀장) : 무슨일 했는지 작성~
-- 강한주 (팀원) : 무슨일 했는지 작성~
-- 김정용 (팀원) : 무슨일 했는지 작성~
-- 박지수 (팀원) : 무슨일 했는지 작성~
-- 안태규 (팀원) : 무슨일 했는지 작성~
+- 김용준 (팀장) : 예약 관련 API 개발, 결제 API 개발
+- 강한주 (팀원) : 버스 외부 APi 개발, 버스 예약 관련, 찜 API 개발
+- 김정용 (팀원) : SMTP EMAIL API 개발, Alan AI 적용, 와이어프레임
+- 박지수 (팀원) : 와이어프레임, 문의 게시판, 질문 게시판 API 개발
+- 안태규 (팀원) : User API 개발, 배포 및 CI/CD 파이프라인 구축
 
 ## ⚙️ 4. 개발 환경
 - **Java** : <img src = "https://img.shields.io/badge/Java 17-007396?&logo=java&logoColor=white">
@@ -89,6 +89,13 @@
 |  | 예매 변경 | PUT | /api/reservation/change/{reservationId}/{busId} |
 |  | 예매 취소 | PUT | /api/reservation/cancel/{reservationId} |
 |  | 예매 | POST | /api/reservation/{busId} |
+|  | 예매에서 총 좌석 수 조회 | GET | /api/totalSeat/{reservationId} |
+|  | 예매의 총 운임 조회 | GET | /api/totalCharge/{reservationId} |
+|  | 해당 좌석의 예매ID 조회 | GET | /api/seat/reservation/{reservationId} |
+|  | 버스의 좌석 중복 조회 | GET | /api/seat/checkDuplicate/{busId}/{seatNumber} |
+|  | 버스의 좌석 조회 | GET | /api/seat/bus/{busId} |
+|  | 현재 사용자의 예매 조회 | GET | /api/reservations/currentUser |
+|  | 예매 조회 | GET | /api/reservation/{reservationId} |
 | Message |  |  |  |
 |  | 예매 확인용 메일 전송 | POST | /send-one/{reservationId} |
 | User |  |  |  |

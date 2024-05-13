@@ -22,7 +22,7 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() { // 스프링시큐리티 비활성화
 
-        return (web) -> web.ignoring().requestMatchers("/static/**");
+        return (web) -> web.ignoring().requestMatchers("/static/**", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**");
     }
 
     // 특정 HTTP 요청에 대한 웹 기반 보안 구성
