@@ -57,6 +57,8 @@
 
 
 ```
+## 6. 프로젝트 아키텍처
+![architecture](./assets/archi.png)
 ## 6. UI 설계
 [figma_link](https://www.figma.com/file/U5E9NIldaSkr28AP0Eebyp/8%EB%8F%84%EA%B4%80%EA%B4%91-%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84?type=design&node-id=2-3&mode=design&t=JHOtFtCp44wTFtkn-0)
 
