@@ -96,7 +96,7 @@ public class ArticleController {
 
     Long articleId = articleService.articleWrite(articleRequestDTO);
 
-    return "redirect:article/"+articleId;
+    return "redirect:/article/"+articleId;
   }
 
   // 수정
@@ -113,13 +113,15 @@ public class ArticleController {
   @PutMapping("/article/update/{articleId}")
   public String articleUpdate(ArticleRequestDTO articleRequestDTO, @PathVariable Long articleId){
 
+    System.out.println(getLoginUserName());
+    System.out.println(articleRequestDTO.getAuthor());
     if(getLoginUserName().equals(articleRequestDTO.getAuthor()) || getLoginUser().getRole().equals(Role.ROLE_ADMIN)) {
       articleService.articleUpdate(articleRequestDTO, articleId);
     }else{
       throw new AuthorizationServiceException("수정 권한이 없습니다.");
     }
 
-    return "redirect:article/"+articleId;
+    return "redirect:/article/"+articleId;
   }
 
   //삭제
@@ -132,7 +134,7 @@ public class ArticleController {
       throw new AuthorizationServiceException("삭제 권한이 없습니다.");
     }
 
-    return "redirect:article";
+    return "redirect:/article";
   }
 
   //유저 정보 가져오기

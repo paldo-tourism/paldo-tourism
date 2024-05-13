@@ -1,4 +1,4 @@
-<th:block th:replace = "~{/article/articleLayout :: setContent(~{this::content})}">
+<th:block th:replace = "~{article/articleLayout :: setContent(~{this::content})}">
   <th:block th:fragment="content">
     <head>
       <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     </head>
     <div id="content-wrap">
       <h2>문의 남기기</h2>
-      <form th:method="put" th:action="@{/article/update/{articleId}(articleId=${articleId})}">
+      <form th:method="put" th:action="@{article/update/{articleId}(articleId=${articleId})}">
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="articleId" th:value="${articleId}">
         <input type="hidden" name="author" th:value="${article.author}">
