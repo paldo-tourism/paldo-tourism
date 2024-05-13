@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let numOfSeatsSelected = 0;
 
     function updateButtonState() {
-        paymentBtn.disabled = numOfSeatsSelected === 0 || numOfSeatsSelected > 10;
+        paymentBtn.disabled = numOfSeatsSelected === 0 || numOfSeatsSelected > 6;
     }
 
     // 페이지 로드시 초기화
@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
     seats.forEach(seat => {
         seat.addEventListener('change', function() {
             if (this.checked) {
-                if(numOfSeatsSelected >= 10) {
-                    alert("좌석은 최대 10개까지 선택 가능합니다.");
+                if(numOfSeatsSelected >= 6) {
+                    alert("좌석은 최대 6개까지 선택 가능합니다.");
                     this.checked = false;
                     return
                 }

@@ -35,7 +35,7 @@ public class ReservationController {
         Optional<User> currentUser = userDetailService.getCurrentUser();
         String userName = currentUser.get().getEmail();
 
-        if(requestDto.getSeatNumbers().size() < 1 || requestDto.getSeatNumbers().size() > 10) {
+        if(requestDto.getSeatNumbers().size() < 1 || requestDto.getSeatNumbers().size() > 6) {
             throw new ReservationNotAllowedException();
         }
 

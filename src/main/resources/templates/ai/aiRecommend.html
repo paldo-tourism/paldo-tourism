@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/layout/header.css" th:href="@{/css/layout/header.css}"/>
     <link rel="stylesheet" href="/static/css/ai/aiRecommend.css" th:href="@{/css/ai/aiRecommend.css}"/>
+    <link rel="stylesheet" href="/static/css/loading.css" th:href="@{/css/loading.css}"/>
 </head>
 
 <body>
@@ -69,6 +70,12 @@
         </form>
     </div>
 </main>
+
+<div id="loading">
+    <img th:src="@{/img/loading.gif}" src="/img/loading.gif" alt="Loading">
+    <p>AI 답변을 생성하고 있습니다. 답변 생성까지 약 20초 정도 소요됩니다.</p>
+    <button onclick="history.back()">뒤로 가기</button>
+</div>
 </body>
 <script src="/static/js/header.js" th:src="@{/js/header.js}"></script>
 <script src="/static/js/ai/aiRecommend.js" th:src="@{/js/ai/aiRecommend.js}"></script>
