@@ -77,6 +77,34 @@
 <img src="./assets/erd.png" width="100%">
 
 ## 📌 9. API 명세
+[API 명세](https://www.notion.so/oreumi/API-a1974fbdbf0d483da73a951721499469)
+
+| 분류 | 기능  | METHOD | API PATH |
+| --- | --- | --- | --- |
+| Comment |  |  |  |
+|  | 댓글 수정 | PUT | /comment/{commentId} |
+|  | 댓글 삭제 | DELETE | /comment/{commentId} |
+|  | 댓글 작성 | POST | /comment/write |
+| Reservation |  |  |  |
+|  | 예매 변경 | PUT | /api/reservation/change/{reservationId}/{busId} |
+|  | 예매 취소 | PUT | /api/reservation/cancel/{reservationId} |
+|  | 예매 | POST | /api/reservation/{busId} |
+| Message |  |  |  |
+|  | 예매 확인용 메일 전송 | POST | /send-one/{reservationId} |
+| User |  |  |  |
+|  | 회원가입 | PUT | /api/signup |
+|  | 비밀번호 찾기 | PUT | /api/forgot-pw |
+|  | 회원탈퇴 | PUT | /api/delete-account |
+|  | 비밀번호 변경 | PUT | /api/change-pw |
+|  | 닉네임 확인 | GET | /api/check-nickname |
+|  | 이메일 확인 | GET | /api/check-email |
+| Like |  |  |  |
+|  | 찜 등록 | POST | /api/likes |
+|  | 찜 삭제 | DELETE | /api/likes |
+| Bus |  |  |  |
+|  | 지역으로 터미널 조회 | GET | /api/terminals |
+|  | 이름으로 터미널 조회| GET | /api/search |
+
 ## 📌 10. 기능 명세
 | No | 분류  | 기능 | 기능 설명 | 
 | --- | --- | --- | --- | 
@@ -104,11 +132,9 @@
 | AI(Alan) |  |  |  |  
 | 1 |  | AI 여행지 추천 받기  | 사용자가 폼에 날짜/여행 유형(?)/여행 인원/여행 경비를 입력하면 그 결과를 바탕으로 AI가 여행지 한 곳을 추천해 줍니다.  | 
 | 회원관리 |  |   |  |  
-| 1 | 회원가입 | 회원 가입(기본) | 닉네임, 비밀번호, Email, 휴대폰 번호를 통한 회원가입 기능 |  
-|  |  | 소셜 로그인을 통한 회원가입 | 추후 예정 |  
+| 1 | 회원가입 | 회원 가입(기본) | 닉네임, 비밀번호, Email, 휴대폰 번호를 통한 회원가입 기능 |
 |  |  | 중복 확인 | 회원 가입시 해당 Email로 이미 가입이 되어있는지, 닉네임이 이미 존재하는지 확인 |  
-| 2 | 로그인 | 로그인(기본) | Email, 비밀번호를 통한 로그인 기능 |  
-|  |  | 소셜 로그인 | 추후 예정 |  
+| 2 | 로그인 | 로그인(기본) | Email, 비밀번호를 통한 로그인 기능 |
 | 3 | 비밀번호 관련 | 비밀번호 찾기 | 현재 로그인 상태 확인 후에 비밀번호 찾기 |  
 |  |  | 비밀번호 변경 | 현재 로그인 상태 확인 후에 비밀번호 변경 |  
 | 4 | 회원 탈퇴 | 회원 탈퇴(기본) | 회원 탈퇴 기능 |  
