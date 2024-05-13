@@ -56,7 +56,7 @@ public class ArticleController {
     model.addAttribute("keyword", keyword);
     model.addAttribute("category", category);
 
-    return "/article/list";
+    return "article/list";
   }
 
   //읽기
@@ -72,7 +72,7 @@ public class ArticleController {
 //    model.addAttribute("commentList", commentService.getCommentList(articleId,
 //            PageRequest.of(0,10, Sort.Direction.ASC, "path")));
 
-    return "/article/readNew";
+    return "article/readNew";
   }
 
   // 쓰기
@@ -85,7 +85,7 @@ public class ArticleController {
 
     model.addAttribute("category", categories);
 
-    return "/article/write";
+    return "article/write";
   }
 
   @PreAuthorize("isAuthenticated() or hasRole('ROLE_ADMIN')")
@@ -96,7 +96,7 @@ public class ArticleController {
 
     Long articleId = articleService.articleWrite(articleRequestDTO);
 
-    return "redirect:/article/"+articleId;
+    return "redirect:article/"+articleId;
   }
 
   // 수정
@@ -106,7 +106,7 @@ public class ArticleController {
     ArticleResponseDTO articleResponseDTO = articleService.articleRead(articleId);
 
     model.addAttribute("article",articleResponseDTO);
-    return "/article/update";
+    return "article/update";
   }
 
   @PreAuthorize("isAuthenticated() or hasRole('ROLE_ADMIN')")
@@ -119,7 +119,7 @@ public class ArticleController {
       throw new AuthorizationServiceException("수정 권한이 없습니다.");
     }
 
-    return "redirect:/article/"+articleId;
+    return "redirect:article/"+articleId;
   }
 
   //삭제
@@ -132,7 +132,7 @@ public class ArticleController {
       throw new AuthorizationServiceException("삭제 권한이 없습니다.");
     }
 
-    return "redirect:/article";
+    return "redirect:article";
   }
 
   //유저 정보 가져오기
