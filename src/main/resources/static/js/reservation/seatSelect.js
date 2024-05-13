@@ -20,15 +20,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     this.checked = false;
                     return
                 }
-                console.log(`선택한 좌석: ${this.id}`);
                 numOfSeatsSelected++;
 
             } else {
-                console.log(`취소한 좌석: ${this.id}`);
                 numOfSeatsSelected--;
             }
 
-            console.log(`선택한 좌석 수: ${numOfSeatsSelected}`);
             numOfPeopleDisplay.textContent = `${numOfSeatsSelected}명`;
 
             updateButtonState();
@@ -74,6 +71,5 @@ document.addEventListener('DOMContentLoaded', function() {
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(data);
         }
-        console.log("선택된 좌석: " + selectedSeats.join(', '));
     });
 });

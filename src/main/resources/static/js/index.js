@@ -17,7 +17,6 @@ function updateDateOptions() {
 
     const option = document.createElement('option');
     option.value = date.toISOString().substring(0,10).replace(/-/g, ''); //YYYY-MM-DD 형식으로 표기(ISO8601 형식의 문자열로 변환)
-    console.log(option.value);
     option.textContent = dateString;
     dateSelect.appendChild(option);
   }
