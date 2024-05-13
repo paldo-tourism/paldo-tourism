@@ -1,5 +1,6 @@
 package com.estsoft.paldotourism.entity;
 
+import com.estsoft.paldotourism.dto.user.MyPageReservationDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -52,6 +53,21 @@ public class Reservation {
     public void updatePaymentHistory(PaymentHistory paymentHistory)
     {
         this.paymentHistory = paymentHistory;
+    }
+
+
+    public MyPageReservationDto toMyPageReservationDto(Boolean check)
+    {
+        return MyPageReservationDto.builder()
+                .id(id)
+                .user(user)
+                .bus(bus)
+                .paymentHistory(paymentHistory)
+                .reservationNumber(reservationNumber)
+                .reservationStatus(reservationStatus)
+                .reservationTimeCheck(check)
+                .build();
+
     }
 
 }

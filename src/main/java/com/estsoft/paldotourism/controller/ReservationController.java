@@ -7,6 +7,8 @@ import com.estsoft.paldotourism.service.ReservationService;
 import com.estsoft.paldotourism.service.UserDetailService;
 import java.security.Principal;
 import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,10 +55,17 @@ public class ReservationController {
 
     // 예약 취소(기존 예약 데이터의 예약 상태를 취소로 변경)
     @PutMapping("/api/reservation/cancel/{reservationId}")
-    public void cancelReservation(@PathVariable Long reservationId)
+    public ResponseEntity<?> cancelReservation(@PathVariable Long reservationId)
     {
+        //코드 개선을 위해 반환 타입을 void에서 ResponseEntity로 변경
+//        reservationService.cancelReservation(reservationId);
 
-        reservationService.cancelReservation(reservationId);
+        try {
+            reservationService.cancelReservation(reservationId);
+            return ResponseEntity.ok().body("{\"success\": true}");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"success\": false, \"message\": \"" + e.getMessage() + "\"}");
+        }
     }
 
 
