@@ -14,6 +14,7 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -39,8 +40,8 @@ public class MessageController {
 
 
     //메시지 전송
-    @PostMapping("/send-one/{reservationId}")
-    public SingleMessageSentResponse sendOne(@PathVariable Long reservationId) {
+    @PostMapping("/message")
+    public SingleMessageSentResponse sendOne(@RequestParam Long reservationId) {
         Message message = new Message();
 
         Reservation reservation = reservationService.showOneReservation(reservationId);
@@ -49,7 +50,7 @@ public class MessageController {
         User user = reservation.getUser();
         Bus bus = reservation.getBus();
 
-        String content = "%s%s에 %s에서 %s로 가는 노선을 예약 하셨습니다".formatted(bus.getDepDate(), bus.getDepTime(), bus.getDepTerminal(), bus.getArrTerminal());
+        String content = "%s에 %s에서 %s로 가는 노선을 예약 하셨습니다".formatted(bus.getDepTime(), bus.getDepTerminal(), bus.getArrTerminal());
 
 
         // 발신번호 및 수신번호는 - 포함하지 않고 작성
