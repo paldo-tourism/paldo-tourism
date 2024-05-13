@@ -26,6 +26,21 @@ li{
   flex-direction: column;
 }
 
+.category-list{
+  margin-bottom: 1rem;
+}
+
+.category-list a{
+  margin-right: 0.7rem;
+}
+
+#content-wrap .select-category{
+  padding: 0.3rem;
+  background-color: #46B78E;
+  border-radius: 5px;
+  color: #ffffff;
+}
+
 #article-table{
   width: 100%;
   margin-bottom: 2rem;
@@ -72,6 +87,14 @@ li{
   width: 6rem;
 }
 
+.notice .col{
+  font-weight: bold;
+}
+
+.head .col{
+  font-weight: bold;
+}
+
 #article-search-write{
   justify-content: space-between;
   margin-bottom: 2rem;
@@ -82,6 +105,7 @@ li{
 }
 
 #article-search-write form .btn-search{
+  color: #ffffff;
   border: 0;
   height: 2rem;
   line-height: 1.6;
@@ -103,6 +127,7 @@ li{
 }
 
 #article-search-write form input{
+  width: 10rem;
   background: #fff;
   padding: .4rem;
   margin: 0;
@@ -110,6 +135,7 @@ li{
 }
 
 #btn-write{
+  color: #ffffff;
   display: inline-block;
   background-color: #46B78E;
   font-size: 0.9rem;
@@ -166,7 +192,7 @@ li{
 }
 
 .pagination a i{
-  vertical-align:middle
+  color: #46B78E;
 }
 
 .pagination #page .is-active a{

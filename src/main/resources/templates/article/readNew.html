@@ -60,7 +60,9 @@
                       <button class="btn-modify">수정</button>
                       <button class="btn-delete">삭제</button>
                     </div>
-                    <button sec:authorize="isAuthenticated()" class="btn-reply-toggle">답글</button>
+                    <div>
+                      <button sec:authorize="isAuthenticated()" class="btn-reply-toggle">답글</button>
+                    </div>
                   </div>
                 </div>
                 <textarea class="comment-content" th:text="${comment.content}"></textarea>
@@ -96,7 +98,7 @@
           <!--  수정 입력 폼-->
           <div id="form-modify" class="comment-input-area" style="display: none">
             <form>
-              <textarea id="input-modify" class="comment-input-common" type="text" name="modify-content"></textarea>
+              <textarea id="input-modify" class="comment-input-common" name="modify-content"></textarea>
               <button id="btn-modify-submit" class="comment-btn-common" type="button">등록</button>
             </form>
           </div>
@@ -104,9 +106,9 @@
           <script th:inline="javascript">
             var articleId = $('#input-board-id').val();
             var commentPage = $('#input-comment-page').val();
+            var author = [[${article.author}]];
 
             $(document).ready(function(){
-
               //글 삭제
               function deleteArticle(){
                 if(!confirm('삭제하시면 복구할수 없습니다. \n 정말로 삭제하시겠습니까??')){
@@ -116,6 +118,9 @@
                 $.ajax({
                   url:"/article/delete/" + articleId,
                   method: "delete",
+                  data: {
+                    author : author
+                  },
                   success(){
                     console.log("삭제 성공");
                     // location.href
@@ -155,7 +160,7 @@
 
               //토글 입력폼 나타내기 버튼
               function displayReplyForm (){
-                $('#form-reply').appendTo($(this).parent().parent().parent()).toggle();
+                $('#form-reply').appendTo($(this).closest('.list-item')).toggle();
               }
 
               $(document).on('click', '.btn-reply-toggle', displayReplyForm);

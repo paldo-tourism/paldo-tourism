@@ -38,11 +38,11 @@ public class ArticleResponseDTO {
 
   private Integer commentCount;
 
-  private Boolean statement;
+  private Boolean state;
 
   @Builder
   public ArticleResponseDTO(Long id, String author, String title, String content, Category category, LocalDateTime createdAt,
-                            LocalDateTime updatedAt, boolean isSecret, Integer commentCount, Boolean statement) {
+                            LocalDateTime updatedAt, boolean isSecret, Integer commentCount, Boolean state) {
     this.id = id;
     this.author = author;
     this.title = title;
@@ -52,7 +52,7 @@ public class ArticleResponseDTO {
     this.updatedAt = updatedAt;
     this.isSecret = isSecret;
     this.commentCount = commentCount;
-    this.statement = statement;
+    this.state = state;
   }
 
   public void updateIsSecret(String author, Role role){
@@ -68,7 +68,7 @@ public class ArticleResponseDTO {
   }
 
   public void updateStatement(Boolean statement){
-    this.statement = statement;
+    this.state = statement;
   }
 
   public String convertLocaldatetimeToTime() {

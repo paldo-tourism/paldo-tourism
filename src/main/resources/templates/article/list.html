@@ -9,6 +9,18 @@
     <div id="content-wrap" class="flex">
       <h2>문의 게시판</h2>
 
+      <div class="category-list">
+        <a th:classappend="${category eq null} ? 'select-category' : ''" href="/article">전체</a>
+        <span th:each="categoryItem : ${categoryList}">
+          <a th:classappend="${category ne null and (category.getCategoryName() eq categoryItem.getCategoryName())} ? 'select-category' : ''"
+             th:text="${categoryItem.getCategoryName()}"
+             th:if="${searchType==null}" th:href="@{/article(category=${categoryItem})}"></a>
+          <a th:classappend="${category ne null and (category.getCategoryName() eq categoryItem.getCategoryName())} ? 'select-category' : ''"
+             th:text="${categoryItem.getCategoryName()}"
+             th:if="${searchType!=null}" th:href="@{/article(category=${categoryItem}, searchType=${searchType}, keyword=${keyword})}"></a>
+        </span>
+      </div>
+
       <div id="article-table">
         <div class="row head flex">
           <div class="row-wrap flex">
@@ -20,6 +32,24 @@
             <span class="col col-time text-center">작성일</span>
           </div>
         </div>
+
+        <a class="row flex notice" th:each="notice : ${noticeList}" th:attr="href=${notice.isSecret} ? '#' : '/article/' + ${notice.id}">
+          <div class="row-wrap flex">
+            <span class="col col-id text-center">
+              [[${notice.id}]]
+            </span>
+            <span class="col col-id text-center" th:text="${notice.category.getCategoryName()}"></span>
+            <span class="col col-title" th:if="${!notice.isSecret()}" th:text="${notice.title}+' ['+${notice.commentCount}+']'">
+            </span>
+            <span class="col col-title isSecret" th:if="${notice.isSecret()}">
+              <i class="fad fa-lock" style="--fa-primary-color: #939393; --fa-secondary-color: #939393;"></i>
+              비밀글입니다.
+            </span>
+            <span class="col col-writer text-center"></span>
+            <span class="col col-writer text-center">[[${notice.author}]]</span>
+            <span class="col col-time text-center" th:text="${notice.convertLocaldatetimeToTime()}"></span>
+          </div>
+        </a>
 
         <a class="row flex article" th:each="dto : ${list.getDtoList()}" th:attr="href=${dto.isSecret} ? '#' : '/article/' + ${dto.id}">
           <div class="row-wrap flex">
@@ -33,7 +63,7 @@
               <i class="fad fa-lock" style="--fa-primary-color: #939393; --fa-secondary-color: #939393;"></i>
               비밀글입니다.
             </span>
-            <span class="col col-writer text-center">[[${dto.statement}]]</span>
+            <span class="col col-writer text-center" th:text="${dto.state eq true} ? '답변완료' : '답변대기'"></span>
             <span class="col col-writer text-center">[[${dto.author}]]</span>
             <span class="col col-time text-center" th:text="${dto.convertLocaldatetimeToTime()}"></span>
           </div>
@@ -42,13 +72,14 @@
 
       <div id="article-search-write" class="flex">
         <form method="get" action="article">
+          <input type="hidden" name="category" th:value="${category}">
           <select name="searchType">
-            <option value="t" selected>제목</option>
-            <option value="c">내용</option>
-            <option value="w">작성자</option>
-            <option value="tc">제목+내용</option>
+            <option value="t" th:selected="${searchType} == 't'">제목</option>
+            <option value="c" th:selected="${searchType} == 'c'">내용</option>
+            <option value="w" th:selected="${searchType} == 'w'">작성자</option>
+            <option value="tc" th:selected="${searchType} == 'tc'">제목+내용</option>
           </select>
-          <input name="keyword" type="text">
+          <input name="keyword" type="text" th:value="${keyword}">
           <button class="btn-search" type="submit">검색</button>
         </form>
 
@@ -58,22 +89,28 @@
       <div class="pagination">
         <ul id="page">
           <li class="page-prev-arrow" th:if="${list.prev}">
-            <a th:if="${searchType != null}" th:href="@{/article(page=${list.start - 2}, searchType=${searchType}, keyword=${keyword})}"><i class="far fa-caret-left fa-lg" style="color: #63E6BE;"></i></a>
-            <a th:if="${searchType == null}" th:href="@{/article(page=${list.start - 2})}"><i class="fas fa-caret-left fa-lg" style="color: #63E6BE;"></i></a>
+            <a th:if="${searchType != null}" th:href="@{/article(page=${list.start - 2}, searchType=${searchType}, keyword=${keyword})}"><i class="far fa-caret-left fa-lg"></i></a>
+            <a th:if="${searchType == null}" th:href="@{/article(page=${list.start - 2})}"><i class="fas fa-caret-left fa-lg"></i></a>
           </li>
 
           <li th:each="pageNum:${list.pageList}" th:class="${list.page == pageNum?'is-active':'not-active'}">
-            <a th:if="${searchType != null}" th:href="@{/article(page=${pageNum} - 1, searchType=${searchType}, keyword=${keyword})}">
+            <a th:if="${searchType != null} and ${category == null}" th:href="@{/article(page=${pageNum} - 1, searchType=${searchType}, keyword=${keyword})}">
               [[${pageNum}]]
             </a>
-            <a th:if="${searchType == null}" th:href="@{/article(page=${pageNum} - 1)}" >
+            <a th:if="${searchType == null} and ${category != null}" th:href="@{/article(page=${pageNum} - 1, category=${category})}" >
+              [[${pageNum}]]
+            </a>
+            <a th:if="${searchType != null} and ${category != null}" th:href="@{/article(page=${pageNum} - 1, category=${category}, searchType=${searchType}, keyword=${keyword})}" >
+              [[${pageNum}]]
+            </a>
+            <a th:if="${searchType == null} and ${category == null}" th:href="@{/article(page=${pageNum} - 1)}" >
               [[${pageNum}]]
             </a>
           </li>
 
           <li class="page-next-arrow" th:if="${list.next}">
-            <a th:if="${searchType != null}" th:href="@{/article(page=${list.end}, searchType=${searchType}, keyword=${keyword})}"><i class="far fa-caret-right fa-lg" style="color: #63E6BE;"></i></a>
-            <a th:if="${searchType == null}" th:href="@{/article(page=${list.end})}"><i class="fas fa-caret-right fa-lg" style="color: #63E6BE;"></i></a>
+            <a th:if="${searchType != null}" th:href="@{/article(page=${list.end}, searchType=${searchType}, keyword=${keyword})}"><i class="far fa-caret-right fa-lg"></i></a>
+            <a th:if="${searchType == null}" th:href="@{/article(page=${list.end})}"><i class="fas fa-caret-right fa-lg"></i></a>
           </li>
         </ul>
       </div>

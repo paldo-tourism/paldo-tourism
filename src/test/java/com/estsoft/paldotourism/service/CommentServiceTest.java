@@ -49,7 +49,7 @@ public class CommentServiceTest {
 //                .parent(null)
 //                .build();
 
-        commentService.writeComment(dto);
+        commentService.writeComment(dto, user);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class CommentServiceTest {
                 .author("aaa@aaa.com")
                 .build();
 
-        commentService.writeComment(dto);
+        commentService.writeComment(dto, user);
     }
 
     @Test

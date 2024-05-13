@@ -48,7 +48,7 @@ public class Article extends BaseTime {
 
     @Column
     @ColumnDefault("false")
-    private Boolean statement;
+    private Boolean state;
 
 
     @Builder
@@ -71,6 +71,8 @@ public class Article extends BaseTime {
     public void updateCategory(Category category) {
         this.category = category;
     }
+
+    public void updateState(Boolean state){ this.state = state; }
 
     public void updateIsSecret(Boolean isSecret){
         this.isSecret = isSecret;

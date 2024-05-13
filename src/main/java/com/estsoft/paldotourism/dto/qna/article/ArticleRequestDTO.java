@@ -21,6 +21,8 @@ public class ArticleRequestDTO {
   @Setter
   private String authorEmail;
 
+  private String author;
+
   private Category category;
 
   private Boolean isSecret;
