@@ -24,7 +24,6 @@ public class BusInfoFindResponseDto {
     private String depTime;
     private String arrTime;
     private Integer charge;
-    //TODO 찜 테이블 고려해서 변경
     private boolean isLike;
     private Integer remainingSeats; //남은 좌석 수
     private Integer totalSeatNumber; //총 좌석 수

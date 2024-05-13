@@ -63,6 +63,11 @@ td {
     justify-content: right;
 }
 
+.button-flex a{
+    color: inherit;
+    text-decoration: none;
+}
+
 p{
     display: inline;
 }

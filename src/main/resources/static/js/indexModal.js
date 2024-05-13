@@ -11,7 +11,6 @@ function viewTerminalList(regionName, type) {
 
 
   const listContainer = document.getElementById(type === 'departure' ? 'departure-terminal-list' : 'arrival-terminal-list');
-  console.log(`region: ${regionName}, type: ${type}`); // 로깅 추가
 
   fetch(`/api/terminals?regionName=${regionName}`)
   .then(response => {
@@ -21,7 +20,6 @@ function viewTerminalList(regionName, type) {
     return response.json();
   })
   .then(data => {
-    console.log(data); //로깅 추가
     listContainer.innerHTML = '';
     data.forEach(terminal => {
       const listItem = document.createElement('li');
