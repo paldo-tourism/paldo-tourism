@@ -1,3 +1,3 @@
 function clickToGoMainButton() {
-            window.location.href = `/main`;
+            window.location.href = `/`;
 }
