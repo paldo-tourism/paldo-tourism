@@ -79,7 +79,6 @@ function checkLoginStatus() {
     fetch('/api/auth/status')
     .then(response => {
       if(response.ok) {
-        console.log("로그인된유저");
         resolve();  // 로그인이 확인되면 resolve 호출
       } else {
         alert("로그인이 필요합니다.");

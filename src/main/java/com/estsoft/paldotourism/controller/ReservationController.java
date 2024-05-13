@@ -6,6 +6,9 @@ import com.estsoft.paldotourism.exception.reservation.ReservationNotAllowedExcep
 import com.estsoft.paldotourism.service.BusApiService;
 import com.estsoft.paldotourism.service.ReservationService;
 import com.estsoft.paldotourism.service.UserDetailService;
+
+import java.security.Principal;
+import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,7 +37,8 @@ public class ReservationController {
         Optional<User> currentUser = userDetailService.getCurrentUser();
         String userName = currentUser.get().getEmail();
 
-        if (requestDto.getSeatNumbers().size() < 1 || requestDto.getSeatNumbers().size() > 10) {
+
+        if(requestDto.getSeatNumbers().size() < 1 || requestDto.getSeatNumbers().size() > 6) {
             throw new ReservationNotAllowedException();
         }
 
@@ -171,7 +175,7 @@ public class ReservationController {
 
         Long totalSeat = reservationService.getTotalSeat(reservationId);
         return ResponseEntity.ok().body(totalSeat);
-    }
 
+    }
 
 }

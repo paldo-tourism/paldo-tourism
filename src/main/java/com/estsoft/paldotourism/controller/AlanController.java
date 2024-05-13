@@ -23,11 +23,6 @@ public class AlanController {
         return "ai/aiAnswer";
     }
 
-    @GetMapping("/main")
-    public String goMain() {
-        return "index";
-    }
-
     @GetMapping("/aiRecommend")
     public String goAiRecommendMain() {
         return "ai/aiRecommend";

@@ -37,7 +37,7 @@
                     <span class="reservation-status" th:if="${reservation.reservationStatus.name() == 'STATUS_RESERVATION'}">예매 완료</span>
                     <span class="reservation-status" th:if="${reservation.reservationStatus.name() == 'STATUS_CANCEL'}">예매 취소</span>
                 </div>
-                <div class="actions" th:if="${reservation.reservationStatus.name() != 'STATUS_CANCEL'}">
+                <div class="actions" th:if="${reservation.reservationStatus.name() != 'STATUS_CANCEL' and reservation.reservationTimeCheck == true}">
                     <button class="btn btn-change" th:data-id="${reservation.id}"
                             th:data-depTerminal="${reservation.bus.depTerminal}"
                             th:data-arrTerminal="${reservation.bus.arrTerminal}"

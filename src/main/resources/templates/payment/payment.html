@@ -47,7 +47,7 @@
                             <div class="title">발급 방법</div>
                             <div class="options">
                                 <label><input type="radio" name="issue" value="email"> 이메일</label>
-                                <label><input type="radio" name="issue" value="text"> 문자</label>
+                                <label><input type="radio" name="issue" value="message"> 문자</label>
                             </div>
                         </div>
                         <div class="payment-box">
@@ -73,7 +73,7 @@
                                 <th>날짜</th>
                                 <td th:text="${reservationInfo.bus.depDate}">출발날짜</td>
                                 <th>시간</th>
-                                <td th:text="${reservationInfo.bus.depTime}">출발시간</td>
+                                <td th:text="${#strings.substring(reservationInfo.bus.depTime, 8, 12)}">출발시간</td>
 
                             </tr>
                             <tr>
@@ -95,7 +95,7 @@
 
                     </div>
                     <!-- 결제하기 버튼 생성 -->
-                    <button type="button" class="submit-button" onclick="requestPay()">결제</button>
+                    <button type="button" class="submit-button">결제</button>
                 </div>
             </div>
         </div>

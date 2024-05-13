@@ -3,9 +3,21 @@ function redirectToTimeTable(buttonElement) {
     const arrTerminal = buttonElement.getAttribute('data-arrTerminal');
     const depDate = buttonElement.getAttribute('data-depDate').replace(/-/g, '');
     const busGrade = buttonElement.getAttribute('data-busGrade');
+    const reservationId = buttonElement.getAttribute('data-id');
 
-    const url = `/timeTable?depTerminalName=${encodeURIComponent(depTerminal)}&arrTerminalName=${encodeURIComponent(arrTerminal)}&depDate=${depDate}&busGrade=${encodeURIComponent(busGrade)}`;
-    window.location.href = url;
+
+    fetch(`/api/reservation/cancel/${reservationId}`, {
+        method: 'PUT'
+    })
+        .then(response => response.json())
+        .then(data => {
+            const url = `/timeTable?depTerminalName=${encodeURIComponent(depTerminal)}&arrTerminalName=${encodeURIComponent(arrTerminal)}&depDate=${depDate}&busGrade=${encodeURIComponent(busGrade)}`;
+            window.location.href = url;
+        })
+        .catch(error => console.error('Error:', error));
+
+
+
 }
 
 function cancelReservation(buttonElement) {

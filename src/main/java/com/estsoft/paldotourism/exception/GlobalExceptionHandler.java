@@ -70,14 +70,14 @@ public class GlobalExceptionHandler {
         ErrorForm errorForm = new ErrorForm(HttpStatus.BAD_REQUEST.value(),"날짜는 'yyyyMMdd' 형식을 사용해야 합니다. 또한 출발 날짜는 오늘부터 모레까지의 날짜만 가능합니다.");
         redirectAttributes.addFlashAttribute("error",errorForm);
         //이렇게 하면 404페이지가 뜨긴하는데 ... status가 200 OK로 뜬다..
-        return "redirect:/error";
+        return "redirect:/404error";
     }
 
     @ExceptionHandler(InvalidBusGradeRequestException.class)
     public String InvalidBusGradeRequestException(InvalidBusGradeRequestException e, RedirectAttributes redirectAttributes) {
         ErrorForm errorForm = new ErrorForm(HttpStatus.BAD_REQUEST.value(),"버스 등급은 '우등' 또는 '일반'만 가능합니다.");
         redirectAttributes.addFlashAttribute("error",errorForm);
-        return "redirect:/error";
+        return "redirect:/404error";
     }
 
     //reservation 관련 에러
