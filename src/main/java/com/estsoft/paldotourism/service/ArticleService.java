@@ -5,51 +5,56 @@ import com.estsoft.paldotourism.dto.qna.article.ArticleResponseDTO;
 import com.estsoft.paldotourism.dto.qna.article.PageResponseDTO;
 import com.estsoft.paldotourism.dto.qna.comment.CommentResponseDTO;
 import com.estsoft.paldotourism.entity.Article;
+import com.estsoft.paldotourism.entity.Category;
+import com.estsoft.paldotourism.entity.QArticle;
 import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.repository.ArticleRepository;
-import com.estsoft.paldotourism.repository.CommentRepository;
 import com.estsoft.paldotourism.repository.UserRepository;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import static com.estsoft.paldotourism.entity.QArticle.article;
+
 @Service
+@RequiredArgsConstructor
 public class ArticleService {
 
-  @Autowired
-  private ArticleRepository articleRepository;
+  private final ArticleRepository articleRepository;
 
-  @Autowired
-  private CommentService commentService;
+  private final CommentService commentService;
 
-  @Autowired
-  private UserRepository userRepository;
+  private final UserRepository userRepository;
 
-  public PageResponseDTO<ArticleResponseDTO> articleList(String searchType, String keyword, Pageable pageable){
-    PageResponseDTO<ArticleResponseDTO> responseDTO;
+  private final JPAQueryFactory queryFactory;
 
-    if(searchType == null || searchType.isEmpty()){
-      responseDTO = new PageResponseDTO<>(articleRepository.findAll(pageable).map(this::toDTO));
-      return responseDTO;
-    }
+  public List<ArticleResponseDTO> noticeList(){
+    List<Article> noticeList = articleRepository.findByCategory(Category.CATEGORY_ANNOUNCEMENT);
 
-    if(searchType.equals("t")){
-      responseDTO = new PageResponseDTO<>(articleRepository.findAllByTitleContains(keyword, pageable).map(this::toDTO));
-    }else if(searchType.equals("c")){
-      responseDTO = new PageResponseDTO<>(articleRepository.findAllByContentContains(keyword, pageable).map(this::toDTO));
-    }else {
-      responseDTO = new PageResponseDTO<>(articleRepository.findAllByTitleOrContentContains(keyword, pageable).map(this::toDTO));
-    }
+      return noticeList.stream().map(this::toDTO).toList();
+  }
 
-    return responseDTO;
+  public PageResponseDTO<ArticleResponseDTO> articleFilteredList(String searchType, String keyword, Category category, Pageable pageable){
+
+    BooleanBuilder filterBuilder = ArticleQuerydsl.createFilterBuilder(searchType, category, keyword, article);
+
+    List<OrderSpecifier> orderSpecifier = ArticleQuerydsl.getOrderSpecifier(pageable.getSort(), article);
+
+    List<Article> result = getFilteredResult(orderSpecifier, filterBuilder, pageable);
+
+    long totalCount = queryFactory.selectFrom(article).where(filterBuilder).fetchCount();
+
+    Page<ArticleResponseDTO> resultDTO = new PageImpl<>(result.stream().map(this::toDTO).toList(),pageable,totalCount);
+
+    return new PageResponseDTO<>(resultDTO);
   }
 
   public ArticleResponseDTO articleRead(Long articleId){
@@ -103,13 +108,17 @@ public class ArticleService {
             .updatedAt(article.getModifiedDateTime())
             .isSecret(article.getIsSecret())
             .commentCount(article.getCommentCount())
+            .state(article.getState())
             .build();
   }
 
-  //유저 정보 가져오기
-  private User getAuthenticatedUser() {
-    String username = SecurityContextHolder.getContext().getAuthentication().getName();
-    return userRepository.findByEmail(username)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+  private List<Article> getFilteredResult(List<OrderSpecifier> orderSpecifier, BooleanBuilder filterBuilder, Pageable pageable){
+
+    return queryFactory.selectFrom(article)
+            .where(filterBuilder)
+            .orderBy(orderSpecifier.toArray(OrderSpecifier[]::new))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
   }
 }

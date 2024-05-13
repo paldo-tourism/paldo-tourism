@@ -52,14 +52,18 @@ textarea:focus{
 }
 
 #article-header-top #category-article{
-  /*width: 70px;*/
+  width: 80px;
   margin-right: 20px;
 }
 
 #writer-article{
   display: inline-block;
-  width: 70px;
+  width: 80px;
   margin-right: 20px;
+}
+
+#article-created-at{
+  font-size: 0.8rem;
 }
 
 #article-body{
@@ -180,14 +184,17 @@ textarea:focus{
 
 .comment-header *{
   display: inline-block;
-  vertical-align: middle;
+}
+
+.comment-create{
+  font-size: 0.8rem;
 }
 
 .comment-header-left{
   float: left;
 }
 
-.comment-header-left *{
+.comment-header .comment-header-left.comment-author{
   margin-right: 15px;
 }
 
@@ -201,6 +208,10 @@ textarea:focus{
 
 .comment-btn-area *{
   margin-left: 15px;
+}
+
+.comment-btn-area button{
+  background-color: #ffffff;
 }
 
 .btn-delete{

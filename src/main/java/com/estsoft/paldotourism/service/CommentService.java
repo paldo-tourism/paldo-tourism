@@ -5,6 +5,7 @@ import com.estsoft.paldotourism.dto.qna.comment.CommentRequestDTO;
 import com.estsoft.paldotourism.dto.qna.comment.CommentResponseDTO;
 import com.estsoft.paldotourism.entity.Article;
 import com.estsoft.paldotourism.entity.Comment;
+import com.estsoft.paldotourism.entity.Role;
 import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.repository.ArticleRepository;
 import com.estsoft.paldotourism.repository.CommentRepository;
@@ -35,14 +36,21 @@ public class CommentService {
     return new PageResponseDTO<>(commentPage.map(this::toDTO));
   }
 
-  public void writeComment(CommentRequestDTO commentRequestDTO){
-    User user = userRepository.findByEmail(commentRequestDTO.getAuthor()).orElseThrow();
+  @Transactional
+  public void writeComment(CommentRequestDTO commentRequestDTO, User loginUser){
+    User user = userRepository.findByEmail(loginUser.getEmail()).orElseThrow();
     Article article = articleRepository.findById(commentRequestDTO.getArticleId()).orElseThrow();
     Comment parent;
     if(commentRequestDTO.getParentId() != null){
       parent = commentRepository.findById(commentRequestDTO.getParentId()).orElseThrow();
     }else{
       parent = null;
+    }
+
+    if(user.getRole().equals(Role.ROLE_ADMIN)){
+      System.out.println("운영자 댓글 작성 확인");
+      article.updateState(true);
+//      articleRepository.save(article);
     }
 
     commentRepository.save(toEntity(commentRequestDTO, user, article, parent));

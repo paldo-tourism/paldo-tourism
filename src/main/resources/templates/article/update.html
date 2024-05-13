@@ -10,6 +10,7 @@
       <form th:method="put" th:action="@{/article/update/{articleId}(articleId=${articleId})}">
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="articleId" th:value="${articleId}">
+        <input type="hidden" name="author" th:value="${article.author}">
         <select id="category" name="category" required>
           <option value="">카테고리</option>
           <option value="CATEGORY_ANNOUNCEMENT" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:selected="${article.category.equals('CATEGORY_ANNOUNCEMENT') ? 'selected' : '' }">공지</option>

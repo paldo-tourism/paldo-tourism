@@ -12,7 +12,7 @@
         <select id="category" name="category">
           <option value="" selected>카테고리</option>
           <option th:if="${#authorization.expression('hasRole(''ADMIN'')')}" value="CATEGORY_ANNOUNCEMENT">공지</option>
-          <option value="CATEGORY_QA">문의</option>
+          <option th:each="categoryItem : ${category}" th:value="${categoryItem}" th:text="${categoryItem.getCategoryName()}"></option>
         </select>
         <input id="article-title" type="text" name="title">
         <textarea id="article-content" name="content"></textarea>

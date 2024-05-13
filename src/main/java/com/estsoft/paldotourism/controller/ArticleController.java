@@ -3,6 +3,7 @@ package com.estsoft.paldotourism.controller;
 import com.estsoft.paldotourism.dto.qna.article.ArticleRequestDTO;
 import com.estsoft.paldotourism.dto.qna.article.ArticleResponseDTO;
 import com.estsoft.paldotourism.dto.qna.article.PageResponseDTO;
+import com.estsoft.paldotourism.entity.Category;
 import com.estsoft.paldotourism.entity.Role;
 import com.estsoft.paldotourism.entity.User;
 import com.estsoft.paldotourism.service.ArticleService;
@@ -15,7 +16,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Log4j2
 @Controller
@@ -35,16 +38,23 @@ public class ArticleController {
   //목록
   @GetMapping("/article")
   public String articleList(Model model, @PageableDefault(page = 0, size = 15, sort ="createdDateTime",
-          direction = Direction.DESC) Pageable pageable, @Nullable String searchType, @Nullable String keyword){
-    PageResponseDTO<ArticleResponseDTO> pageResponseDTO = articleService.articleList(searchType, keyword, pageable);
+          direction = Direction.DESC) Pageable pageable, @Nullable String searchType, @Nullable String keyword, @Nullable Category category){
+//    PageResponseDTO<ArticleResponseDTO> pageResponseDTO = articleService.articleList(searchType, keyword, category, pageable);
+    PageResponseDTO<ArticleResponseDTO> pageResponseDTO = articleService.articleFilteredList(searchType, keyword, category, pageable);
+    List<ArticleResponseDTO> noticeDTOList = articleService.noticeList();
 
     if(!getLoginUserName().equals("anonymousUser")) {
       pageResponseDTO.getDtoList().forEach(x->x.updateIsSecret(getLoginUser().getNickName(), getLoginUser().getRole()));
     }
 
+    List<Category> categoryList = Arrays.asList(Category.values());
+
     model.addAttribute("list", pageResponseDTO);
+    model.addAttribute("noticeList", noticeDTOList);
+    model.addAttribute("categoryList", categoryList);
     model.addAttribute("searchType", searchType);
     model.addAttribute("keyword", keyword);
+    model.addAttribute("category", category);
 
     return "/article/list";
   }
@@ -68,7 +78,12 @@ public class ArticleController {
   // 쓰기
   @PreAuthorize("isAuthenticated() or hasRole('ROLE_ADMIN')")
   @GetMapping("/article/write")
-  public String articleWritePage(){
+  public String articleWritePage(Model model){
+    List<Category> categories = Arrays.stream(Category.values())
+            .filter(category -> category != Category.CATEGORY_ANNOUNCEMENT)
+            .toList();
+
+    model.addAttribute("category", categories);
 
     return "/article/write";
   }
@@ -98,7 +113,11 @@ public class ArticleController {
   @PutMapping("/article/update/{articleId}")
   public String articleUpdate(ArticleRequestDTO articleRequestDTO, @PathVariable Long articleId){
 
-    articleService.articleUpdate(articleRequestDTO, articleId);
+    if(getLoginUserName().equals(articleRequestDTO.getAuthor()) || getLoginUser().getRole().equals(Role.ROLE_ADMIN)) {
+      articleService.articleUpdate(articleRequestDTO, articleId);
+    }else{
+      throw new AuthorizationServiceException("수정 권한이 없습니다.");
+    }
 
     return "redirect:/article/"+articleId;
   }
@@ -106,10 +125,12 @@ public class ArticleController {
   //삭제
   @PreAuthorize("isAuthenticated() or hasRole('ROLE_ADMIN')")
   @DeleteMapping("/article/delete/{articleId}")
-  public String articleDelete(@PathVariable Long articleId){
-    ArticleResponseDTO articleResponseDTO = articleService.articleRead(articleId);
-
-    articleService.articleDelete(articleId);
+  public String articleDelete(ArticleRequestDTO articleRequestDTO, @PathVariable Long articleId){
+    if(getLoginUserName().equals(articleRequestDTO.getAuthor()) || getLoginUser().getRole().equals(Role.ROLE_ADMIN)) {
+      articleService.articleDelete(articleId);
+    }else{
+      throw new AuthorizationServiceException("삭제 권한이 없습니다.");
+    }
 
     return "redirect:/article";
   }

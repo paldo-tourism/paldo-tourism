@@ -2,11 +2,16 @@ package com.estsoft.paldotourism.service;
 
 import com.estsoft.paldotourism.dto.qna.article.ArticleRequestDTO;
 import com.estsoft.paldotourism.dto.qna.article.ArticleResponseDTO;
+import com.estsoft.paldotourism.entity.Article;
 import com.estsoft.paldotourism.entity.Category;
 import com.estsoft.paldotourism.entity.User;
+import com.estsoft.paldotourism.repository.ArticleRepository;
 import com.estsoft.paldotourism.repository.UserRepository;
 
+import java.util.List;
 import java.util.stream.IntStream;
+
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +27,8 @@ class ArticleServiceTest {
   private UserRepository userRepository;
 
   User user;
+    @Autowired
+    private ArticleRepository articleRepository;
 
   @BeforeEach
   void setUser(){
@@ -62,6 +69,16 @@ class ArticleServiceTest {
       articleService.articleRead(56L);
     }catch (Exception e){
       System.out.println(e.getMessage());
+    }
+  }
+
+  @Test
+  @Transactional
+  public void updateState(){
+    List<Article> article = articleRepository.findAll();
+
+    for(Article a : article){
+      a.updateState(true);
     }
   }
 }

@@ -24,5 +24,5 @@ function clickLogoutButton() {
 }
 
 function clickToGoBoardButton() {
-  location.href=""
+  location.href="/article"
 }
