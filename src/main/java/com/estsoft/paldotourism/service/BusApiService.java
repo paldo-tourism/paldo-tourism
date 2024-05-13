@@ -184,4 +184,9 @@ public class BusApiService {
 
         return terminal.get().getId();
     }
+
+    public Bus getBusById(Long busId)
+    {
+        return busRepository.findById(busId).get();
+    }
 }

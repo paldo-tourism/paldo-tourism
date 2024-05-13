@@ -224,7 +224,7 @@ public class ReservationService {
     }
 
     // 좌석 중복 체크
-    private Boolean checkDuplication(Bus bus, Integer seatNumber) {
+    public Boolean checkDuplication(Bus bus, Integer seatNumber) {
         Seat seat = seatRepository.findByBusAndSeatNumber(bus, seatNumber);
         if(seat.getStatus() != SeatStatus.EMPTY)
         {
