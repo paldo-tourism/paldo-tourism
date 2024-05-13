@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class BusApiController {
 
     private final BusApiService busApiService;
@@ -41,7 +40,7 @@ public class BusApiController {
         List<BusInfoFindResponseDto> busList = busApiService.getBusInfo(request, currentUser);
 
         model.addAttribute("schedules", busList);
-        return "/reservation/timeTable";  // 타임 테이블 페이지 렌더링
+        return "reservation/timeTable";  // 타임 테이블 페이지 렌더링
     }
 
     @GetMapping("/api/terminals")
@@ -64,7 +63,7 @@ public class BusApiController {
 
         model.addAttribute("bus",busInfo);
         model.addAttribute("seats",seats);
-        return "/reservation/seatSelect";
+        return "reservation/seatSelect";
     }
 
 }
