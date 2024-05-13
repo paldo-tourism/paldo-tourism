@@ -1,0 +1,50 @@
+#loading {
+  display: none;
+  position: fixed;
+  left: 0;
+  top:0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  text-align: center;
+  color: #ffffff;
+}
+
+#loading img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+#loading p {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color:black;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#loading button {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  background-color:#007bff;
+  color: white;
+  border:none;
+  border-radius: 3px;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#loading button:hover {
+  filter: brightness(90%);
+}
