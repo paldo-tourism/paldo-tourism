@@ -295,7 +295,7 @@ public class ReservationService {
     // 스케줄링(10분 마다 실행)
     // 좌석 상태가 변경된지 10분이 지난 것만 제거
     @Transactional
-    @Scheduled(fixedDelay = 600000)
+    @Scheduled(fixedDelay = 300000)
     public void autoScheduled()
     {
         List<Seat> seatList = seatRepository.findAllByStatus(SeatStatus.SELECTED);
@@ -304,7 +304,7 @@ public class ReservationService {
 
 
         seatList.forEach(seat -> {
-            if (seat.getModifiedDateTime().plusMinutes(10).isBefore(now)) {
+            if (seat.getModifiedDateTime().plusMinutes(5).isBefore(now)) {
 
                 if(seat.getReservation() != null)
                 {
