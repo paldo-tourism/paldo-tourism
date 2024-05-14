@@ -50,7 +50,6 @@ public class CommentService {
     if(user.getRole().equals(Role.ROLE_ADMIN)){
       System.out.println("운영자 댓글 작성 확인");
       article.updateState(true);
-//      articleRepository.save(article);
     }
 
     commentRepository.save(toEntity(commentRequestDTO, user, article, parent));

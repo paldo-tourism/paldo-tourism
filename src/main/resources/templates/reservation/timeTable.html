@@ -12,25 +12,25 @@
 <body>
 <div th:replace="~{layout/header.html::main-header}"></div>
 
-<h3>배차 조회</h3>
+<h2 class="page-title">배차 조회</h2>
 <section class="user-selected-place-info">
   <!--  사용자가 선택한 출발지,도착지,날짜,등급 정보를 간단히 보여주는 div-->
   <div class="user-selected-place-info-detail">
     <div class="info-item">
       <h4>출발지</h4>
-      <h3 th:text="${schedules.get(0).depTerminal}">여주프리미엄아울렛</h3>
+      <h3 th:text="${schedules.get(0).depTerminal}"></h3>
     </div>
     <div class="info-item">
       <h4>도착지</h4>
-      <h3 th:text="${schedules.get(0).arrTerminal}">여주부산대구터미널</h3>
+      <h3 th:text="${schedules.get(0).arrTerminal}"></h3>
     </div>
     <div class="info-item">
       <h4>날짜</h4>
-      <h3 th:text="${schedules.get(0).depDate}">2024-04-24</h3>
+      <h3 th:text="${schedules.get(0).depDate}"></h3>
     </div>
     <div class="info-item">
       <h4>등급</h4>
-      <h3 th:text="${schedules.get(0).busGrade}">일반</h3>
+      <h3 th:text="${schedules.get(0).busGrade}"></h3>
     </div>
   </div>
   <!--  사용자가 선택한 정보에 따라 버스 스케줄 표를 보여주는 div-->

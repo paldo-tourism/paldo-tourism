@@ -8,24 +8,32 @@
     <link th:href="@{/css/user/login.css}" rel="stylesheet">
 </head>
 <body>
-<main class="form-signin" id="loginForm">
-    <form action="/login" method="post">
-        <h1 class="h3 mb-3 fw-normal">8도관광 - 로그인</h1>
-        <div class="form-floating">
-            <label><strong>Email</strong></label>
-            <input type="email" class="form-control" name="username" placeholder="Enter Your email" >
+<div class="login-wrap">
+    <div class="login-logo">
+        <img th:src="@{/img/paldo-logo.png}" alt="Log" class="logo-img">
+<!--        <span class="login-title">8도 관광</span>-->
+    </div>
+    <div class="form-signin" id="loginForm">
+        <form action="/login" method="post">
+            <h1 class="h3 mb-3 fw-normal">로그인</h1>
+            <div class="form-floating">
+                <label><strong>이메일</strong></label>
+                <input type="email" class="form-control" name="username" placeholder="이메일을 입력하세요" >
 
-        </div>
-        <div class="form-floating">
-            <label><strong>Password</strong></label>
-            <input type="password" class="form-control" name="password" placeholder="Enter Your Password" >
+            </div>
+            <div class="form-floating">
+                <label><strong>비밀번호</strong></label>
+                <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력하세요" >
 
-        </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button><br>
-        <a th:href="@{/signup}">회원가입</a> /
-        <a th:href="@{/forgot-pw}">PW 찾기</a>
-    </form>
-</main>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button><br>
+            <div>
+                <a th:href="@{/signup}">회원가입</a> /
+                <a th:href="@{/forgot-pw}">비밀번호 찾기</a>
+            </div>
+        </form>
+    </div>
+</div>
 <script>
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);

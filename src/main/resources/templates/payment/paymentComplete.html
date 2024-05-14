@@ -13,7 +13,7 @@
 
 <div class="flex-main">
     <main>
-        <h2>결제 완료</h2>
+        <h2 class="page-title">결제 완료</h2>
 
         <div class="item-container">
             <div class="item-details">
@@ -27,9 +27,13 @@
                         </tr>
                         <tr>
                             <th>날짜</th>
-                            <td th:text="${reservationInfo.bus.depDate}">출발날짜</td>
+                            <td th:text="${#strings.substring(reservationInfo.bus.depDate, 0, 4) + '-' +
+                            #strings.substring(reservationInfo.bus.depDate, 4, 6) + '-' +
+                            #strings.substring(reservationInfo.bus.depDate, 6, 8)}">출발날짜</td>
                             <th>시간</th>
-                            <td th:text="${reservationInfo.bus.depTime}">출발시간</td>
+<!--                            <td th:text="${reservationInfo.bus.depTime}">출발시간</td>-->
+                            <td th:text="${#strings.substring(reservationInfo.bus.depTime, 8, 10) + ':' +
+                            #strings.substring(reservationInfo.bus.depTime, 10, 12)}">출발시간</td>
                         </tr>
                         <tr>
                             <th>좌석</th>
@@ -37,13 +41,13 @@
                                 <p th:each="seat : ${seats}" th:text="${seat.seatNumber} + ' '"></p>
                             </td>
                             <th>인원</th>
-                            <td th:text="${totalSeat}">인원</td>
+                            <td th:text="${totalSeat} + ' 명'">인원</td>
                         </tr>
                         <tr>
                             <th>결제 방법</th>
                             <td>카카오페이</td>
                             <th>결제 금액</th>
-                            <td th:text="${totalCharge}">요금</td>
+                            <td th:text="${totalCharge} + ' 원'">요금</td>
                         </tr>
                         <tr>
                             <th>결제 시간</th>

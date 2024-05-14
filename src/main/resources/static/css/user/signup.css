@@ -1,0 +1,54 @@
+@font-face {
+    font-family: 'GongGothicLight';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+*{
+    font-family: 'GongGothicLight', 'sans-serif';
+}
+
+label{
+    color: #19A7CE;
+}
+
+a:link { color: #19A7CE; text-decoration: none;}
+a:visited { color: #19A7CE; text-decoration: none;}
+a:hover { color: #19A7CE; text-decoration: none;}
+a:active { color: #19A7CE; text-decoration: none;}
+
+.body-wrap{
+    margin-top: 100px;
+}
+
+.signup-title{
+    color: #19A7CE;
+}
+
+.btn-signup{
+    background-color: #19A7CE;
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-signup:hover{
+    background-color: #19A7CE;
+}
+
+.btn-signup a{
+    color: #ffffff;
+}
+
+.signup-wrap{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.signup-form{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

@@ -6,7 +6,8 @@ main{
 
 div#main-area{
     margin-top: 100px;
-    background-color: #f4f4f4;
+    background-color: #ffffff;
+    border: 3px solid #19A7CE;
     border-radius: 15px;
     padding: 30px;
     display: flex;
@@ -33,8 +34,8 @@ div#form-list{
 }
 
 .button-zone .recommend-button{
-    background-color: #007BFF;
-    color: white;
+    background-color: #19A7CE;
+    color: #F6F1F1;
     border: none;
     padding: 15px 20px;
     border-radius: 4px;

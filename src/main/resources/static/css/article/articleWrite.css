@@ -20,11 +20,15 @@ textarea:focus{
     outline: none;
 }
 
+form button{
+    color: #ffffff;
+}
+
 #content-wrap button{
     border : none;
     font-weight: bold;
     cursor: pointer;
-    background-color: #46B78E;
+    background-color: #19A7CE;
     float: right;
     width: 50px;
     height: 30px;

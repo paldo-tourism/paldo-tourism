@@ -52,14 +52,18 @@ textarea:focus{
 }
 
 #article-header-top #category-article{
-  width: 80px;
+  width: 95px;
   margin-right: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap
 }
 
 #writer-article{
   display: inline-block;
-  width: 80px;
+  width: 95px;
   margin-right: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap
 }
 
 #article-created-at{
@@ -76,10 +80,14 @@ textarea:focus{
   height: 70px;
   padding: 10px;
   margin-bottom: 20px;
-  background-color: #46B78E;
+  background-color: #19A7CE;
   color: #f7f7f7;
   text-align: left;
   vertical-align: middle;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 #article-header-top{
@@ -111,14 +119,14 @@ textarea:focus{
 }
 
 #btn-modify-article{
-  background-color: #46B78E;
+  background-color: #19A7CE;
   color: #f7f7f7;
   width: 50px;
   height: 30px;
 }
 
 #btn-delete-article{
-  background-color: crimson;
+  background-color: #F87474;
   color: #f7f7f7;
   width: 50px;
   height: 30px;
@@ -166,7 +174,7 @@ textarea:focus{
 }
 
 .comment-btn-common{
-  background-color: #46B78E;
+  background-color: #19A7CE;
   box-sizing: border-box;
   position: absolute;
   right: 5px;
@@ -215,7 +223,7 @@ textarea:focus{
 }
 
 .btn-delete{
-  color: crimson;
+  color: #F87474;
 }
 
 .content-wrap ul{
@@ -246,6 +254,6 @@ textarea:focus{
 #btn-article-list{
   width: 50px;
   height: 30px;
-  background-color: #46B78E;
+  background-color: #19A7CE;
   color: #ffffff;
 }
