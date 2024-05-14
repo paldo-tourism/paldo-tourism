@@ -10,21 +10,20 @@
   <div class="container-fluid row justify-content-center align-content-center">
     <div class="card" th:style="'border-radius: 1rem;'">
       <div class="card-body p-5 text-center">
-        <h2 class="text-black">8도관광</h2>
-        <p class="text-bg-dark-50 mt-2">비밀번호 변경</p>
+        <h2 class="text-black change-pw-title">비밀번호 변경</h2>
 
         <div class = "mb-2">
           <form id="changePasswordForm" action="/api/change-pw" method="post">
             <div class="mb-3 text-left">
               <label class="form-label text-black"><strong>현재 비밀번호</strong></label>
-              <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="Enter your password" required>
+              <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="현재 비밀번호를 입력하세요" required>
             </div>
             <div class="mb-3 text-left">
               <label class="form-label text-black"><strong>바꿀 비밀번호</strong></label>
-              <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Enter your newPassword" required>
+              <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="새로운 비밀번호를 입력하세요" required>
             </div>
 
-            <button type="button" id="changePwdBtn" class="btn btn-primary ui-state-focus">비밀번호 변경하기</button><br><br>
+            <button type="button" id="changePwdBtn" class="btn btn-primary ui-state-focus">변경하기</button><br><br>
           </form>
         </div>
       </div>
@@ -32,8 +31,7 @@
 
     <div class="card" th:style="'border-radius: 1rem;'">
       <div class="card-body p-5 text-center">
-        <h2 class="text-black">8도관광</h2>
-        <p class="text-bg-dark-50 mt-2">계정 삭제</p>
+        <h2 class="text-black quit-title">회원 탈퇴</h2>
 
         <div class = "mb-2">
           <form id="deleteAccountForm" action="/api/delete-account" method="post">

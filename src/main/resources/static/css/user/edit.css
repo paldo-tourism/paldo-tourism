@@ -45,14 +45,14 @@ body {
     padding: 20px;
 }
 
-.reservation-container {
+.edit-container {
     background: white;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
     padding: 20px;
     border-radius: 5px;
 }
 
-.reservation-card {
+.change-pw-card {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -60,29 +60,14 @@ body {
     padding: 15px 0;
 }
 
-.reservation-card:last-child {
+.edit-card:last-child {
     border-bottom: none;
 }
 
-.reservation-number {
+.edit-title {
     font-weight: bold;
     margin-right: 20px; /* 예약 정보와의 간격 */
     color: #333;
-    font-size: 16px;
-}
-
-.route-info {
-    font-size: 16px;
-}
-
-.city .date-date, .date-time, .bus-grade, .reservation-status {
-    /*font-size: 20px; !* 글씨 크기 증가 *!*/
-    /*font-weight: bold;*/
-    margin-top: 5px;
-}
-
-.actions {
-    /*margin-left: auto; !* 액션 버튼을 오른쪽으로 정렬 *!*/
 }
 
 .btn {
@@ -90,7 +75,7 @@ body {
     margin-right: 10px; /* 버튼 간 간격 조정 */
 }
 
-.btn-change, .btn-do-reservation {
+.btn-change, .btn-do-edit {
     background-color: #19A7CE;
 }
 
@@ -102,60 +87,11 @@ body {
     opacity: 0.9;
 }
 
-.no-reservation {
+.no-edit {
     text-align: center;
     padding: 20px;
     color: #666;
     font-size: 16px;
-}
-
-
-/* myPage-likes(내 찜) */
-
-.likes-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.likes-container {
-    width: 50%; /* 컨테이너의 전체 너비를 줄임 */
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 그림자 추가 */
-    padding: 20px;
-    background-color: #fff; /* 배경색 변경 */
-    border-radius: 10px; /* 둥근 모서리 */
-}
-
-.likes-card {
-    background-color: #e4fcef;
-    border: 1px solid #d4e2d4;
-    padding: 20px; /* 패딩 증가 */
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.route-info {
-    display: flex;
-    align-items: center;
-    gap: 30px; /* 간격 증가 */
-}
-
-.city {
-    /*font-size: 20px; !* 글씨 크기 증가 *!*/
-    /*font-weight: bold;*/
-}
-
-.date-time {
-    /*color: #555;*/
-    /*font-size: 18px; !* 글씨 크기 증가 *!*/
-}
-.actions {
-    display: flex;
-    gap: 10px;
 }
 
 .btn {
@@ -169,9 +105,22 @@ body {
     color: #ffffff;
 }
 
-.no-likes {
-    font-size: 16px;
-    color: #666;
-    padding: 20px;
-    text-align: center;
+#changePasswordForm, #deleteAccountForm{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#changePasswordForm label, #deleteAccountForm label{
+    margin-right: 15px;
+}
+
+.btn-edit-page{
+    width: 150px;
+    background-color: #19A7CE;
+    font-weight: bold;
+}
+
+.edit-input{
+    padding: 5px;
 }

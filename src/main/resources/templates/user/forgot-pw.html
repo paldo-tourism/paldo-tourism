@@ -10,24 +10,29 @@
     <link th:href="@{/css/user/login.css}" rel="stylesheet">
 </head>
 <body>
-<main class="form-signin" id="loginForm">
-    <form action="/api/forgot-pw" method="post" id="forgotForm">
-        <h1 class="h3 mb-3 fw-normal">8도관광-비밀번호 찾기</h1>
-        <div class="form-floating">
-            <label><strong>Email</strong></label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your email" >
+<div class="login-wrap">
+    <div class="login-logo">
+        <img th:src="@{/img/paldo-logo.png}" alt="Log" class="logo-img">
+    </div>
+    <main class="form-signin" id="loginForm">
+        <form action="/api/forgot-pw" method="post" id="forgotForm">
+            <h1 class="h3 mb-3 fw-normal">비밀번호 찾기</h1>
+            <div class="form-floating">
+                <label><strong>이메일</strong></label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요" >
 
-        </div>
-        <div class="form-floating">
-            <label><strong>Phone number</strong></label>
-            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Enter Your Phone Number" >
+            </div>
+            <div class="form-floating">
+                <label><strong>전화번호</strong></label>
+                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="전화번호를 입력해주세요" >
 
-        </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">찾기</button><br>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">찾기</button><br>
 
-    </form>
+        </form>
 
-</main>
+    </main>
+</div>
 <script src="/js/user/forgot-pw.js"></script>
 </body>
 </html>
