@@ -12,6 +12,8 @@
 
 .seat-area{
     background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 15px;
 }
 
 .bus-info .schedule-container,.select-info{
@@ -25,8 +27,6 @@
 }
 
 #payment-btn {
-    background-color: #007BFF;
-    color: white;
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
@@ -60,16 +60,17 @@ label{
 }
 
 .seat-select:checked + .seat {
-    background-color: #a2ff88; /* 선택된 좌석의 색상 */
-    border: 2px solid green;
+    background-color: #19A7CE; /* 선택된 좌석의 색상 */
+    border: 2px solid #146C94;
+    border-radius: 10px;
 }
 
 .seat.available {
-    background-color: #ccc;
+    background-color: #ffffff;
 }
 
 .seat.unavailable {
-    background-color: #a2ff88; /* 선택된 좌석의 색상 */
+    background-color: #6b6b6b; /* 이미예약된 좌석의 색상 */
     cursor: not-allowed; /* 클릭 불가능하게 설정 */
 }
 
@@ -92,14 +93,22 @@ label{
 /* 버튼이 off 상태일 때 */
 #payment-btn[disabled] {
     background-color: #818080;
-    color: black;
+    color: white;
     cursor: default;
 }
 
 /* 버튼이 on 상태일 때 */
 #payment-btn:not([disabled]) {
-    background-color: #46b68d;
-    color: black;
+    background-color: #19A7CE;
+    color: white;
+}
+
+span label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-weight: bold;
 }
 
 
