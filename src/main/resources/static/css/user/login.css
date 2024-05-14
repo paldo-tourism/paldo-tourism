@@ -1,3 +1,14 @@
+@font-face {
+    font-family: 'GongGothicLight';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+*{
+    font-family: 'GongGothicLight', 'sans-serif';
+}
+
 html,
 body {
     height: 100%;
@@ -7,17 +18,61 @@ h1{
 }
 body {
     display: flex;
-    align-items: center;
+    /*align-items: center;*/
     padding-top: 40px;
     padding-bottom: 40px;
-    background-color: #f5f5f5;
+    background-color: #ffffff;
+}
+
+a:link { color: #19A7CE; text-decoration: none;}
+a:visited { color: #19A7CE; text-decoration: none;}
+a:hover { color: #19A7CE; text-decoration: none;}
+a:active { color: #19A7CE; text-decoration: none;}
+
+label{
+    color: #19A7CE;
+    font-weight: bold;
+}
+
+.login-wrap{
+    margin: 100px auto;
+}
+
+.login-logo{
+    margin: 20px auto;
+    text-align: center;
+}
+
+.logo-img{
+    width: 100px;
+}
+
+.login-title{
+    font-size: 20px;
+    font-weight: bold;
+    color: #19A7CE;
+    text-align: center;
 }
 
 .form-signin {
     width: 100%;
-    max-width: 330px;
-    padding: 15px;
+    max-width: 450px;
+    padding: 40px;
     margin: auto;
+    background-color: #fff;
+    box-sizing: border-box;
+    border-radius: 15px;
+    border: 1px solid #19A7CE;
+}
+
+.form-signin form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-signin form h1{
+    color: #19A7CE;
 }
 
 .form-signin .form-floating:focus-within {
@@ -40,4 +95,10 @@ body {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+.btn{
+    background-color: #19A7CE;
+    color: #fff;
+    font-weight: bold;
 }

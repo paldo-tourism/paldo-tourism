@@ -53,6 +53,9 @@ body {
 }
 
 .reservation-card {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     border-bottom: 1px solid #eee;
     padding: 15px 0;
 }
@@ -72,27 +75,27 @@ body {
     font-size: 16px;
 }
 
-.date-date, .date-time, .bus-grade, .reservation-status {
-    font-size: 14px;
-    color: #666;
+.city .date-date, .date-time, .bus-grade, .reservation-status {
+    /*font-size: 20px; !* 글씨 크기 증가 *!*/
+    /*font-weight: bold;*/
     margin-top: 5px;
 }
 
 .actions {
-    margin-left: auto; /* 액션 버튼을 오른쪽으로 정렬 */
+    /*margin-left: auto; !* 액션 버튼을 오른쪽으로 정렬 *!*/
 }
 
 .btn {
     padding: 8px 16px;
-    margin-left: 10px; /* 버튼 간 간격 조정 */
+    margin-right: 10px; /* 버튼 간 간격 조정 */
 }
 
 .btn-change, .btn-do-reservation {
-    background-color: #4CAF50;
+    background-color: #19A7CE;
 }
 
 .btn-cancel {
-    background-color: #f44336;
+    background-color: #F87474;
 }
 
 .btn:hover {
@@ -142,13 +145,13 @@ body {
 }
 
 .city {
-    font-size: 20px; /* 글씨 크기 증가 */
-    font-weight: bold;
+    /*font-size: 20px; !* 글씨 크기 증가 *!*/
+    /*font-weight: bold;*/
 }
 
 .date-time {
-    color: #555;
-    font-size: 18px; /* 글씨 크기 증가 */
+    /*color: #555;*/
+    /*font-size: 18px; !* 글씨 크기 증가 *!*/
 }
 .actions {
     display: flex;
@@ -162,6 +165,8 @@ body {
     cursor: pointer;
     font-size: 14px;
     text-transform: uppercase; /* 버튼 텍스트를 대문자로 */
+
+    color: #ffffff;
 }
 
 .no-likes {

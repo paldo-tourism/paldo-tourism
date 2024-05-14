@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'GongGothicLight';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+*{
+  font-family: 'GongGothicLight', 'sans-serif';
+}
+
 body {
   margin: 0;
 }
@@ -7,7 +18,7 @@ header {
   align-items: center;
   padding: 10px 51px;
   justify-content: space-between;
-  background-color: #46B78E;
+  background-color: #19A7CE;
 }
 
 .logo-img {
@@ -16,30 +27,58 @@ header {
 }
 
 .login-controls a {
-  color: inherit;
+  /*color: inherit;*/
+  display: inline-block;
   text-decoration: none;
   margin-right: 30px;
-  font-size: 20px;
+
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .login-controls a:hover {
   color: white;
 }
 
-.login-controls button{
-  margin-right: 10px;
-  padding: 8px 16px;
-  background-color: #fff;
-  border: none;
-  border-radius: 5px;
-  color: #717171;
-  font-size: 16px;
-  cursor: pointer; /
-  transition: background-color 0.3s;
+.login-controls a:after{
+  display:block;
+  padding-bottom: 5px;
+  content: '';
+  border-bottom: 3px solid #ffffff;
+  transform: scaleX(0);
+  transition: transform 200ms ease-in-out;
 }
 
-.login-controls button:hover {
-  filter: brightness(90%);
+.login-controls a:hover:after {
+  transform: scaleX(1);
+}
+
+.login-controls button{
+  margin-right: 10px;
+  padding: 5px 3px;
+  background-color: #19A7CE;
+  border: none;
+  /*border-radius: 5px;*/
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  /*transition: background-color 0.3s;*/
+}
+
+.login-controls button:after{
+  display:block;
+  padding-bottom: 5px;
+  content: '';
+  border-bottom: 3px solid #ffffff;
+  transform: scaleX(0);
+  transition: transform 200ms ease-in-out;
+}
+
+.login-controls button:hover:after {
+  /*filter: brightness(90%);*/
+  transform: scaleX(1);
 }
 
 .login-controls button:last-child {

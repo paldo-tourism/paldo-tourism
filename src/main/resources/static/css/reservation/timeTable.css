@@ -3,19 +3,26 @@ h3 {
   margin-left: 20%;
 }
 
+.page-title{
+  border-left: 5px solid #19A7CE;
+  padding-left: 10px;
+  margin-left: 20%;
+}
+
 /*사용자가 선택한 출발지,도착지,날짜,등급 정보를 간단히 보여주는 div*/
 .user-selected-place-info-detail {
   margin-left:20%;
   margin-right: 20%;
-  background-color: #f4f4f4;
+  /*background-color: #f4f4f4;*/
   border-radius: 8px;
-}
 
-.user-selected-place-info-detail {
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 20px;
+
+  background-color: #ffffff;
+  border: 2px solid #19A7CE;
 }
 
 /*TODO 글자수에 따라서 출발지,도착지,날짜,등급 위치가 바뀌는데 나중에 바꾸기로*/
@@ -58,12 +65,21 @@ h3 {
 .schedule-header {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  border-top: 1px solid #ddd;
+  /*border-top: 1px solid #ddd;*/
+  background-color: #19A7CE;
+  color: #fff;
+  font-weight: bold;
+}
+
+.schedule-list{
+  border: 2px solid #19A7CE;
 }
 
 .schedule-item {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  /*border-bottom-left-radius: 8px;*/
+  /*border-bottom-right-radius: 8px;*/
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(25, 167, 206, 0.6);
 }
 
 .header-item, .item-detail {
@@ -94,7 +110,7 @@ h3 {
 
 /*좌석 예약 버튼*/
 .seat-select-button{
-  background-color: #007BFF;
+  background-color: #19A7CE;
   color: white;
   border: none;
   padding: 8px 16px;

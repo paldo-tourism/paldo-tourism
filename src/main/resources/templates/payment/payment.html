@@ -29,7 +29,7 @@
 
 <div class="flex-main">
     <main>
-        <h2>결제</h2>
+        <h2 class="page-title">결제</h2>
         <div class="flex-container">
             <div class="container">
                 <div class="payment-container">
@@ -52,7 +52,7 @@
                         </div>
                         <div class="payment-box">
                             <div class="title">결제 금액</div>
-                            <p name="amount" th:text="${totalCharge}">요금</p>
+                            <p name="amount" th:text="${totalCharge} + ' 원'">요금</p>
                         </div>
                         <!--            <button type="submit" >결제</button>-->
 
@@ -71,14 +71,20 @@
                             </tr>
                             <tr>
                                 <th>날짜</th>
-                                <td th:text="${reservationInfo.bus.depDate}">출발날짜</td>
+<!--                                <td th:text="${reservationInfo.bus.depDate}">출발날짜</td>-->
+                                <td th:text="${#strings.substring(reservationInfo.bus.depDate, 0, 4) + '-' +
+                                #strings.substring(reservationInfo.bus.depDate, 4, 6) + '-' +
+                                #strings.substring(reservationInfo.bus.depDate, 6, 8)}">출발날짜</td>
+
                                 <th>시간</th>
-                                <td th:text="${#strings.substring(reservationInfo.bus.depTime, 8, 12)}">출발시간</td>
+<!--                                <td th:text="${#strings.substring(reservationInfo.bus.depTime, 8, 12)}">출발시간</td>-->
+                                <td th:text="${#strings.substring(reservationInfo.bus.depTime, 8, 10) + ':' +
+                                #strings.substring(reservationInfo.bus.depTime, 10, 12)}">출발시간</td>
 
                             </tr>
                             <tr>
                                 <th>인원수</th>
-                                <td th:text="${totalSeat}">인원</td>
+                                <td th:text="${totalSeat} + ' 명'">인원</td>
 <!--                                <th>아동</th>-->
 <!--                                <td>0명</td>-->
                             </tr>

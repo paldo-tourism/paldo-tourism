@@ -9,11 +9,13 @@
   <link rel="stylesheet" href="/static/css/layout/header.css" th:href="@{/css/layout/header.css}"/>
   <link rel="stylesheet" href="/static/css/index.css" th:href="@{/css/index.css}"/>
   <link rel="stylesheet" href="/static/css/indexModal.css" th:href="@{/css/indexModal.css}"/>
+  <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" rel="stylesheet" />
 </head>
 <body>
 <div th:replace="~{layout/header.html::main-header}"></div>
 
 <!--사용자에게 여행지 입력을 받는 container-->
+<h2 class="page-title">승차권 조회</h2>
 <section class="main-cont">
   <form class="info-input-box" onsubmit="return clickToGoTimeTableButton()">
     <div class="dep-place-selected-box">
@@ -55,8 +57,9 @@
   <section class="title">
     출발지 선택
     <button onclick="closeModal('departureModal')" class="modal-close-button">
-      <img th:src="@{/img/modal-close-button.png}" src="/static/img/modal-close-button.png"
-           alt="모달창 닫기 버튼">
+<!--      <img th:src="@{/img/modal-close-button.png}" src="/static/img/modal-close-button.png"-->
+<!--           alt="모달창 닫기 버튼">-->
+      <i class="fas fa-times" style="color: #ffffff;"></i>
     </button>
   </section>
   <section class="cont">
@@ -72,7 +75,8 @@
         <input type="text" class="search-input" placeholder="터미널 이름을 검색하세요."
                id="inputDepartureTerminalName">
         <button type="submit" class="search-button">
-          <img th:src="@{/img/search-icon.png}" src="/static/img/search-icon.png" alt="검색">
+<!--          <img th:src="@{/img/search-icon.png}" src="/static/img/search-icon.png" alt="검색">-->
+          <i class="fas fa-search" style="color: #19A7CE;"></i>
         </button>
       </form>
     </section>
@@ -126,8 +130,9 @@
   <section class="title">
     도착지 선택
     <button onclick="closeModal('arrivalModal')" class="modal-close-button">
-      <img th:src="@{/img/modal-close-button.png}" src="/static/img/modal-close-button.png"
-           alt="모달창 닫기 버튼">
+<!--      <img th:src="@{/img/modal-close-button.png}" src="/static/img/modal-close-button.png"-->
+<!--           alt="모달창 닫기 버튼">-->
+      <i class="fas fa-times" style="color: #ffffff;"></i>
     </button>
   </section>
   <section class="cont">
@@ -143,7 +148,8 @@
         <input type="text" class="search-input" placeholder="터미널 이름을 검색하세요."
                id="inputArrivalTerminalName">
         <button type="submit" class="search-button">
-          <img th:src="@{/img/search-icon.png}" src="/static/img/search-icon.png" alt="검색">
+<!--          <img th:src="@{/img/search-icon.png}" src="/static/img/search-icon.png" alt="검색">-->
+          <i class="fas fa-search" style="color: #19A7CE;"></i>
         </button>
       </form>
     </section>

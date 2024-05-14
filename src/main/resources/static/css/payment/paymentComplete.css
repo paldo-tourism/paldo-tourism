@@ -2,7 +2,13 @@ body, html {
     height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #ffffff;
+}
+
+h2.page-title{
+    margin-left: 30px;
+    border-left: 5px solid #19A7CE;
+    padding-left: 10px;
 }
 
 .flex-main
@@ -12,15 +18,15 @@ body, html {
 }
 
 .item-container {
-    background-color: #f4f4f4;
-    padding: 20px;
+    background-color: #ffffff;
+    padding: 0 20px 20px 20px;
     margin: 10px;
     width: 800px;
     flex: 1;
 }
 
 .item-details {
-    border: 1px solid #ccc;
+    border: 1px solid #19A7CE;
     background-color: white;
     border-radius: 10px;
     padding: 20px;
@@ -47,14 +53,16 @@ td {
 
 
 .link-button {
+    color: #ffffff;
     width: 17%;
     padding: 5px;
     margin-top: 15px;
     margin-left: 20px;
-    background-color: #46B78E;
+    background-color: #19A7CE;
     border-radius: 10px;
     border: none;
     font-size: 16px;
+    font-weight: bold;
 }
 
 .button-flex

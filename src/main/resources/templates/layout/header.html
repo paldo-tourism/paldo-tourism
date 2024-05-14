@@ -7,7 +7,7 @@
   <!--    로그인 상태일때 유저 닉네임과, 로그아웃 버튼을 표시, 유저 닉네임을 누르면 마이페이지로 이동-->
   <div class="login-controls" th:if="${currentLoginUser}">
   <!--    TODO 마이페이지 링크 주의 -->
-    <a class="username" th:href="'/myPage'" th:text="${currentLoginUser.nickName}">유저닉네임</a>
+    <a class="username" th:href="'/myPage'" th:text="${currentLoginUser.nickName} + ' 님'">유저닉네임</a>
     <button class="header-logout-button" onclick="clickLogoutButton()">로그아웃</button>
     <button class="header-board-button" onclick="clickToGoBoardButton()">공지/문의 게시판</button>
   </div>

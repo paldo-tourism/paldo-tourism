@@ -3,8 +3,15 @@ a {
   color: inherit;
 }
 
+.page-title{
+  margin-top: 3%;
+  border-left: 5px solid #19A7CE;
+  padding-left: 10px;
+  margin-left: 20%;
+}
+
 .main-cont {
-  margin-top:10%;
+  margin-top:5%;
   margin-left:20%;
   margin-right: 20%;
   display: flex;
@@ -50,10 +57,19 @@ a {
   border-radius: 4px;
   width: 90%;
   text-align: center;
+  background-color: #ffffff;
 }
 
 .info-input-box input:focus, .info-input-box select:focus {
   border-color: #4A90E2;
+}
+
+.date-selected-box{
+  background-color: #ffffff;
+}
+
+.bus-grade-selected-box{
+  background-color: #ffffff;
 }
 
 /*aside 관련 css*/
@@ -61,13 +77,14 @@ a {
   display: flex;
   flex-direction: column;
   text-align: center;
+  justify-content: center;
 }
 
 .recommend-button {
   width: 80%;
   margin: 50px auto;
   padding: 10px;
-  background-color: #46B78E;
+  background-color: #19A7CE;
   color: white;
   font-weight: bold;
   border-radius: 8px;
@@ -82,7 +99,7 @@ a {
   width: 30%;
   border: none;
   padding: 10px;
-  background-color: #46B78E;
+  background-color: #19A7CE;
   color: white;
   font-weight: bold;
   border-radius: 8px;

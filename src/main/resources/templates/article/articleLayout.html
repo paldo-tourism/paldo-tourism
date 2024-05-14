@@ -6,13 +6,13 @@
     <title>문의 게시판</title>
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" rel="stylesheet" />
-    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+<!--    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>-->
     <link th:href="@{/css/layout/header.css}" rel="stylesheet">
     <style>
-      *{
-        box-sizing: border-box;
-        font-family: 'Spoqa Han Sans Neo', 'sans-serif';
-      }
+      /**{*/
+      /*  box-sizing: border-box;*/
+      /*  font-family: 'Happiness-Sans-Bold', 'sans-serif';*/
+      /*}*/
 
       .content {
         width:100%;
@@ -24,6 +24,8 @@
   <div class="header"><th:block th:replace="~{layout/header::main-header}" /></div>
   <div class="content flex"><th:block th:replace="${content}"></th:block></div>
   <!--  <div class="footer"><th:block th:replace="~{/layout/footer::footer}" /></div>-->
+
+  <script src="/static/js/header.js" th:src="@{/js/header.js}"></script>
   </body>
 </th:block>
 </html>
