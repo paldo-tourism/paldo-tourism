@@ -4,16 +4,41 @@
 - 스프링 부트 _ 8도관광(고속버스 예매 사이트)
 - [배포 URL](http://43.202.23.27:8080)
 
+## 0. 목차
+1. [프로젝트 소개](#-프로젝트-소개)
+2. [개발 기간](#-개발-기간)
+3. [멤버 구성](#-멤버-구성)
+4. [개발 환경](#-개발-환경)
+5. [프로젝트 구조](#-프로젝트-구조)
+6. [프로젝트 아키텍처](#-프로젝트-아키텍처)
+7. [UI 설계](#-ui-설계)
+8. [ERD 설계](#-erd-설계)
+9. [API 명세](#-api-명세)
+10. [기능 명세](#-기능-명세)
+11. [시연 영상](#-시연-영상)
+12. [프로젝트 회고](#-프로젝트-회고)
+
 ## 🖥️ 1. 프로젝트 소개
 이 프로젝트는 Spring 기반의 고속버스 예매 웹 애플리케이션입니다. <br>
 [국토교통부(TAGO) API](https://www.data.go.kr/data/15098522/openapi.do?recommendDataYn=Y) 를 활용해 고속버스의 노선 조회 및 예매를 할 수 있습니다. <br>
 또한, ESTsoft에서 제공하는 Alan AI를 통해 목적지를 추천받을 수 있습니다.
 <br>
+<div align="right">
+
+[목차](#목차)
+
+</div>
 
 ## 🕰️ 2. 개발 기간
 
 * 프로젝트 일정: 04/24(수) ~ 05/16(목)
 * 프로젝트 발표: 05/17(금)
+
+<div align="right">
+
+[목차](#목차)
+
+</div>
 
 ## 🧑‍🤝‍🧑 3. 멤버 구성
 - 김용준 (팀장) : 예약 관련 API 개발, 결제 API 개발
@@ -21,6 +46,12 @@
 - 김정용 (팀원) : SMTP EMAIL API 개발, Alan AI 적용, 와이어프레임
 - 박지수 (팀원) : 와이어프레임, 문의 게시판, 질문 게시판 API 개발
 - 안태규 (팀원) : User API 개발, 배포 및 CI/CD 파이프라인 구축
+
+<div align="right">
+
+[목차](#목차)
+
+</div>
 
 ## ⚙️ 4. 개발 환경
 - **Java** : <img src = "https://img.shields.io/badge/Java 17-007396?&logo=java&logoColor=white">
@@ -33,6 +64,11 @@
 - **Front-end** : <img src = "https://img.shields.io/badge/HTML-E34F26?&logo=html5&logoColor=white">, <img src = "https://img.shields.io/badge/CSS3-1572B6?&logo=css3&logoColor=white">, <img src = "https://img.shields.io/badge/Javascript-F7DF1E?&logo=javascript&logoColor=white">,  <img src = "https://img.shields.io/badge/Thymeleaf-005F0F?&logo=thymeleaf&logoColor=white">
 - **CI/CD** :  <img src = "https://img.shields.io/badge/GitHub Actions-181717?&logo=github&logoColor=white">, <img src = "https://img.shields.io/badge/Amazon EC2-FF9900?&logo=amazonec2&logoColor=white">, <img src = "https://img.shields.io/badge/Amazon S3-569A31?&logo=Amazon S3&logoColor=white">
 
+<div align="right">
+
+[목차](#목차)
+
+</div>
 
 ## 🔨 5. 프로젝트 구조
 
@@ -57,8 +93,21 @@
 │      └─templates # HTML + Thymleaf 파일
 
 ```
+<div align="right">
+
+[목차](#목차)
+
+</div>
+
 ## 📔 6. 프로젝트 아키텍처
 ![architecture](./assets/archi.png)
+
+<div align="right">
+
+[목차](#목차)
+
+</div>
+
 ## 📺 7. UI 설계
 [figma_link](https://www.figma.com/file/U5E9NIldaSkr28AP0Eebyp/8%EB%8F%84%EA%B4%80%EA%B4%91-%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84?type=design&node-id=2-3&mode=design&t=JHOtFtCp44wTFtkn-0)
 
@@ -72,9 +121,21 @@
 |<img src="./assets/signup-view.png" width="100%">회원가입 화면|<img src="./assets/mypage-reservation-view.png" width="100%">내 예매 정보 화면|
 |<img src="./assets/mypage-likes-view.png" width="100%">내 노선 찜 화면|
 
+<div align="right">
+
+[목차](#목차)
+
+</div>
+
 ## 💾 8. ERD 설계
 [ERD CLOUD](https://www.erdcloud.com/d/TYp6nBDBZw94StuBx)
 <img src="./assets/erd.png" width="100%">
+
+<div align="right">
+
+[목차](#목차)
+
+</div>
 
 ## 📌 9. API 명세
 [API 명세](https://www.notion.so/oreumi/API-a1974fbdbf0d483da73a951721499469)
@@ -112,6 +173,12 @@
 |  | 지역으로 터미널 조회 | GET | /api/terminals |
 |  | 이름으로 터미널 조회| GET | /api/search |
 
+<div align="right">
+
+[목차](#목차)
+
+</div>
+
 ## 📌 10. 기능 명세
 | No | 분류  | 기능 | 기능 설명 | 
 | --- | --- | --- | --- | 
@@ -148,4 +215,35 @@
 | 5 | 내 예약 정보  | 사용자가 예약한 버스 리스트 조회 | 사용자가 예약한 버스들 정보를 보여준다. 출발지와 목적지,출발 시간이 적혀 있으며 옆에 좌석/시간 변경, 취소를 눌러 해당 기능 실행 가능 |  
 | 6 | 내 찜  | 사용자가 찜한 버스 리스트 조회 | 사용자가 찜한 버스들 정보를 보여준다. 출발지와 목적지, 출발 시간이 적혀 있으며 찜 취소가 가능하며 예약 하기 버튼을 누르면 예약 페이지로 이동  | 
 
+<div align="right">
+
+[목차](#목차)
+
+</div>
+
 ## 📽️ 11. 시연 영상
+
+<div align="right">
+
+[목차](#목차)
+
+</div>
+
+## 📜 12. 프로젝트 회고
+
+### 👨‍💻 김용준
+가나다라마바사
+### 👩‍💻 강한주
+가나다라마바사
+### 👨‍💻 김정용
+가나다라마바사
+### 👨‍💻 박지수
+가나다라마바사
+### 👨‍💻 안태규
+가나다라마바사
+
+<div align="right">
+
+[목차](#목차)
+
+</div>
