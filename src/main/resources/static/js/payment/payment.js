@@ -1,15 +1,27 @@
 var IMP = window.IMP;
 IMP.init("imp26578218");
 
+var pageLoadTime = new Date(); // 페이지 로드 시간 저장
+
 document.addEventListener('DOMContentLoaded', function() {
     const paymentButton = document.querySelector('.submit-button'); // 결제 버튼 선택
     paymentButton.addEventListener('click', function(event) {
-        const selectedIssue = document.querySelector('input[name="issue"]:checked');
-        if (!selectedIssue) {
-            alert("발급 방법을 선택해주세요."); // 발급 방법이 선택되지 않았다면 경고 메시지 표시
-            event.preventDefault(); // 이벤트의 기본 동작을 중단 (결제 처리를 막음)
-        } else {
-            requestPay(); // 결제 처리 함수 호출
+        const currentTime = new Date(); // 현재 시간
+        const timeDifference = (currentTime - pageLoadTime) / 60000; // 분 단위로 차이 계산
+
+        if (timeDifference > 5) { // 5분이 넘었는지 확인
+            alert("5분이 초과되어 예약이 취소되었습니다. 다시 예약해주세요");
+            event.preventDefault(); // 이벤트의 기본 동작을 중단
+            window.location.href = '/';
+        }
+        else {
+            const selectedIssue = document.querySelector('input[name="issue"]:checked');
+            if (!selectedIssue) {
+                alert("발급 방법을 선택해주세요."); // 발급 방법이 선택되지 않았다면 경고 메시지 표시
+                event.preventDefault(); // 이벤트의 기본 동작을 중단 (결제 처리를 막음)
+            } else {
+                requestPay(); // 결제 처리 함수 호출
+            }
         }
     });
 });
