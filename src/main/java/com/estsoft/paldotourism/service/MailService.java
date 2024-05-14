@@ -31,10 +31,11 @@ public class MailService {
         MailDto mailDto = MailDto.builder().build();
         StringBuilder seat = new StringBuilder();
 
-        String busInfo = reservationRepository.findBusDetails().get(0);
+        String busInfo = reservationRepository.findBusDetails(reservationNumber).get(0);
         List<String> busInfoSeperated = Arrays.asList(busInfo.split(","));
 
         List<Seat> seatInfo = seatRepository.findByReservationNumber(reservationNumber);
+        int seatCount = seatInfo.size();
         makeSeatList(seatInfo, seat);
 
         mailDto.setSeatNumber(seat.toString());
@@ -42,7 +43,7 @@ public class MailService {
         mailDto.setArr_terminal(busInfoSeperated.get(1));
         mailDto.setDep_time(timeFormat(busInfoSeperated.get(2)));
         mailDto.setArr_time(timeFormat(busInfoSeperated.get(3)));
-        mailDto.setCharge(Integer.parseInt(busInfoSeperated.get(4)));
+        mailDto.setCharge(Integer.parseInt(busInfoSeperated.get(4)) * seatCount);
         mailDto.setBus_grade(busInfoSeperated.get(5));
         mailDto.setReservationNumber(reservationNumber);
         mailDto.setNickname(getAuthenticatedUser().getNickName());
