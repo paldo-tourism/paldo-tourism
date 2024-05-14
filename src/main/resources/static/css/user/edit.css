@@ -115,7 +115,13 @@ body {
     margin-right: 15px;
 }
 
-.btn-edit-page{
+#deleteAccountBtn{
+    width: 150px;
+    background-color: #F87474;
+    font-weight: bold;
+}
+
+#changePwdBtn{
     width: 150px;
     background-color: #19A7CE;
     font-weight: bold;

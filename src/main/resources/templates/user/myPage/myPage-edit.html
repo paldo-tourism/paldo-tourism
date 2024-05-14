@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>마이페이지</title>
+  <link rel="stylesheet" href="/static/css/layout/header.css" th:href="@{/css/layout/header.css}"/>
+  <link rel="stylesheet" href="/static/css/user/myPage.css" th:href="@{/css/user/edit.css}"/>
+</head>
+<body>
+<div th:replace="~{layout/header.html::main-header}"></div>
+<div class="main-container">
+  <div class="sidebar">
+    <h1>마이페이지</h1>
+    <ul>
+      <li><a th:href="@{/myPage}">내 예매 정보</a></li>
+      <li><a th:href="@{/myPage/likes}">내 찜</a></li>
+      <li><a th:href="@{/myPage/edit}">비밀번호 변경 / 회원탈퇴</a></li>
+    </ul>
+  </div>
+  <div class="content">
+    <div class="edit-container" >
+      <h1>비밀번호 변경 / 회원탈퇴</h1>
+      <div class="change-pw-card">
+        <h2 class="edit-title">비밀번호 변경</h2>
+        <div class="route-info">
+          <form id="changePasswordForm" action="/api/change-pw" method="post">
+            <div class="mb-3 text-left">
+              <label class="form-label text-black"><strong>현재 비밀번호</strong></label>
+              <input type="password" class="form-control edit-input" id="currentPassword" name="currentPassword" placeholder="현재 비밀번호를 입력하세요" required>
+            </div>
+            <div class="mb-3 text-left">
+              <label class="form-label text-black"><strong>바꿀 비밀번호</strong></label>
+              <input type="password" class="form-control edit-input" id="newPassword" name="newPassword" placeholder="새로운 비밀번호를 입력하세요" required>
+            </div>
+
+            <button type="button" id="changePwdBtn" class="btn btn-primary ui-state-focus btn-edit-page">변경하기</button><br><br>
+          </form>
+        </div>
+      </div>
+      <div class="edit-card">
+        <h2 class="edit-title">회원 탈퇴</h2>
+        <div class = "mb-2">
+          <form id="deleteAccountForm" action="/api/delete-account" method="post">
+            <div class="mb-3 text-left">
+              <label class="form-label text-black"><strong>비밀번호</strong></label>
+              <input type="password" class="form-control edit-input" id="password" name="password" placeholder="비밀번호를 입력해주세요" required>
+            </div>
+            <button type="button" id="deleteAccountBtn" class="btn btn-primary ui-state-focus btn-edit-page">탈퇴하기</button>
+          </form>
+          <!--                    <form>-->
+          <!--                        <button type="button" class="btn btn-secondary" onclick="location.href='/myPage'" style="color: white">돌아가기</button>-->
+          <!--                    </form>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/header.js" th:src="@{/js/header.js}"></script>
+<script src="js/user/myPage/myPage.js" th:src="@{/js/user/myPage/myPage.js}" ></script>
+</body>
+</html>
