@@ -4,42 +4,42 @@
 - 스프링 부트 _ 8도관광(고속버스 예매 사이트)
 - [배포 URL](http://43.202.23.27:8080)
 
-##0. 목차
-1. [프로젝트 소개](#1-프로젝트-소개)
-2. [개발 기간](#2-개발-기간)
-3. [멤버 구성](#3-멤버-구성)
-4. [개발 환경](#4-개발-환경)
-5. [프로젝트 구조](#5-프로젝트-구조)
-6. [프로젝트 아키텍처](#6-프로젝트-아키텍처)
-7. [UI 설계](#7-ui-설계)
-8. [ERD 설계](#8-erd-설계)
-9. [API 명세](#9-api-명세)
-10. [기능 명세](#10-기능-명세)
-11. [시연 영상](#11-시연-영상)
-12. [프로젝트 회고](#12-프로젝트-회고)
+## 목차
+[1. 프로젝트 소개](#1-프로젝트-소개)  
+[2. 개발 기간](#2-개발-기간)  
+[3. 멤버 구성](#3-멤버-구성)  
+[4. 개발 환경](#4-개발-환경)  
+[5. 프로젝트 구조](#5-프로젝트-구조)  
+[6. 프로젝트 아키텍처](#6-프로젝트-아키텍처)  
+[7. UI 설계](#7-ui-설계)  
+[8. ERD 설계](#8-erd-설계)  
+[9. API 명세](#9-api-명세)  
+[10. 기능 명세](#10-기능-명세)  
+[11. 시연 영상](#11-시연-영상)  
+[12. 프로젝트 회고](#12-프로젝트-회고)
 
-## 🖥️ 1. 프로젝트 소개
+## 1. 프로젝트 소개
 이 프로젝트는 Spring 기반의 고속버스 예매 웹 애플리케이션입니다. <br>
 [국토교통부(TAGO) API](https://www.data.go.kr/data/15098522/openapi.do?recommendDataYn=Y) 를 활용해 고속버스의 노선 조회 및 예매를 할 수 있습니다. <br>
 또한, ESTsoft에서 제공하는 Alan AI를 통해 목적지를 추천받을 수 있습니다.
 <br>
 <div align="right">
 
-[목차](#0-목차)
+[목차](#목차)
 </div>
 
-## 🕰️ 2. 개발 기간
+## 2. 개발 기간
 
 * 프로젝트 일정: 04/24(수) ~ 05/16(목)
 * 프로젝트 발표: 05/17(금)
 
 <div align="right">
 
-[목차](#0-목차)
+[목차](#목차)
 
 </div>
 
-## 🧑‍🤝‍🧑 3. 멤버 구성
+## 3. 멤버 구성
 - 김용준 (팀장) : 예약 관련 API 개발, 결제 API 개발
 - 강한주 (팀원) : 버스 외부 APi 개발, 버스 예약 관련, 찜 API 개발
 - 김정용 (팀원) : SMTP EMAIL API 개발, Alan AI 적용, 와이어프레임
@@ -48,11 +48,11 @@
 
 <div align="right">
 
-[목차](#0-목차)
+[목차](#목차)
 
 </div>
 
-## ⚙️ 4. 개발 환경
+## 4. 개발 환경
 - **Java** : <img src = "https://img.shields.io/badge/Java 17-007396?&logo=java&logoColor=white">
 - **IDE** : <img src = "https://img.shields.io/badge/Intellij Idea-000000?&logo=intellijidea&logoColor=white">
 - **Framework** : <img src = "https://img.shields.io/badge/Springboot 3.2.5-6DB33F?&logo=springboot&logoColor=white">
@@ -65,11 +65,11 @@
 
 <div align="right">
 
-[목차](#0-목차)
+[목차](#목차)
 
 </div>
 
-## 🔨 5. 프로젝트 구조
+## 5. 프로젝트 구조
 
 ```
 ├─main
@@ -94,20 +94,20 @@
 ```
 <div align="right">
 
-[목차](#0-목차)
+[목차](#목차)
 
 </div>
 
-## 📔 6. 프로젝트 아키텍처
+## 6. 프로젝트 아키텍처
 ![architecture](./assets/archi.png)
 
 <div align="right">
 
-[목차](#0-목차)
+[목차](#목차)
 
 </div>
 
-## 📺 7. UI 설계
+## 7. UI 설계
 [figma_link](https://www.figma.com/file/U5E9NIldaSkr28AP0Eebyp/8%EB%8F%84%EA%B4%80%EA%B4%91-%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84?type=design&node-id=2-3&mode=design&t=JHOtFtCp44wTFtkn-0)
 
 |||
@@ -122,21 +122,21 @@
 
 <div align="right">
 
-[목차](#0-목차)
+[목차](#목차)
 
 </div>
 
-## 💾 8. ERD 설계
+## 8. ERD 설계
 [ERD CLOUD](https://www.erdcloud.com/d/TYp6nBDBZw94StuBx)
 <img src="./assets/erd.png" width="100%">
 
 <div align="right">
 
-[목차](#0-목차)
+[목차](#목차)
 
 </div>
 
-## 📌 9. API 명세
+## 9. API 명세
 [API 명세](https://www.notion.so/oreumi/API-a1974fbdbf0d483da73a951721499469)
 
 | 분류 | 기능  | METHOD | API PATH |
@@ -174,11 +174,11 @@
 
 <div align="right">
 
-[목차](#0-목차)
+[목차](#목차)
 
 </div>
 
-## 📌 10. 기능 명세
+## 10. 기능 명세
 | No | 분류  | 기능 | 기능 설명 | 
 | --- | --- | --- | --- | 
 | 메인페이지 |  |  |  |  |
@@ -216,19 +216,19 @@
 
 <div align="right">
 
-[목차](#0-목차)
+[목차](#목차)
 
 </div>
 
-## 📽️ 11. 시연 영상
+## 11. 시연 영상
 
 <div align="right">
 
-[목차](#0-목차)
+[목차](#목차)
 
 </div>
 
-##12. 프로젝트 회고
+## 12. 프로젝트 회고
 
 ### 👨‍💻 김용준
 가나다라마바사
@@ -243,6 +243,6 @@
 
 <div align="right">
 
-[목차](#0-목차)
+[목차](#목차)
 
 </div>
