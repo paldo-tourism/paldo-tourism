@@ -45,7 +45,8 @@
 
             <div class="mb-3 text-left">
               <label class="form-label text-black"><strong>전화번호</strong></label>
-              <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${user.phoneNumber}" placeholder="전화번호를 입력하세요" required>
+              <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${user.phoneNumber}" placeholder="하이픈('-')을 제외하고 전화번호를 입력하세요" required maxlength="11">
+              <div id="phoneFeedback" style="color: red;"></div>
             </div>
 
             <button type="submit" id="signup-btn" class="btn btn-primary ui-state-focus btn-signup">회원가입</button><br><br>
