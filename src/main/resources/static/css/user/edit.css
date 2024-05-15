@@ -1,0 +1,132 @@
+body {
+    display: flex;
+    flex-direction: column; /* 방향을 수직으로 설정 */
+}
+
+.main-container {
+    display: flex;
+    flex-direction: row; /* 사이드바와 콘텐츠 영역을 수평으로 배치 */
+    height: calc(100vh - 60px); /* 헤더 높이를 제외한 전체 높이 */
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #F6F1F1;
+    padding: 20px;
+    height: 100%; /* 부모 컨테이너의 높이에 맞춤 */
+}
+
+.sidebar h1 {
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    background-color: #ddd;
+}
+
+
+/* myPage-main(내 예매내역) */
+
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.edit-container {
+    background: white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.change-pw-card {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.edit-card:last-child {
+    border-bottom: none;
+}
+
+.edit-title {
+    font-weight: bold;
+    margin-right: 20px; /* 예약 정보와의 간격 */
+    color: #333;
+}
+
+.btn {
+    padding: 8px 16px;
+    margin-right: 10px; /* 버튼 간 간격 조정 */
+}
+
+.btn-change, .btn-do-edit {
+    background-color: #19A7CE;
+}
+
+.btn-cancel {
+    background-color: #F87474;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.no-edit {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 16px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: uppercase; /* 버튼 텍스트를 대문자로 */
+
+    color: #ffffff;
+}
+
+#changePasswordForm, #deleteAccountForm{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#changePasswordForm label, #deleteAccountForm label{
+    margin-right: 15px;
+}
+
+#deleteAccountBtn{
+    width: 150px;
+    background-color: #F87474;
+    font-weight: bold;
+}
+
+#changePwdBtn{
+    width: 150px;
+    background-color: #19A7CE;
+    font-weight: bold;
+}
+
+.edit-input{
+    padding: 5px;
+}

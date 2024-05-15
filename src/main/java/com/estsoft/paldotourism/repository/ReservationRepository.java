@@ -15,8 +15,8 @@ import java.util.Optional;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation,Long> {
 
-    @Query("SELECT b.depTerminal, b.arrTerminal, b.depTime, b.arrTime, b.charge, b.busGrade FROM Reservation r join Bus b on r.bus.id = b.id")
-    List<String> findBusDetails();
+    @Query("SELECT b.depTerminal, b.arrTerminal, b.depTime, b.arrTime, b.charge, b.busGrade FROM Reservation r join Bus b on r.bus.id = b.id WHERE r.reservationNumber = :reservationNumber")
+    List<String> findBusDetails(String reservationNumber);
 
     @Query("SELECT s.seatNumber FROM Reservation r join Seat s on r.id = s.reservation.id")
     List<String> findSeatDetails();

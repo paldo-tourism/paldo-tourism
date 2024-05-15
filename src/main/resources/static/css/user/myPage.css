@@ -11,7 +11,7 @@ body {
 
 .sidebar {
     width: 250px;
-    background-color: #f4f4f4;
+    background-color: #F6F1F1;
     padding: 20px;
     height: 100%; /* 부모 컨테이너의 높이에 맞춤 */
 }
