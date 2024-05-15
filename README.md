@@ -243,6 +243,7 @@
 
 ## 11. 시연 영상
 
+![video](./assets/8do-video.gif)
 
 <div align="right">
 
