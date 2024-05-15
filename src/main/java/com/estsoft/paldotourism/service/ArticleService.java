@@ -114,7 +114,8 @@ public class ArticleService {
 
   private List<Article> getFilteredResult(List<OrderSpecifier> orderSpecifier, BooleanBuilder filterBuilder, Pageable pageable){
 
-    return queryFactory.selectFrom(article)
+    return queryFactory.select(article)
+            .from(article)
             .where(filterBuilder)
             .orderBy(orderSpecifier.toArray(OrderSpecifier[]::new))
             .offset(pageable.getOffset())

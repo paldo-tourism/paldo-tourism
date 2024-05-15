@@ -24,12 +24,15 @@ public class CommentServiceTest {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private UserService userService;
+
     User user;
     Article article;
 
     @BeforeEach
     void setTest(){
-        user = userRepository.findByEmail("aaa@aaa.com").orElseThrow();
+//        user = userRepository.findByEmail("aaa@aaa.com").orElseThrow();
         article = articleRepository.findById(80L).orElseThrow();
     }
 
@@ -74,5 +77,12 @@ public class CommentServiceTest {
     @Transactional
     void getChildCommentList(){
         System.out.println(commentService.getComment(1L).getChildren().get(0).getContent());
+    }
+
+    @Test
+    void userDelete(){
+        User user = userRepository.findByEmail("ccc@ccc.com").orElseThrow();
+
+        userService.deleteUser(user);
     }
 }

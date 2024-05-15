@@ -28,10 +28,12 @@ public class ArticleRequestDTO {
   private Boolean isSecret;
 
   @Builder
-  public ArticleRequestDTO(String title, String content, String authorEmail, Category category, Boolean isSecret){
+  public ArticleRequestDTO(String title, String content, String author, String authorEmail, Category category, Boolean isSecret){
     this.title = title;
 
     this.content = content;
+
+    this.author = author;
 
     this.authorEmail = authorEmail;
 

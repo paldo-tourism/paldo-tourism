@@ -9,7 +9,7 @@
     <div id="content-wrap" class="flex">
       <h2>문의 남기기</h2>
       <form method="post" action="/article/write">
-        <select id="category" name="category">
+        <select id="category" name="category" required>
           <option value="" selected>카테고리</option>
           <option th:if="${#authorization.expression('hasRole(''ADMIN'')')}" value="CATEGORY_ANNOUNCEMENT">공지</option>
           <option th:each="categoryItem : ${category}" th:value="${categoryItem}" th:text="${categoryItem.getCategoryName()}"></option>
