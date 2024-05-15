@@ -36,13 +36,13 @@ public class ArticleResponseDTO {
 
   private PageResponseDTO<CommentResponseDTO> commentList;
 
-  private Integer commentCount;
+  private Long commentCount;
 
   private Boolean state;
 
   @Builder
   public ArticleResponseDTO(Long id, String author, String title, String content, Category category, LocalDateTime createdAt,
-                            LocalDateTime updatedAt, boolean isSecret, Integer commentCount, Boolean state) {
+                            LocalDateTime updatedAt, boolean isSecret, Long commentCount, Boolean state) {
     this.id = id;
     this.author = author;
     this.title = title;

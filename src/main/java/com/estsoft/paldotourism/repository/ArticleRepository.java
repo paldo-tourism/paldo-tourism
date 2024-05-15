@@ -20,5 +20,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
   List<Article> findByCategory(Category category);
 
-    void deleteByUserId(Long userId);
+  void deleteByUserId(Long userId);
 }

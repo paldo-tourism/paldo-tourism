@@ -19,11 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -104,8 +100,13 @@ public class ArticleController {
   @GetMapping("/article/update/{articleId}")
   public String articleUpdatePage(Model model, @PathVariable Long articleId){
     ArticleResponseDTO articleResponseDTO = articleService.articleRead(articleId);
+    List<Category> categories = Arrays.stream(Category.values())
+            .filter(category -> category != Category.CATEGORY_ANNOUNCEMENT)
+            .toList();
 
+    model.addAttribute("category", categories);
     model.addAttribute("article",articleResponseDTO);
+
     return "article/update";
   }
 
