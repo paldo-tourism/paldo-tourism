@@ -5,6 +5,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const emailFeedback = document.getElementById('emailFeedback');
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 간단한 이메일 형식 검증
 
+    const phoneInput = document.getElementById('phoneNumber');
+    const phoneFeedback = document.getElementById('phoneFeedback');
+
+    phoneInput.addEventListener('input', function() {
+        const phonePattern = /^(01[016789]{1})[0-9]{4}[0-9]{4}$/; // 최대 11자리 숫자
+        if (!phonePattern.test(phoneInput.value)) {
+            phoneFeedback.textContent = '유효하지 않은 휴대폰 번호입니다.';
+            phoneFeedback.style.color = 'red';
+        } else {
+            phoneFeedback.textContent = '유효한 휴대폰 번호입니다.';
+            phoneFeedback.style.color = 'green';
+        }
+    });
+
+    phoneInput.addEventListener('keypress', function(event) {
+        const charCode = event.charCode;
+        if (charCode !== 0 && (charCode < 48 || charCode > 57)) {
+            event.preventDefault(); // 숫자가 아닌 입력을 방지
+        }
+    });
+
     // 이메일 형식 검증 이벤트 리스너
     emailInput.addEventListener('input', function() {
         if (emailInput.value.length > 0) {
@@ -120,6 +141,9 @@ signupBtn.addEventListener('click', function(event) {
         return;
     } else if(passwordConfrim !== password) {
         alert('비밀번호가 일치하지 않습니다.');
+        return;
+    } else if (!/^(01[016789]{1})[0-9]{4}[0-9]{4}$/.test(phoneNumber)) {
+        alert('유효하지 않은 휴대폰 번호입니다.');
         return;
     }
 

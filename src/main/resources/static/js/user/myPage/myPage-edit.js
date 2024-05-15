@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 if (data.success) {
                     alert(data.message); // 성공 메시지
-                    window.location.href = '/login'; // 로그인 페이지로 리디렉션
+                    window.location.href = '/'; // 로그인 페이지로 리디렉션
                 } else {
                     alert(data.message); // 실패 메시지
                 }
