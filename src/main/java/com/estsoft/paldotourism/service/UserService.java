@@ -24,6 +24,7 @@ public class UserService {
     private final CommentRepository commentRepository;
     private final ArticleRepository articleRepository;
     private final SeatRepository seatRepository;
+    private final LikesRepository likesRepository;
 
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -100,7 +101,13 @@ public class UserService {
         // Step 4: 게시글 삭제
         articleRepository.deleteByUserId(userId);
 
-        // Step 5: 유저 삭제
+
+        // Step 5: 찜 삭제
+        likesRepository.deleteByUserId(userId);
+
+
+
+        // Step 6: 유저 삭제
         userRepository.delete(user);
     }
 }
