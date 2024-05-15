@@ -44,7 +44,7 @@ public class Article extends BaseTime {
     private List<Comment> comment;
 
     @Formula("(select count(1) from comment c where c.article_id = id)")
-    private int commentCount;
+    private long commentCount;
 
     @Column
     @ColumnDefault("false")

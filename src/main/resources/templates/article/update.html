@@ -7,14 +7,14 @@
     </head>
     <div id="content-wrap">
       <h2>문의 남기기</h2>
-      <form th:method="put" th:action="@{article/update/{articleId}(articleId=${articleId})}">
+      <form th:method="put" th:action="@{/article/update/{articleId}(articleId=${articleId})}">
         <input type="hidden" name="_method" value="PUT">
-        <input type="hidden" name="articleId" th:value="${articleId}">
+        <input type="hidden" name="articleId" th:value="${article.id}">
         <input type="hidden" name="author" th:value="${article.author}">
         <select id="category" name="category" required>
           <option value="">카테고리</option>
-          <option value="CATEGORY_ANNOUNCEMENT" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:selected="${article.category.equals('CATEGORY_ANNOUNCEMENT') ? 'selected' : '' }">공지</option>
-          <option value="CATEGORY_QA" th:selected="${article.category.equals('CATEGORY_QA') ? 'selected' : '' }">문의</option>
+          <option th:if="${#authorization.expression('hasRole(''ADMIN'')')}" value="CATEGORY_ANNOUNCEMENT" th:selected="${article.category.getCategoryName()} eq 'CATEGORY_ANNOUNCEMENT'">공지</option>
+          <option th:each="categoryItem : ${category}" th:value="${categoryItem}" th:text="${categoryItem.getCategoryName()}" th:selected="${article.category.getCategoryName()} eq ${categoryItem.getCategoryName()}"></option>
         </select>
         <input id="article-title" type="text" name="title" th:value="${article.title}" required>
         <textarea id="article-content" name="content" th:text="${article.content}" required></textarea>
