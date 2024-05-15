@@ -37,15 +37,13 @@
 <script>
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
+
         if (urlParams.has('error')) {
             const error = sessionStorage.getItem('error') || '이메일 또는 비밀번호를 다시 확인해 주세요.';
             alert(error);
             sessionStorage.removeItem('error');  // 세션에서 오류 메시지 삭제
         }
-    };
 
-    window.onload = function() {
-        const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('denied')) {
             alert('로그인이 필요한 페이지입니다. 로그인 해주세요.');
         }
