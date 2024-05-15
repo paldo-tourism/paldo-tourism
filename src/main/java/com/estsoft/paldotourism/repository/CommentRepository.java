@@ -17,4 +17,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long>{
   boolean existsChild(Long articleId, Long commentId);
 
   boolean existsByParentId(Long parentId);
+
+    void deleteByUserId(Long userId);
 }

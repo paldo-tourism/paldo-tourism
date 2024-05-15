@@ -4,7 +4,7 @@ import com.estsoft.paldotourism.dto.user.AddUserRequestDto;
 import com.estsoft.paldotourism.dto.user.AddUserResponseDto;
 import com.estsoft.paldotourism.entity.Role;
 import com.estsoft.paldotourism.entity.User;
-import com.estsoft.paldotourism.repository.UserRepository;
+import com.estsoft.paldotourism.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,11 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+
+    private final ReservationRepository reservationRepository;
+    private final CommentRepository commentRepository;
+    private final ArticleRepository articleRepository;
+    private final SeatRepository seatRepository;
 
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -82,8 +87,20 @@ public class UserService {
     // 회원 탈퇴
     @Transactional
     public void deleteUser(User user) {
-        // 회원 탈퇴 시 연관된 정보들도 삭제해야함
-        // 게시글, 댓글, 찜 등에서 해당 user의 정보 삭제후
+        Long userId = user.getId();
+        // Step 1: seat 변경
+        seatRepository.updateSeatsByUserId(userId);
+
+        // Step 2: 예매 삭제
+        reservationRepository.deleteByUserId(userId);
+
+        // Step 3: 댓글 삭제
+        commentRepository.deleteByUserId(userId);
+
+        // Step 4: 게시글 삭제
+        articleRepository.deleteByUserId(userId);
+
+        // Step 5: 유저 삭제
         userRepository.delete(user);
     }
 }
