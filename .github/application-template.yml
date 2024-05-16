@@ -1,4 +1,12 @@
 spring:
+  profiles:
+    default: local
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+---
+spring:
   mail:
     host: smtp.gmail.com
     port: 587
@@ -11,10 +19,6 @@ spring:
           starttls:
             enable: true
 
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
 
 apis:
   bus:
