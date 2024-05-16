@@ -11,6 +11,11 @@ spring:
           starttls:
             enable: true
 
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
 apis:
   bus:
     key: ${BUS_KEY}
